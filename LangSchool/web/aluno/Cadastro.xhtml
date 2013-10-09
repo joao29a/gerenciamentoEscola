@@ -23,8 +23,8 @@
                     <br/>
                     <br/>
                     <p:separator/>
-                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
+                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew(); " type="button"/>  
+                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack();" type="button"/>   
 
                 </p:dialog> 
                 <h:panelGrid columns="2">
@@ -33,77 +33,77 @@
                 </h:panelGrid>
                 <h:panelGrid columns="4" cellpadding="5">
                     <h:outputText value="Nome:" />
-                    <p:inputText value="Jousué dos Santos Junior" />
+                    <p:inputText id="nome" value="#{gerenciarAluno.aluno.nome}"/>
                     <h:outputText value="Data de nascimento:" />
-                    <p:calendar />
+                    <p:calendar id="dataNasc" value="#{gerenciarAluno.aluno.dataNasc}"/>
                     <h:outputText value="Número RG:" />
-                    <p:inputText value="6.452.674-8" />
+                    <p:inputText value="#{gerenciarAluno.aluno.rg}"/>
                     <h:outputText value="Sexo:" />
-                    <p:selectOneRadio>
-                        <f:selectItem itemLabel="Masculino" />
-                        <f:selectItem itemLabel="Feminino" />
+                    <p:selectOneRadio value="#{gerenciarAluno.aluno.sexo}">
+                        <f:selectItem itemLabel="Masculino" itemValue="M"/>
+                        <f:selectItem itemLabel="Feminino" itemValue="F" />
                     </p:selectOneRadio>
                     <h:outputText value="Telefone Residencial:" />
-                    <p:inputText value="3029-3464" />
+                    <p:inputMask value="#{gerenciarAluno.aluno.telefone}" mask="(99) 9999-9999"/>
                     <h:outputText value="  " />
                     <h:outputText value="  " />
                     <h:outputText value="CEP:" />
-                    <p:inputText value="86000-380" />
+                    <p:inputMask value="#{gerenciarAluno.aluno.CEP}" mask="99999-999"/>
                     <h:outputText value="Estado:" />
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="AC" />
-                        <f:selectItem itemLabel="AL" />
-                        <f:selectItem itemLabel="AP" />
-                        <f:selectItem itemLabel="AM" />
-                        <f:selectItem itemLabel="BA" />
-                        <f:selectItem itemLabel="CE" />
-                        <f:selectItem itemLabel="DF" />
-                        <f:selectItem itemLabel="ES" />
-                        <f:selectItem itemLabel="GO" />
-                        <f:selectItem itemLabel="MA" />
-                        <f:selectItem itemLabel="MT" />
-                        <f:selectItem itemLabel="MS" />
-                        <f:selectItem itemLabel="MG" />
-                        <f:selectItem itemLabel="PA" />
-                        <f:selectItem itemLabel="PB" />
-                        <f:selectItem itemLabel="PR" />
-                        <f:selectItem itemLabel="PE" />
-                        <f:selectItem itemLabel="PI" />
-                        <f:selectItem itemLabel="RJ" />
-                        <f:selectItem itemLabel="RN" />
-                        <f:selectItem itemLabel="RS" />
-                        <f:selectItem itemLabel="RO" />
-                        <f:selectItem itemLabel="RR" />
-                        <f:selectItem itemLabel="SC" />
-                        <f:selectItem itemLabel="SP" />
-                        <f:selectItem itemLabel="SE" />
-                        <f:selectItem itemLabel="TO" />
-                        <f:selectItem itemLabel="--" />
+                    <p:selectOneMenu value="#{gerenciarAluno.aluno.uf}">
+                        <f:selectItem itemLabel="AC" itemValue ="AC"/>
+                        <f:selectItem itemLabel="AL" itemValue ="AL"/>
+                        <f:selectItem itemLabel="AP" itemValue ="AP"/>
+                        <f:selectItem itemLabel="AM" itemValue ="AM"/>
+                        <f:selectItem itemLabel="BA" itemValue ="BA"/>
+                        <f:selectItem itemLabel="CE" itemValue ="CE"/>
+                        <f:selectItem itemLabel="DF" itemValue ="DF"/>
+                        <f:selectItem itemLabel="ES" itemValue ="ES"/>
+                        <f:selectItem itemLabel="GO" itemValue ="GO"/>
+                        <f:selectItem itemLabel="MA" itemValue ="MA"/>
+                        <f:selectItem itemLabel="MT" itemValue ="MT"/>
+                        <f:selectItem itemLabel="MS" itemValue ="MS"/>
+                        <f:selectItem itemLabel="MG" itemValue ="MA"/>
+                        <f:selectItem itemLabel="PA" itemValue ="PA"/>
+                        <f:selectItem itemLabel="PB" itemValue ="PB"/>
+                        <f:selectItem itemLabel="PR" itemValue ="PR"/>
+                        <f:selectItem itemLabel="PE" itemValue ="PE"/>
+                        <f:selectItem itemLabel="PI" itemValue ="PI"/>
+                        <f:selectItem itemLabel="RJ" itemValue ="RJ"/>
+                        <f:selectItem itemLabel="RN" itemValue ="RN"/>
+                        <f:selectItem itemLabel="RS" itemValue ="RS"/>
+                        <f:selectItem itemLabel="RO" itemValue ="RR"/>
+                        <f:selectItem itemLabel="RR" itemValue ="RR"/>
+                        <f:selectItem itemLabel="SC" itemValue ="SC"/>
+                        <f:selectItem itemLabel="SP" itemValue ="SP"/>
+                        <f:selectItem itemLabel="SE" itemValue ="SE"/>
+                        <f:selectItem itemLabel="TO" itemValue ="TO"/>
+                        <f:selectItem itemLabel="--" itemValue ="--"/>
                     </p:selectOneMenu>
                     <h:outputText value="Cidade:" />
-                    <p:inputText value="Maringá" />
+                    <p:inputText value="#{gerenciarAluno.aluno.cidade}" />
                     <h:outputText value="Endereço:" />
-                    <p:inputText value="Rua Logo Ali" />
+                    <p:inputText value="#{gerenciarAluno.aluno.endereco}" />
                     <h:outputText value="Número:" />
-                    <p:inputText value="666" />
+                    <p:inputText value="#{gerenciarAluno.aluno.numero}" />
                     <h:outputText value="  " />
                     <h:outputText value="  " />
                     <h:outputText value="Nome do Pai:" />
-                    <p:inputText value="Josué dos Santos" />
+                    <p:inputText value="#{gerenciarAluno.aluno.nomePai}" />
                     <h:outputText value="Telefone do Pai:" />
-                    <p:inputText value="9974-2365" />  
+                        <p:inputMask value="#{gerenciarAluno.aluno.telefonePai}" mask="(99) 9999-9999"/>  
                     <h:outputText value="Nome da Mãe:" />
-                    <p:inputText value="Maria Rosângela dos Santos" />
+                    <p:inputText value="#{gerenciarAluno.aluno.nomeMae}" />
                     <h:outputText value="Telefone da Mãe:" />
-                    <p:inputText value="9137-2345" />
+                    <p:inputMask value="#{gerenciarAluno.aluno.telefoneMae}" mask="(99) 9999-9999"/>
                 </h:panelGrid>
 
                 <h:panelGrid columns="2">
-                    <p:commandButton value="Salvar" style="color: green" onclick="confirmation.show()"/>
-                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
+                    <p:commandButton value="Salvar" style="color: green" 
+                                     actionListener="#{gerenciarAluno.cadastrarAluno}" onclick="confirmation.show();"/>
+                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>
 </html>
-

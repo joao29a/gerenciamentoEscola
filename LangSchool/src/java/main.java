@@ -12,12 +12,7 @@ public class main {
     public static void main(String[] args) {
         
         EntityPersist ep = new EntityPersist();
-        Professor p = new Professor("Carlos", "c@a.com", "932889983");
-        try {
-            ep.save(p);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        ep.update_bd();
       
     }
 }

@@ -34,6 +34,7 @@ public class EntityPersist extends HibernateUtil {
         }
         return method;
     }
+    
 
     //Funcao generica
     private String doSerialize(Object obj, Method method) throws Exception {
@@ -103,5 +104,10 @@ public class EntityPersist extends HibernateUtil {
         if(cg.type.equals("between")) return Restrictions.between(cg.attribute, cg.valueFrom, cg.valueTo);
         if(cg.type.equals("sql")) return Restrictions.sqlRestriction(cg.attribute);
         return null;
+    }
+    
+    public void update_bd() {
+        init();
+        session.close();
     }
 }

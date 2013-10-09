@@ -22,6 +22,9 @@ public class FluxoCaixa {
     
     @Column(name = "data_movimento")
     private String data;
+    
+    @Column(name = "estado")
+    private String estado;
 
     public int getId() {
         return id;
@@ -55,4 +58,8 @@ public class FluxoCaixa {
         this.data = data;
     }
     
+     public void alteraEstado() {
+        if(this.estado.equals("inativo")) this.estado = "ativo";
+        this.estado = "inativo";
+    }     
 }
