@@ -1,6 +1,7 @@
 
 import com.entity.Aluno;
 import com.entity.Curso;
+import com.entity.LogIn;
 import com.entity.Matricula;
 import com.entity.Mensalidade;
 import com.entity.Nivel;
@@ -64,6 +65,11 @@ public class main {
             //Mensalidade
             Mensalidade qlqr = new Mensalidade();
             ep.save(qlqr);
+            //Login
+            ep.save(new LogIn("secretario", 
+                    (Professor)ep.search(Professor.class, new CriteriaGroup("eq", "id", 1, null)).get(0), 0));
+            ep.save(new LogIn("professor", 
+                    (Professor)ep.search(Professor.class, new CriteriaGroup("eq", "id", 2, null)).get(0), 0));
             //---------------------------------------------
         } catch (Exception ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

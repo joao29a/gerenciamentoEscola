@@ -24,11 +24,17 @@ public class LoginFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(true);
         
-        System.out.println(req.getContextPath());
-        
-        if(session.getAttribute("authenticated") == null && 
-                !req.getRequestURL().toString().contains("login.xhtml")) {
+        String url = req.getRequestURL().toString();
+        String hierarchy = (String)session.getAttribute("authenticated");
+        if(hierarchy == null && 
+                !url.contains("login.xhtml")) {
             resp.sendRedirect(req.getContextPath()+ "/faces/login.xhtml");
+        } else if (hierarchy != null && hierarchy.equals("professor")) {
+            if (url.matches(".*(aluno|caixa|curso|documentos|imagens|matricula|"
+                + "mensalidade|nivel|professor|turma).*"))
+                resp.sendRedirect(req.getContextPath()+ "/faces/index.xhtml");
+            else
+                chain.doFilter(request, response);
         } else
             chain.doFilter(request, response);
     }

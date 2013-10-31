@@ -7,7 +7,7 @@
     <f:view>
         <h:head>
             <script>
-                function goHome(){
+                function goHome() {
                     self.location = "/LangSchool/faces/index.xhtml";
                 }
             </script>
@@ -32,7 +32,17 @@
                     </p:panel>
                 </p:layoutUnit>
                 <p:layoutUnit position="north" style="padding: 0px 0px 0px 0px">
-                    <div style="width: available; height: 50px; background-color: #D20005; margin: 0px"/>
+                    <h:form>
+                        <div style="width: available; height: 50px; background-color: #D20005; 
+                             margin: 0px; text-align: right; color: white; padding-right: 60px">
+                            <br/>
+                            Bem vindo, #{gerenciamentoLogin.loggedName}!
+                            <p:commandLink value="Logar" style="color: blue" rendered="#{gerenciamentoLogin.notLogged}" ajax="false"
+                                           action="#{gerenciamentoLogin.goLogIn}"/>
+                            <p:commandLink value="Sair" style="color: blue" rendered="#{gerenciamentoLogin.logged}" ajax="false"
+                                           action="#{gerenciamentoLogin.logOut}"/>
+                        </div>
+                    </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="south" style="padding: 0px 0px 0px 0px">
                     <div style="width: available; height: 50px; background-color: #D20005; margin: 0px"/>

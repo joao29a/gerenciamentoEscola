@@ -19,10 +19,17 @@ public class LogIn implements Serializable {
     
     @Column(name = "hierarquia")
     private int hierarquia;
-    
-    @Column(name = "estado")
-    private String estado;
 
+    public LogIn(String password, Professor professor, int hierarquia) {
+        this.password = password;
+        this.professor = professor;
+        this.hierarquia = hierarquia;
+    }
+    
+    public LogIn() {
+        this.professor = new Professor();
+    }
+    
     public int getId() {
         return id;
     }
@@ -42,14 +49,12 @@ public class LogIn implements Serializable {
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
-    
-    public String getEstado() {
-        return this.estado;
+
+    public int getHierarquia() {
+        return hierarquia;
     }
-    
-    public void alteraEstado() {
-        if(this.estado.equals("inativo")) this.estado = "ativo";
-        this.estado = "inativo";
+
+    public void setHierarquia(int hierarquia) {
+        this.hierarquia = hierarquia;
     }
-    
 }
