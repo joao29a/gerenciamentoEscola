@@ -2,6 +2,7 @@
 import com.entity.Aluno;
 import com.entity.Curso;
 import com.entity.Matricula;
+import com.entity.Mensalidade;
 import com.entity.Nivel;
 import com.entity.Professor;
 import com.entity.Turma;
@@ -60,6 +61,9 @@ public class main {
                     (Turma)ep.search(Turma.class, new CriteriaGroup("eq", "turma", "Turma Ingles Basico", null)).get(0), new Date()));
             ep.save(new Matricula((Aluno)ep.search(Aluno.class, new CriteriaGroup("eq", "nome", "lucas", null)).get(0), 
                     (Turma)ep.search(Turma.class, new CriteriaGroup("eq", "turma", "Turma Espanhol Basico", null)).get(0), new Date()));
+            //Mensalidade
+            Mensalidade qlqr = new Mensalidade();
+            ep.save(qlqr);
             //---------------------------------------------
         } catch (Exception ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

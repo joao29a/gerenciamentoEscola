@@ -31,8 +31,9 @@ public class Matricula implements Serializable {
     @OneToMany(mappedBy = "matricula")
     private Set<Presenca> presenca;
     
-    @OneToMany(mappedBy = "matricula")
-    private Set<Mensalidade> mensalidade;
+    @OneToOne
+    @JoinColumn(name = "id_mensalidade")
+    private Mensalidade mensalidade;
     
     @OneToMany(mappedBy = "matricula")
     private Set<ReposicaoAula> reposicoes;
@@ -76,4 +77,12 @@ public class Matricula implements Serializable {
     public void setDataMatricula(Date dataMatricula) {
         this.dataMatricula = dataMatricula;
     }
+
+    public Mensalidade getMensalidade() {
+        return mensalidade;
+    }
+
+    public void setMensalidade(Mensalidade mensalidade) {
+        this.mensalidade = mensalidade;
+    }   
 }

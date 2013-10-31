@@ -1,16 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-/**
- *
- * @author massao
- */
 @Entity
 @Table(name = "Mensalidade")
 public class Mensalidade implements Serializable {
@@ -19,24 +17,14 @@ public class Mensalidade implements Serializable {
     @GeneratedValue
     private int id;
     
-    @Column(name = "valor")
-    private float valorMensalidade;
-    
+    @Column(name = "mes")
+    private String[] mes = new String[12];
+ 
     @Column(name = "situacao")
     private boolean situMensalidade;
     
-    @Column(name = "mes")
-    private String mes;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_matricula")
-    private Matricula matricula;
-    
     public int getId(){
         return id;
-    }
-    public float getValorMensalidade(){
-        return valorMensalidade;
     }
     
     public boolean getSituMensalidade(){
@@ -47,13 +35,12 @@ public class Mensalidade implements Serializable {
         this.situMensalidade = situMensalidade;
     }
 
-    public String getMes() {
+    public String[] getMes() {
         return mes;
     }
 
-    public void setMes(String mes) {
+    public void setMes(String[] mes) {
         this.mes = mes;
     }
-    
-    
+   
 }

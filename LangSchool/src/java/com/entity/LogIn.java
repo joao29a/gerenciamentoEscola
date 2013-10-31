@@ -17,6 +17,9 @@ public class LogIn implements Serializable {
     @JoinColumn(name = "id_professor")
     private Professor professor;
     
+    @Column(name = "hierarquia")
+    private int hierarquia;
+    
     @Column(name = "estado")
     private String estado;
 

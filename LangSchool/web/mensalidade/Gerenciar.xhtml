@@ -23,99 +23,48 @@
                 <p:inputText style="width:60%" />
                 <p:button value="Buscar" style="color: blue" />
 
-                <p:panelGrid style="margin-top: 20px; width: 80%">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column style="font-weight: bold; color: teal" colspan="320">Resultados da Busca</p:column>
-                        </p:row>
-
-                        <p:row>
-                            <p:column colspan="20">ID Matrícula</p:column>
-                            <p:column colspan="100">Nome</p:column>
-                            <p:column colspan="1">Idade</p:column>
-                            <p:column colspan="49">Curso</p:column>
-                            <p:column colspan="50">Nível</p:column>
-                            <p:column colspan="15">Turma</p:column>
-                            <p:column colspan="5">Estado</p:column>
-                            <p:column style="font-weight: bold; color: orangered" colspan="60">Ações</p:column> 
-                        </p:row>
-                    </f:facet>
+                <p:dataTable var="matricula" value="#{gerenciarMatricula.matriculas}">
+                    <f:facet name="header">Resultados da Busca</f:facet>
 
                     <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">003</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Massao Uyeno</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">22</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Japonês</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Medio III</p:column>
-                        <p:column colspan="15" style="font-weight: normal; text-align: center">02</p:column>
-                        <p:column colspan="5" style="font-weight: normal; text-align: center; background-color: green; color: white">OK</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
+                        <p:column colspan="20">ID Matrícula</p:column>
+                        <p:column colspan="100">Nome</p:column>
+                        <p:column colspan="49">Curso</p:column>
+                        <p:column colspan="50">Nível</p:column>
+                        <p:column colspan="15">Turma</p:column>
+                        <p:column colspan="5">Estado</p:column>
+                        <p:column style="font-weight: bold; color: orangered" colspan="60">Ações</p:column> 
                     </p:row>
 
-                    <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">001</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Jousué dos Santos Junior</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">22</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Alemão</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Básico I</p:column>
-                        <p:column colspan="15" style="font-weight: normal; text-align: center">04</p:column>
-                        <p:column colspan="5" style="font-weight: normal; text-align: center; background-color: red; color: white">DEVE</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" onclick="dlgo.show();" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" onclick="dlgo1.show();" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" onclick="dlgo2.show();" />
-                            </div>
-                        </p:column>
-                    </p:row>
+                    <p:column colspan="20" style="font-weight: normal; text-align: center">
+                        <h:outputText value="#{matricula.id}"/> </p:column>
+                    <p:column colspan="100" style="font-weight: normal; text-align: center">
+                        <h:outputText value="#{matricula.aluno.nome}"/></p:column>
+                    <p:column colspan="49" style="font-weight: normal; text-align: center">
+                        <h:outputText value="#{matricula.turma.nivel.curso.nome}"/></p:column>
+                    <p:column colspan="50" style="font-weight: normal; text-align: center">
+                        <h:outputText value="#{matricula.turma.nivel.nome}"/></p:column>
+                    <p:column colspan="15" style="font-weight: normal; text-align: center">02
+                        <h:outputText value="#{matricula.turma.turma}"/></p:column>
+                    <p:column colspan="5" style="font-weight: normal; text-align: center; background-color: green; color: white">OK
+                        <h:outputText value="#{matricula.mensalidade.situMensalidade}"/></p:column>
 
-                    <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">005</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Yukio Siraichi</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">20</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Mandarim</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Avançado II</p:column>
-                        <p:column colspan="15" style="font-weight: normal; text-align: center">07</p:column>
-                        <p:column colspan="5" style="font-weight: normal; text-align: center; background-color: green; color: white">OK</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                    <p:column colspan="20">
+                        <div style="text-align: center">
+                            <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" onclick="dlgo0.show();"/>
+                        </div>
+                    </p:column>
+                    <p:column colspan="20">
+                        <div style="text-align: center">
+                            <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" onclick="dlgo1.show();"/>
+                        </div>
+                    </p:column>
+                    <p:column colspan="20">
+                        <div style="text-align: center">
+                            <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
+                        </div>
+                    </p:column>
+                </p:dataTable>
 
                 <p:dialog header="Visualização" widgetVar="dlgo">
                     <h:panelGrid columns="2">
