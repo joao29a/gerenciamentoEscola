@@ -42,9 +42,9 @@ public class main {
             ep.save(new Nivel("Espanhol I", "Curso basico de espanhol", 30, 
                     (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Ingles", null)).get(0)));
             //Professor
-            ep.save(new Professor("Jose", "jose@algumacoisa.com", "999999999"));
-            ep.save(new Professor("Makoto", "makoto@outracoisa.com", "888888888"));
-            ep.save(new Professor("Smith", "smith@algumaoutracoisa.com", "777777777"));
+            //ep.save(new Professor("Jose", "jose@algumacoisa.com", "999999999"));
+            //ep.save(new Professor("Makoto", "makoto@outracoisa.com", "888888888"));
+            //ep.save(new Professor("Smith", "smith@algumaoutracoisa.com", "777777777"));
             //Turmas
             ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Makoto", null)).get(0), 
                     (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Japones I", null)).get(0), 
