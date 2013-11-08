@@ -56,7 +56,7 @@
                 </h:panelGrid>
                 <h:panelGrid columns="2" cellpadding="4">
                     <p:commandButton value="Cadastrar" style="color: green"
-                                         action="#{gerenciarTurma.adicionarTurma}" 
+                                     actionListener="#{gerenciarTurma.cadastrarTurma}" 
                                          onclick="confirmation.show()"/>
                         
                     <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>

@@ -5,33 +5,62 @@ import com.entity.Turma;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+import messages.Gmessages;
 
 @ViewScoped
 @ManagedBean
 public class GerenciarTurma {
-    private Turma turma;
+    private String busca, param;
+    private boolean isAtivo;
+    private Gmessages msg = new Gmessages();
+    private Turma turma, selecionado;
     private List<Turma> turmas;
     private EntityPersist ep;
     private GerenciarProfessor gerenProf;
     private GerenciarNivel gerenNivel;
     
     public GerenciarTurma(){
+        System.out.println("Ativado");
+        selecionado = new Turma();
         turma = new Turma();
         ep = new EntityPersist();
         gerenProf = new GerenciarProfessor();
         gerenNivel = new GerenciarNivel();
         turmas = ep.search(Turma.class, 
-                new CriteriaGroup("eq","estado","ativo",null));
+                new CriteriaGroup("eq","estado","ativo",turma));
     }
     
     public void setTurma(Turma turma){
         this.turma = turma;
     }
     
+    public String getBusca() {
+        return busca;
+    }
+
+    public void setBusca(String busca) {
+        this.busca = busca;
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
+    }
+    
     public Turma getTurma(){
         return this.turma;
+    }
+    
+    public void setTurmas(List<Turma> turmas){
+        this.turmas = turmas;
     }
     
     public List<Turma> getTurmas(){
@@ -54,26 +83,77 @@ public class GerenciarTurma {
         this.gerenNivel = gerenNivel;
     }
     
-    public void adicionarTurma(){
+    public Turma getSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(Turma selecionado) {
+        this.selecionado = selecionado;
+    }
+
+    public boolean isIsAtivo() {
+        return isAtivo;
+    }
+
+    public void setIsAtivo(boolean isAtivo) {
+        this.isAtivo = isAtivo;
+    }
+
+    public List<Turma> listar() {
+        return ep.search(Turma.class);
+    }
+    
+    public void cadastrarTurma(ActionEvent ae) {
         try {
+            turma.setVagasRest(turma.getVagas());
             ep.save(turma);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.getLogger(GerenciarTurma.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void consultarTurma(ActionEvent ae) {
+        if(busca.trim().equals(""))
+            turmas = ep.search(Turma.class, new CriteriaGroup("eq", "estado", "ativo", null));
+        else if(!param.equals("estado")) {
+            turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null),
+                    new CriteriaGroup("eq", "estado", "ativo", null));
+        } else
+            turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null));
+    }
+
+    public void selectTurma(ActionEvent ae) {
+        selecionado = (Turma) ae.getComponent().getAttributes().get("turma");
+        setIsAtivo(!"inativo".equals(selecionado.getEstado()));
+    }
+
+    public void alterarTurma(ActionEvent ae) {
+        System.out.println("Alterando");
+        try {
+            ep.update(selecionado);
+            msg.alterar(ae);
+        } catch (Exception ex) {
+            Logger.getLogger(GerenciarTurma.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void alterarTurma(){
-        
+    public void removerTurma(ActionEvent ae) {
+        System.out.println("Removendo");
+        selecionado.setEstadoInativo();
+        try {
+            ep.update(selecionado);
+            msg.remover(ae);
+            busca = "";
+            param = "Nome";
+            consultarTurma(ae);
+        } catch (Exception ex) {
+            Logger.getLogger(GerenciarTurma.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void alterarVagas(){
-        
+    public void ativar(ActionEvent ae) {
+        selecionado.setEstadoAtivo();
+        msg.ativado(ae);
+        setIsAtivo(false);
     }
-    
-    public void consultarTurma(String nome){
-        turmas = ep.search(Turma.class, 
-                new CriteriaGroup("like", "nome", nome, null));
-    }
-    
-    public void excluirTurma(int id){}
 }
