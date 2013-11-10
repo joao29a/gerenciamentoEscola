@@ -17,30 +17,64 @@
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
                 </script>
-                <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">
-                    <center>
-                        <p:commandButton id="confirm" value="OK" onclick="confirmation.hide();swNew();" type="button"/>
-                    </center>
-                </p:dialog> 
-                    <h:panelGrid columns="2" cellpadding="4" style="width: auto;height: 100%">
-                        <h:outputText value="Nome:" />
-                        <p:inputText id="nome" value="#{gerenciarProfessor.professor.nome}"/> 
-                        
-                        <h:outputText value="Email:" />
-                        <p:inputText id="email" value="#{gerenciarProfessor.professor.email}"/>
-                        
-                        <h:outputText value="Telefone:" />
-                        <p:inputText id="telefone" value="#{gerenciarProfessor.professor.telefone}"/>
-                        
-                        <p:commandButton value="Cadastrar" style="color: green"
-                                         action="#{gerenciarProfessor.adicionarProfessor}" 
-                                         onclick="confirmation.show()"/>
-                        
-                        <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
-                    </h:panelGrid>
 
+                <p:dialog id="diag1" header="Cadastrado com Sucesso!" widgetVar="confirmation">  
+                    <p:outputLabel value="Deseja cadastrar outro professor?" />
+                    <br/>
+                    <br/>
+                    <p:separator/>
+                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
+                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
+
+                </p:dialog>                 
+                
+                <h:panelGrid id="panel" columns="3" cellpadding="4">
+                    <h:outputText value="Nome *:" />
+                    <p:inputText id="inputNome" value="#{gerenciarProfessor.professor.nome}" required="true" requiredMessage="Insira um nome."/>
+                    <p:message for="inputNome"/>
+                    
+                    
+                    <h:outputText value="Email *:" />
+                    <p:inputText id="inputEmail" value="#{gerenciarProfessor.professor.email}" required="true" requiredMessage="Insira um email."/>
+                    <p:message for="inputEmail"/>
+                    
+                    
+                    
+                    <h:outputText value="Número RG *:" />
+                    <p:inputMask id="inputRg" mask="99.999.999-9" value="#{gerenciarProfessor.professor.rg}" required="true" requiredMessage="Insira o RG."/>
+                    <p:message for="inputRg"/>
+                    
+                    <h:outputText value="Sexo *:" />
+                    <p:selectOneRadio id="inputSexo" value="#{gerenciarProfessor.professor.sexo}" required="true" requiredMessage="Selecione o Sexo.">
+                        <f:selectItem itemLabel="Masculino" itemValue='M'/>
+                        <f:selectItem itemLabel="Feminino" itemValue='F'/>
+                    </p:selectOneRadio>
+                    <p:message for="inputSexo"/>
+                                                           
+                    <h:outputText value="Estado *:" />
+                    <p:inputText id="inputUf" value="#{gerenciarProfessor.professor.uf}" required="true" requiredMessage="Selecione um estado."/> 
+                    <p:message for="inputUf"/>
+                    
+                    <h:outputText value="Cidade *:" />
+                    <p:inputText id="inputCidade" requiredMessage="Insira a cidade." value="#{gerenciarProfessor.professor.cidade}" required="true"/>
+                    <p:message for="inputCidade"/>
+                    
+                    <h:outputText value="Endereço *:" />
+                    <p:inputText id="inputEnd" required="true" requiredMessage="Insira o endereço." value="#{gerenciarProfessor.professor.endereco}"/>
+                    <p:message for="inputEnd"/>
+                    
+                    <h:outputText value="Telefone:" />
+                    <p:inputMask id="inputTel" mask="(99)9999-9999" value="#{gerenciarProfessor.professor.telefone}"/>
+                    
+                    
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarProfessor.cadastrarProfessor}" 
+                                     update="panel" oncomplete="if (args &amp;&amp; !args.validationFailed) confirmation.show()"/>
+                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
+                </h:panelGrid>
             </h:form>
-
         </ui:define>
     </ui:composition>
 </html>

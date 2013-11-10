@@ -18,48 +18,50 @@
                     }
                 </script>
 
-                <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">
-                    <center>
-                        <p:commandButton id="confirm" value="OK" onclick="confirmation.hide();swNew();" type="button"/>
-                    </center>
-                </p:dialog> 
+                <p:dialog id="diag1" header="Cadastrado com Sucesso!" widgetVar="confirmation">  
+                    <p:outputLabel value="Deseja cadastrar outra turma?" />
+                    <br/>
+                    <br/>
+                    <p:separator/>
+                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
+                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
 
-                <h:panelGrid columns="2" cellpadding="4">
-                    <h:outputText value="Nome:" />
-                    <p:inputText id="nome" value="#{gerenciarTurma.turma.turma}"/>
+                </p:dialog>
+
+                <h:panelGrid id="panel" columns="3" cellpadding="4">
+                    <h:outputText value="Nome *:" />
+                    <p:inputText id="nome" requiredMessage="Insira o nome da turma." value="#{gerenciarTurma.turma.turma}" required="true"/>
+                    <p:message for="nome"/>
+         
+                    <h:outputText value="Descricao *:" />
+                    <p:inputTextarea id="descricao" required="true" requiredMessage="Insira uma descrição." cols="50" value="#{gerenciarTurma.turma.descricao}"/>
+                    <p:message for="descricao"/>
                     
-                    <h:outputText value="Descricao:" />
-                    <p:inputTextarea cols="50" id="descricao" value="#{gerenciarTurma.turma.descricao}"/>
-                    
-                    <h:outputText value="Vagas:" />
-                    <p:inputText id="vagas" value="#{gerenciarTurma.turma.vagas}"/>
+                    <h:outputText value="Vagas *:" />
+                    <p:inputMask mask="99" id="vagas" requiredMessage="Insira a quantidade de vagas." value="#{gerenciarTurma.turma.vagas}" required="true"/>
+                    <p:message for="vagas" />
                     
                     <h:outputText value="Professor *:" />
-                    <p:selectOneMenu value="#{gerenciarTurma.turma.professor}" converter="professor">
+                    <p:selectOneMenu id="professor" required="true" requiredMessage="Selecione um professor." value="#{gerenciarTurma.turma.professor}" converter="professor">
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{gerenciarTurma.gerenProf.professores}" var="professor" itemLabel="#{professor.nome}" itemValue="#{professor}"/>
                     </p:selectOneMenu>
-                  
-                    <h:outputText value="Curso *:" />
-                    <p:selectOneMenu value="#{gerenciarTurma.gerenNivel.nivel.curso}" converter="curso">
-                        <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{gerenciarTurma.gerenNivel.cursoMan.cursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
-                    </p:selectOneMenu>
+                    <p:message for="professor" />
                     
-                    <h:outputText value="Nível *:" />
-                    <p:selectOneMenu value="#{gerenciarTurma.turma.nivel}" converter="nivel">
+                    <h:outputText value="Curso *:" />
+                    <p:selectOneMenu id="curso" required="true" requiredMessage="Selecione um curso." value="#{gerenciarTurma.turma.curso}" converter="curso">
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{gerenciarTurma.gerenNivel.niveis}" var="nivel" itemLabel="#{nivel.nome}" itemValue="#{nivel}"/>
+                        <f:selectItems value="#{gerenciarTurma.gerenCurso.cursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
                     </p:selectOneMenu>
-                    <h:outputText />
+                    <p:message for="curso" />
+                    
                     
                 </h:panelGrid>
-                <h:panelGrid columns="2" cellpadding="4">
-                    <p:commandButton value="Cadastrar" style="color: green"
-                                         action="#{gerenciarTurma.adicionarTurma}" 
-                                         onclick="confirmation.show()"/>
-                        
-                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>
+                
+                 <h:panelGrid columns="2">
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarTurma.cadastrarTurma}" 
+                                     update="panel" oncomplete="if (args &amp;&amp; !args.validationFailed) confirmation.show()"/>
+                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
                 </h:panelGrid>
             </h:form>
         </ui:define>

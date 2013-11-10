@@ -42,19 +42,19 @@ public class main {
             ep.save(new Nivel("Espanhol I", "Curso basico de espanhol", 30, 
                     (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Ingles", null)).get(0)));
             //Professor
-            ep.save(new Professor("Jose", "jose@algumacoisa.com", "999999999"));
-            ep.save(new Professor("Makoto", "makoto@outracoisa.com", "888888888"));
-            ep.save(new Professor("Smith", "smith@algumaoutracoisa.com", "777777777"));
+            //ep.save(new Professor("Jose", "jose@algumacoisa.com", "999999999"));
+            //ep.save(new Professor("Makoto", "makoto@outracoisa.com", "888888888"));
+            //ep.save(new Professor("Smith", "smith@algumaoutracoisa.com", "777777777"));
             //Turmas
-            ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Makoto", null)).get(0), 
-                    (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Japones I", null)).get(0), 
-                    "Turma Japones Basico", "Turma de Japones basico", 30));
-            ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Jose", null)).get(0), 
-                    (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Espanhol I", null)).get(0), 
-                    "Turma Espanhol Basico", "Turma de Espanhol basico", 30));
-            ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Smith", null)).get(0), 
-                    (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Ingles I", null)).get(0), 
-                    "Turma Ingles Basico", "Turma de Ingles basico", 30));
+            //ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Makoto", null)).get(0), 
+            //        (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Japones I", null)).get(0), 
+             //       "Turma Japones Basico", "Turma de Japones basico", 30));
+            //ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Jose", null)).get(0), 
+            //        (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Espanhol I", null)).get(0), 
+            //        "Turma Espanhol Basico", "Turma de Espanhol basico", 30));
+            //ep.save(new Turma((Professor)ep.search(Professor.class, new CriteriaGroup("eq", "nome", "Smith", null)).get(0), 
+             //       (Nivel)ep.search(Nivel.class, new CriteriaGroup("eq", "nome", "Ingles I", null)).get(0), 
+             //       "Turma Ingles Basico", "Turma de Ingles basico", 30));
             //Matricula
             ep.save(new Matricula((Aluno)ep.search(Aluno.class, new CriteriaGroup("eq", "nome", "marcos", null)).get(0), 
                     (Turma)ep.search(Turma.class, new CriteriaGroup("eq", "turma", "Turma Japones Basico", null)).get(0), new Date()));

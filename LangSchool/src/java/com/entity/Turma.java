@@ -22,13 +22,10 @@ public class Turma implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
-    
+   
     @ManyToOne
-    @JoinColumn(name = "id_nivel")
-    private Nivel nivel;
-    
-    @Column (name = "codigo")
-    private int codigo;
+    @JoinColumn(name = "id_curso")
+    private Curso curso;
     
     @Column (name = "turma")
     private String turma;
@@ -39,6 +36,9 @@ public class Turma implements Serializable {
     @Column (name = "vagas")
     private int vagas;
     
+    @Column (name = "vagas_rest")
+    private int vagasRest;
+    
     @Column(name = "estado")
     private String estado;
     
@@ -46,12 +46,13 @@ public class Turma implements Serializable {
         this.estado = "ativo";
     }
 
-    public Turma(Professor professor, Nivel nivel, String turma, String descricao, int vagas) {
+    public Turma(Professor professor, Curso curso, String turma, String descricao, int vagas, int vagasRest) {
         this.professor = professor;
-        this.nivel = nivel;
+        this.curso = curso;
         this.turma = turma;
         this.descricao = descricao;
         this.vagas = vagas;
+        this.vagasRest = vagasRest;
         this.estado = "ativo";
     }
     
@@ -63,12 +64,21 @@ public class Turma implements Serializable {
         return this.id;
     }
     
-    public void setNivel(Nivel nivel){
-        this.nivel = nivel;
+    
+    public void setCurso(Curso curso){
+        this.curso = curso;
     }
     
-    public Nivel getNivel(){
-        return this.nivel;
+    public Curso getCurso(){
+        return this.curso;
+    }
+    
+    public void setVagasRest(int rest){
+        this.vagasRest = rest;
+    }
+    
+    public int getVagasRest(){
+        return this.vagasRest;
     }
     
     public void setProfessor(Professor professor){
@@ -77,14 +87,6 @@ public class Turma implements Serializable {
     
     public Professor getProfessor(){
         return this.professor;
-    }
-    
-    public void setCodigo(int codigo){
-        this.codigo = codigo;
-    }
-    
-    public int getCodigo(){
-        return this.codigo;
     }
     
     public void setTurma(String turma){
@@ -117,6 +119,14 @@ public class Turma implements Serializable {
     
     public String getEstado(){
         return this.estado;
+    }
+    
+    public void setEstadoAtivo() {
+        this.estado = "ativo";
+    }
+    
+    public void setEstadoInativo() {
+        this.estado = "inativo";
     }
 
     @Override
