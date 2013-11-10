@@ -13,6 +13,9 @@ public class LogIn implements Serializable {
     @Column(name = "password")
     private String password;
     
+    @Column(name = "login")
+    private String login;
+    
     @OneToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
@@ -20,7 +23,8 @@ public class LogIn implements Serializable {
     @Column(name = "hierarquia")
     private int hierarquia;
 
-    public LogIn(String password, Professor professor, int hierarquia) {
+    public LogIn(String login, String password, Professor professor, int hierarquia) {
+        this.login = login;
         this.password = password;
         this.professor = professor;
         this.hierarquia = hierarquia;
@@ -50,6 +54,14 @@ public class LogIn implements Serializable {
         this.professor = professor;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
     public int getHierarquia() {
         return hierarquia;
     }

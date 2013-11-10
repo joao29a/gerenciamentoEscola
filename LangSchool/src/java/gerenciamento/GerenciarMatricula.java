@@ -12,9 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import messages.Gmessages;
-import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
@@ -162,6 +160,8 @@ public class GerenciarMatricula {
         try {
             ep.save(matricula.getNotas());
             ep.save(matricula);
+            turma.setVagasRest(turma.getVagasRest()-1);
+            ep.update(turma);
         } catch (Exception ex) {
             Logger.getLogger(GerenciarMatricula.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -256,3 +256,4 @@ public class GerenciarMatricula {
         }
     }
 }
+    

@@ -26,16 +26,14 @@ public class GerenciamentoLogin {
     }
     
     public String autenticar() {
-        String email = login.getProfessor().getEmail();
+        String email = login.getLogin();
         String password = login.getPassword();
         
         if (email.equals("") || password.equals("")) {
             return "";
         }
-        Professor professor = (Professor)ep.search(Professor.class, 
-                new CriteriaGroup("eq", "email", email, null)).get(0);
         LogIn logged;
-        if ((logged = (LogIn)ep.search(LogIn.class, new CriteriaGroup("eq", "professor", professor, null),
+        if ((logged = (LogIn)ep.search(LogIn.class, new CriteriaGroup("eq", "login", email, null),
                 new CriteriaGroup("eq", "password", password, null)).get(0)) == null)
             return "";
         

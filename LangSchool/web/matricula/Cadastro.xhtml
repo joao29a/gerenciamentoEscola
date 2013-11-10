@@ -55,17 +55,20 @@
                     <p:column headerText="Id Turma">
                         #{turma.id}
                     </p:column>
-                    <p:column headerText="Turma">
-                        #{turma.turma}
-                    </p:column>
                     <p:column headerText="Nivel">
                         #{turma.nivel.nome}
+                    </p:column>
+                    <p:column headerText="Turma">
+                        #{turma.turma}
                     </p:column>
                     <p:column headerText="Professor">
                         #{turma.professor.nome}
                     </p:column>
                     <p:column headerText="Vagas">
                         #{turma.vagas}
+                    </p:column>
+                    <p:column headerText="Vagas Restantes">
+                        #{turma.vagasRest}
                     </p:column>
                 </p:dataTable>
 
