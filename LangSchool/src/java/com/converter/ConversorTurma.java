@@ -8,11 +8,11 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Turma.class ,value = "turma")
-public class ConversorTurma implements Converter {
-    private static GerenciarTurma turmaMan = new GerenciarTurma();
+public class ConversorTurma implements Converter { 
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
+        GerenciarTurma turmaMan = new GerenciarTurma();
         if(string != null && !string.trim().equals("")) {
             for(Turma c : turmaMan.getTurmas()) {
                 if(c.getTurma().equals(string))

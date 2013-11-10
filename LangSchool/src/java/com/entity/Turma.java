@@ -22,10 +22,10 @@ public class Turma implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
-    
+   
     @ManyToOne
-    @JoinColumn(name = "id_nivel")
-    private Nivel nivel;
+    @JoinColumn(name = "id_curso")
+    private Curso curso;
     
     @Column (name = "turma")
     private String turma;
@@ -46,9 +46,9 @@ public class Turma implements Serializable {
         this.estado = "ativo";
     }
 
-    public Turma(Professor professor, Nivel nivel, String turma, String descricao, int vagas, int vagasRest) {
+    public Turma(Professor professor, Curso curso, String turma, String descricao, int vagas, int vagasRest) {
         this.professor = professor;
-        this.nivel = nivel;
+        this.curso = curso;
         this.turma = turma;
         this.descricao = descricao;
         this.vagas = vagas;
@@ -64,20 +64,21 @@ public class Turma implements Serializable {
         return this.id;
     }
     
+    
+    public void setCurso(Curso curso){
+        this.curso = curso;
+    }
+    
+    public Curso getCurso(){
+        return this.curso;
+    }
+    
     public void setVagasRest(int rest){
         this.vagasRest = rest;
     }
     
     public int getVagasRest(){
         return this.vagasRest;
-    }
-    
-    public void setNivel(Nivel nivel){
-        this.nivel = nivel;
-    }
-    
-    public Nivel getNivel(){
-        return this.nivel;
     }
     
     public void setProfessor(Professor professor){

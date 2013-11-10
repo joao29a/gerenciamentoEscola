@@ -78,7 +78,7 @@
                             <p:inputText value="#{gerenciarProfessor.selecionado.email}" disabled="true"/>
 
                             <h:outputText value="Número RG *:" />
-                            <p:inputText value="#{gerenciarProfessor.selecionado.rg}" disabled="true"/>
+                            <p:inputMask mask="99.999.999-9" value="#{gerenciarProfessor.selecionado.rg}" disabled="true"/>
 
                             <h:outputText value="Sexo *:" />
                             <p:selectOneRadio value="#{gerenciarProfessor.selecionado.sexo}" disabled="true">
@@ -87,7 +87,7 @@
                             </p:selectOneRadio>
 
                             <h:outputText value="Telefone *:" />
-                            <p:inputMask mask="(99)09999-9999" value="#{gerenciarProfessor.selecionado.telefone}" disabled="true"/>
+                            <p:inputMask mask="(99)9999-9999" value="#{gerenciarProfessor.selecionado.telefone}" disabled="true"/>
 
                             <h:outputText value="Estado *:" />
                             <p:inputText value="#{gerenciarProfessor.selecionado.uf}" disabled="true"/>
@@ -109,67 +109,40 @@
                     <h:panelGrid columns="5" cellpadding="4">
                         <h:outputText/>
                         <h:outputText/>
-                        <p:commandButton value="Salvar" style="color: green" actionListener="#{gerenciarProfessor.alterarProfessor}" update="gProfessor" oncomplete="dlgAlt.hide()"/>
+                        <p:commandButton value="Salvar" style="color: green" actionListener="#{gerenciarProfessor.alterarProfessor}" update="gProfessor,panelAlt" 
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) dlgAlt.hide()"/>
                         <h:outputText value=" " />
                         <p:commandButton value="Cancelar" style="color: red" onclick="dlgAlt.hide()"/>
                     </h:panelGrid>
                     <p:scrollPanel style="width: 800px; height: 400px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelAlt">
                             <h:outputText value="Nome *:" />
-                            <p:inputText value="#{gerenciarProfessor.selecionado.nome}"/>
+                            <p:inputText required="true" value="#{gerenciarProfessor.selecionado.nome}"/>
 
                             <h:outputText value="Email *:" />
-                            <p:inputText value="#{gerenciarProfessor.selecionado.email}"/>
+                            <p:inputText required="true" value="#{gerenciarProfessor.selecionado.email}"/>
 
-                            <h:outputText value="Número RG:" />
-                            <p:inputText value="#{gerenciarProfessor.selecionado.rg}"/>
+                            <h:outputText value="Número RG *:" />
+                            <p:inputMask mask="99.999.999-9" required="true" value="#{gerenciarProfessor.selecionado.rg}"/>
 
                             <h:outputText value="Sexo *:" />
-                            <p:selectOneRadio value="#{gerenciarProfessor.selecionado.sexo}">
+                            <p:selectOneRadio required="true" value="#{gerenciarProfessor.selecionado.sexo}">
                                 <f:selectItem itemLabel="Masculino" itemValue='M'/>
                                 <f:selectItem itemLabel="Feminino" itemValue='F'/>
                             </p:selectOneRadio>
-
-                            <h:outputText value="Telefone *:" />
-                            <p:inputMask mask="(99)09999-9999" value="#{gerenciarProfessor.selecionado.telefone}"/>
-
+                            
                             <h:outputText value="Estado *:" />
-                            <p:selectOneMenu value="#{gerenciarProfessor.selecionado.uf}">
-                                <f:selectItem itemLabel="AC" itemValue="AC"/>
-                                <f:selectItem itemLabel="AL" itemValue="AL"/>
-                                <f:selectItem itemLabel="AP" itemValue="AP"/>
-                                <f:selectItem itemLabel="AM" itemValue="AM"/>
-                                <f:selectItem itemLabel="BA" itemValue="BA"/>
-                                <f:selectItem itemLabel="CE" itemValue="CE"/>
-                                <f:selectItem itemLabel="DF" itemValue="DF"/>
-                                <f:selectItem itemLabel="ES" itemValue="ES"/>
-                                <f:selectItem itemLabel="GO" itemValue="GO"/>
-                                <f:selectItem itemLabel="MA" itemValue="MA"/>
-                                <f:selectItem itemLabel="MT" itemValue="MT"/>
-                                <f:selectItem itemLabel="MS" itemValue="MS"/>
-                                <f:selectItem itemLabel="MG" itemValue="MG"/>
-                                <f:selectItem itemLabel="PA" itemValue="PA"/>
-                                <f:selectItem itemLabel="PB" itemValue="PB"/>
-                                <f:selectItem itemLabel="PR" itemValue="PR"/>
-                                <f:selectItem itemLabel="PE" itemValue="PE"/>
-                                <f:selectItem itemLabel="PI" itemValue="PI"/>
-                                <f:selectItem itemLabel="RJ" itemValue="RJ"/>
-                                <f:selectItem itemLabel="RN" itemValue="RN"/>
-                                <f:selectItem itemLabel="RS" itemValue="RS"/>
-                                <f:selectItem itemLabel="RO" itemValue="RO"/>
-                                <f:selectItem itemLabel="RR" itemValue="RR"/>
-                                <f:selectItem itemLabel="SC" itemValue="SC"/>
-                                <f:selectItem itemLabel="SP" itemValue="SP"/>
-                                <f:selectItem itemLabel="SE" itemValue="SE"/>
-                                <f:selectItem itemLabel="TO" itemValue="TO"/>
-                            </p:selectOneMenu>
+                            <p:inputText  required="true" value="#{gerenciarProfessor.selecionado.uf}"/>
 
                             <h:outputText value="Cidade *:" />
-                            <p:inputText value="#{gerenciarProfessor.selecionado.cidade}"/>
+                            <p:inputText required="true" value="#{gerenciarProfessor.selecionado.cidade}"/>
 
                             <h:outputText value="Endereço *:" />
                             <p:inputText required="true" value="#{gerenciarProfessor.selecionado.endereco}"/>
 
+                            <h:outputText value="Telefone:" />
+                            <p:inputMask mask="(99)9999-9999" value="#{gerenciarProfessor.selecionado.telefone}"/>
+                            
                             <h:outputText value="Estado"/>
                             <p:commandButton value="Ativar" actionListener="#{gerenciarProfessor.ativar}" update="gProfessor" disabled="#{gerenciarProfessor.isAtivo}"/>
                         </h:panelGrid>

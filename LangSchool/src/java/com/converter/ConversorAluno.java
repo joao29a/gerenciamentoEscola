@@ -9,10 +9,10 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Aluno.class ,value = "aluno")
 public class ConversorAluno implements Converter {
-    private static GerenciarAluno alunoMan = new GerenciarAluno();
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
+        GerenciarAluno alunoMan = new GerenciarAluno();
         if(string != null && !string.trim().equals("")) {
             for(Aluno c : alunoMan.getAlunos()) {
                 if(c.getNome().equals(string))

@@ -23,7 +23,7 @@
                 <p:commandButton icon="ui-icon-search" value="Buscar" style="color: blue; margin-left: 10px; margin-bottom: 20px" actionListener="#{gerenciarTurma.consultarTurma}" update="dtTurmas"/>
 
                 <p:dataTable var="turma" id="dtTurmas" value="#{gerenciarTurma.turmas}"
-                             emptyMessage="Turma não encontrado!">
+                             emptyMessage="Turma não encontrada!">
                     <f:facet name="header">
                         Lista de Turmas
                     </f:facet>
@@ -36,8 +36,8 @@
                         <h:outputText value="#{turma.turma}"
                                              style="font-size: small; font-weight: bold"/>
                     </p:column>
-                    <p:column headerText="Nível">
-                        <h:outputText value="#{turma.nivel}"
+                    <p:column headerText="Curso">
+                        <h:outputText value="#{turma.curso.nome}"
                                              style="font-size: small; font-weight: bold"/>
                     </p:column>
                     <p:column headerText="Vagas Restantes">
@@ -77,11 +77,14 @@
                             <h:outputText value="Descrição *:" />
                             <p:inputText value="#{gerenciarTurma.selecionado.descricao}" disabled="true"/>
 
-                            <h:outputText value="Total de Vagas:" />
+                            <h:outputText value="Total de Vagas *:" />
                             <p:inputText value="#{gerenciarTurma.selecionado.vagas}" disabled="true"/>
-
+                            
                             <h:outputText value="Vagas Restantes *:" />
                             <p:inputText value="#{gerenciarTurma.selecionado.vagasRest}" disabled="true"/>
+                            
+                            <h:outputText value="Professor:"/>
+                            <p:inputText value="#{gerenciarTurma.selecionado.professor.nome}" disabled="true"/>
                         </h:panelGrid>
                     </p:scrollPanel>
                 </p:dialog> 
@@ -93,28 +96,36 @@
                     <h:panelGrid columns="5" cellpadding="4">
                         <h:outputText/>
                         <h:outputText/>
-                        <p:commandButton value="Salvar" style="color: green" actionListener="#{gerenciarTurma.alterarTurma}" update="gTurma" oncomplete="dlgAlt.hide()"/>
+                        <p:commandButton value="Salvar" style="color: green" actionListener="#{gerenciarTurma.alterarTurma}" 
+                                         update="gTurma,panelAlt" oncomplete="if (args &amp;&amp; !args.validationFailed) dlgAlt.hide()"/>
                         <h:outputText value=" " />
                         <p:commandButton value="Cancelar" style="color: red" onclick="dlgAlt.hide()"/>
                     </h:panelGrid>
-                    <p:scrollPanel style="width: 800px; height: 400px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelAlt">
                             <h:outputText value="Turma *:" />
-                            <p:inputText value="#{gerenciarTurma.selecionado.turma}"/>
+                            <p:inputText value="#{gerenciarTurma.selecionado.turma}" required="true"/>
 
                             <h:outputText value="Descrição *:" />
-                            <p:inputText value="#{gerenciarTurma.selecionado.descricao}"/>
+                            <p:inputTextarea cols="40" value="#{gerenciarTurma.selecionado.descricao}" required="true"/>
 
                             <h:outputText value="Total de Vagas:" />
-                            <p:inputText value="#{gerenciarTurma.selecionado.vagas}"/>
+                            <p:inputText value="#{gerenciarTurma.selecionado.vagas}" required="true"/>
 
                             <h:outputText value="Vagas Restantes *:" />
-                            <p:inputText value="#{gerenciarTurma.selecionado.vagasRest}"/>
+                            <p:inputText value="#{gerenciarTurma.selecionado.vagasRest}" required="true"/>
 
+                            <h:outputText value="Professor:"/>
+                            <p:inputText value="#{gerenciarTurma.selecionado.professor.nome}" disabled="true"/>
+                            
+                            <h:outputText value="Trocar professor:" />
+                            <p:selectOneMenu id="professor" value="#{gerenciarTurma.selecionado.professor}" converter="professor">
+                                <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                <f:selectItems value="#{gerenciarTurma.gerenProf.professores}" var="professor" itemLabel="#{professor.nome}" itemValue="#{professor}"/>
+                            </p:selectOneMenu>
+                            
                             <h:outputText value="Estado"/>
                             <p:commandButton value="Ativar" actionListener="#{gerenciarTurma.ativar}" update="gTurma" disabled="#{gerenciarTurma.isAtivo}"/>
                         </h:panelGrid>
-                    </p:scrollPanel>
                 </p:dialog> 
             </h:form>
 

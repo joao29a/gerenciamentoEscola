@@ -9,10 +9,10 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Curso.class ,value = "curso")
 public class ConversorCurso implements Converter {
-    private static GerenciarCurso cursoMan = new GerenciarCurso();
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
+        GerenciarCurso cursoMan = new GerenciarCurso();
         if(string != null && !string.trim().equals("")) {
             for(Curso c : cursoMan.getCursos()) {
                 if(c.getNome().equals(string))

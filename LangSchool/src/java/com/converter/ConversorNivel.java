@@ -9,10 +9,10 @@ import javax.faces.convert.FacesConverter;
 
 @FacesConverter(forClass = Nivel.class ,value = "nivel")
 public class ConversorNivel implements Converter {
-    private static GerenciarNivel gerenNivel = new GerenciarNivel();
     
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
+        GerenciarNivel gerenNivel = new GerenciarNivel();
         if(string != null && !string.trim().equals("")) {
             for(Nivel nivel : gerenNivel.getNiveis()) {
                 if(nivel.getNome().equals(string))
