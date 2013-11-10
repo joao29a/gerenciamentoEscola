@@ -22,6 +22,15 @@ public class FluxoCaixa {
     
     @Column(name = "data_movimento")
     private String data;
+    
+    @Column(name = "tipo")
+    private String tipo;
+    
+    @Column(name = "situacao")
+    private String situacao = "OK";
+    
+    @Column(name = "estado")
+    private String estado;
 
     public int getId() {
         return id;
@@ -54,5 +63,25 @@ public class FluxoCaixa {
     public void setData(String data) {
         this.data = data;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
     
+     public void alteraEstado() {
+        if(this.estado.equals("inativo")) this.estado = "ativo";
+        this.estado = "inativo";
+    }     
 }

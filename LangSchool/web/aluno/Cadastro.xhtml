@@ -8,7 +8,7 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Aluno</ui:define>
         <ui:define name="centro">
-            <h:form>
+            <h:form id="cadastro">
                 <script>
                     function swNew(){
                         self.location = "/LangSchool/faces/aluno/Cadastro.xhtml";
@@ -57,6 +57,7 @@
                     
                     <h:outputText value="Estado *:" />
                     <p:selectOneMenu id="inputUf" value="#{gerenciarAluno.aluno.uf}" required="true">
+                        <f:selectItem itemLabel="PR" itemValue="PR"/>
                         <f:selectItem itemLabel="AC" itemValue="AC"/>
                         <f:selectItem itemLabel="AL" itemValue="AL"/>
                         <f:selectItem itemLabel="AP" itemValue="AP"/>
@@ -72,7 +73,6 @@
                         <f:selectItem itemLabel="MG" itemValue="MG"/>
                         <f:selectItem itemLabel="PA" itemValue="PA"/>
                         <f:selectItem itemLabel="PB" itemValue="PB"/>
-                        <f:selectItem itemLabel="PR" itemValue="PR"/>
                         <f:selectItem itemLabel="PE" itemValue="PE"/>
                         <f:selectItem itemLabel="PI" itemValue="PI"/>
                         <f:selectItem itemLabel="RJ" itemValue="RJ"/>
@@ -83,8 +83,7 @@
                         <f:selectItem itemLabel="SC" itemValue="SC"/>
                         <f:selectItem itemLabel="SP" itemValue="SP"/>
                         <f:selectItem itemLabel="SE" itemValue="SE"/>
-                        <f:selectItem itemLabel="TO" itemValue="TO"/>
-                        <f:selectItem itemLabel="--" itemValue="--"/>
+                        <f:selectItem itemLabel="TO" itemValue="TO"/> 
                     </p:selectOneMenu>
                     <p:message for="inputUf" display="icon"/>
                     
@@ -119,7 +118,7 @@
 
                 <h:panelGrid columns="2">
                     <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarAluno.cadastrarAluno}" update="panel" oncomplete="confirmation.show()"/>
-                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
+                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
             </h:form>
         </ui:define>

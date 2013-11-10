@@ -15,12 +15,15 @@
                     <h:outputText value="Pesquisar por:"/>
                     <p:selectOneMenu value="#{gerenciarMatricula.param}">
                         <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <f:selectItem itemLabel="Turma" itemValue="turma"/>
+                        <f:selectItem itemLabel="Curso" itemValue="curso"/>
                         <f:selectItem itemLabel="Estado" itemValue="estado"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
 
                 <p:inputText style="width: 60%;" value="#{gerenciarMatricula.busca}"/>
-                <p:commandButton icon="ui-icon-search" value="Buscar" style="color: blue; margin-left: 10px; margin-bottom: 20px" actionListener="#{gerenciarMatricula.consultarMatricula}" update="dtMatriculas"/>
+                <p:commandButton icon="ui-icon-search" value="Buscar" style="color: blue; margin-left: 10px; margin-bottom: 20px" 
+                                 actionListener="#{gerenciarMatricula.consultarMatricula}" update="dtMatriculas"/>
 
                 <p:dataTable var="matricula" id="dtMatriculas" value="#{gerenciarMatricula.matriculas}"
                              emptyMessage="Matricula nao encontrado!">

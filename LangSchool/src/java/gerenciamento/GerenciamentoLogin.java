@@ -40,6 +40,7 @@ public class GerenciamentoLogin {
             return "";
         
         String hierarchy = "secretario";
+        System.out.println(logged.getHierarquia() + " Hierarquia");
         if (logged.getHierarquia() != 1) hierarchy = "professor";
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("authenticated", hierarchy);

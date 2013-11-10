@@ -63,8 +63,32 @@ public class main {
             ep.save(new Matricula((Aluno)ep.search(Aluno.class, new CriteriaGroup("eq", "nome", "lucas", null)).get(0), 
                     (Turma)ep.search(Turma.class, new CriteriaGroup("eq", "turma", "Turma Espanhol Basico", null)).get(0), new Date()));
             //Mensalidade
-            Mensalidade qlqr = new Mensalidade();
-            ep.save(qlqr);
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"jan"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"fev"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"mar"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"abr"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"mai"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"jun"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"jul"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"ago"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"set"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"out"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"nov"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",1,null)).get(0),"dez"));
+            
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"jan"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"fev"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"mar"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"abr"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"mai"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"jun"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"jul"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"ago"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"set"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"out"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"nov"));
+            ep.save(new Mensalidade((Matricula)ep.search(Matricula.class, new CriteriaGroup("eq","id",2,null)).get(0),"dez"));
+            
             //Login
             ep.save(new LogIn("secretario", 
                     (Professor)ep.search(Professor.class, new CriteriaGroup("eq", "id", 1, null)).get(0), 0));

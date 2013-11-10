@@ -37,6 +37,10 @@ public class GerenciarTurma {
     public List<Turma> getTurmas(){
         return this.turmas;
     }
+
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
+    }
     
     public GerenciarProfessor getGerenProf(){
         return this.gerenProf;

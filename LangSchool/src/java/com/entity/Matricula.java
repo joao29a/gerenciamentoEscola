@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
@@ -31,9 +32,8 @@ public class Matricula implements Serializable {
     @OneToMany(mappedBy = "matricula")
     private Set<Presenca> presenca;
     
-    @OneToOne
-    @JoinColumn(name = "id_mensalidade")
-    private Mensalidade mensalidade;
+    @OneToMany(mappedBy = "matricula")
+    private Set<Mensalidade> mensalidade;
     
     @OneToMany(mappedBy = "matricula")
     private Set<ReposicaoAula> reposicoes;
@@ -52,6 +52,10 @@ public class Matricula implements Serializable {
 
     public Nota getNotas() {
         return notas;
+    }
+
+    public void setNotas(Nota n) {
+        this.notas = n;
     }
     
     public Aluno getAluno() {
@@ -78,11 +82,11 @@ public class Matricula implements Serializable {
         this.dataMatricula = dataMatricula;
     }
 
-    public Mensalidade getMensalidade() {
-        return mensalidade;
+    public ArrayList<Mensalidade> getMensalidade() {
+        return new ArrayList<Mensalidade>(mensalidade);
     }
 
-    public void setMensalidade(Mensalidade mensalidade) {
+    public void setMensalidade(Set<Mensalidade> mensalidade) {
         this.mensalidade = mensalidade;
     }   
 }

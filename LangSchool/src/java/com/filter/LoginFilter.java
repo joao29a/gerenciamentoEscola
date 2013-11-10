@@ -30,6 +30,7 @@ public class LoginFilter implements Filter {
                 !url.contains("login.xhtml")) {
             resp.sendRedirect(req.getContextPath()+ "/faces/login.xhtml");
         } else if (hierarchy != null && hierarchy.equals("professor")) {
+            System.out.println("Professor!");
             if (url.matches(".*(aluno|caixa|curso|documentos|imagens|matricula|"
                 + "mensalidade|nivel|professor|turma).*"))
                 resp.sendRedirect(req.getContextPath()+ "/faces/index.xhtml");

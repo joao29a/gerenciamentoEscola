@@ -1,6 +1,7 @@
 package gerenciamento;
 
 import com.entity.Matricula;
+import com.entity.Professor;
 import com.entity.ReposicaoAula;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
@@ -12,16 +13,17 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import messages.Gmessages;
+import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
 public class GerenciarReposicao {
+
     private ReposicaoAula reposicao, selecionado;
     private EntityPersist ep;
     private Matricula selectMat = new Matricula();
     private String busca, param;
     private List<ReposicaoAula> reposicoes;
-    
     private boolean isAtivo;
     private GerenciarProfessor professorMan = new GerenciarProfessor();
     private GerenciarMatricula matriculaMan = new GerenciarMatricula();
@@ -118,7 +120,7 @@ public class GerenciarReposicao {
             Logger.getLogger(GerenciarReposicao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String cadastrarReposicaoAulaAction(Matricula selectMat) {
         System.out.println("Cadastrando");
         System.out.println(reposicao.getDataReposicao());
@@ -126,6 +128,7 @@ public class GerenciarReposicao {
         this.reposicao.setMatricula(selectMat);
         try {
             ep.save(reposicao);
+            RequestContext.getCurrentInstance().execute("confirmation.show()");
             return "";
         } catch (Exception ex) {
             Logger.getLogger(GerenciarReposicao.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,23 +137,29 @@ public class GerenciarReposicao {
     }
 
     public void consultarReposicaoAula(ActionEvent ae) {
-        if(busca.trim().equals(""))
+        if (busca.trim().equals("")) {
             reposicoes = ep.search(ReposicaoAula.class);
-        else if(param.equals("nome")) {
+        } else if (param.equals("nome")) {
             matriculaMan.setBusca(busca);
             matriculaMan.setParam(param);
             matriculaMan.consultarMatricula(ae);
-            reposicoes = ep.search(ReposicaoAula.class, 
-                    new CriteriaGroup("eq", "matricula", matriculaMan.getMatriculas().get(0), null));
-        } else
-            reposicoes = ep.search(ReposicaoAula.class, new CriteriaGroup("eq", param, busca, null));
+            if (matriculaMan.getMatriculas().isEmpty()) {
+                reposicoes.clear();
+            } else {
+                reposicoes = ep.search(ReposicaoAula.class,
+                        new CriteriaGroup("eq", "matricula", matriculaMan.getMatriculas().get(0), null));
+            }
+        } else {
+            reposicoes = ep.search(ReposicaoAula.class, new CriteriaGroup("eq", "professor",
+                    (Professor) ep.search(Professor.class, new CriteriaGroup("eq", "nome", busca, null)).get(0), null));
+        }
     }
 
     public void selectMatricula(ActionEvent ae) {
         System.out.println("DEU!");
         selectMat = (Matricula) ae.getComponent().getAttributes().get("mat");
     }
-    
+
     public void selectReposicaoAula(ActionEvent ae) {
         System.out.println("DEU!");
         selecionado = (ReposicaoAula) ae.getComponent().getAttributes().get("reposicao");
@@ -165,7 +174,7 @@ public class GerenciarReposicao {
             Logger.getLogger(GerenciarReposicao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void removerReposicaoAula(ActionEvent ae) {
         System.out.println("Removendo");
         try {
@@ -178,11 +187,11 @@ public class GerenciarReposicao {
             Logger.getLogger(GerenciarReposicao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void change(ValueChangeEvent vc) {
         System.out.println("DEU");
     }
-    
+
     public void consultarMatricula(ActionEvent ae) {
         matriculaMan.setBusca(busca);
         matriculaMan.setParam(param);

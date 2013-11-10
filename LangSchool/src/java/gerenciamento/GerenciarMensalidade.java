@@ -1,6 +1,11 @@
 package gerenciamento;
 
+import com.entity.Aluno;
+import com.entity.Curso;
+import com.entity.Matricula;
 import com.entity.Mensalidade;
+import com.entity.Nivel;
+import com.entity.Turma;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
 import java.util.List;
@@ -14,24 +19,40 @@ import messages.Gmessages;
 @ViewScoped
 @ManagedBean
 public class GerenciarMensalidade {
-    private Mensalidade mensalidade, selecionado;
+    private GerenciarMatricula gerMat;
+    
+    private Mensalidade mensalidade;
+    private List<Aluno> aluno;
+    private List<Curso> curso;
+    private List<Turma> turma;
+    private List<Nivel> nivel;
+    private Matricula selecionado;
     private EntityPersist ep;
     private List<Mensalidade> mensalidades;
     private Gmessages msg = new Gmessages();
-    //private String busca, param;
+    private String busca, param;
+    private Object matriculas;
 
 
     public GerenciarMensalidade() {
-        mensalidades = ep.search(Mensalidade.class, new CriteriaGroup("gt", "id", 0, null));
+        selecionado = new Matricula();
+        ep = new EntityPersist();
+        mensalidades = ep.search(Mensalidade.class);
+        gerMat = new GerenciarMatricula();
     }
     
     public Mensalidade getMensalidade() {
         return mensalidade;
     }
 
-    public Mensalidade getSelecionado() {
+    public Matricula getSelecionado() {
         return selecionado;
     }
+
+    public void setSelecionado(Matricula selecionado) {
+        this.selecionado = selecionado;
+    }
+    
 
 
     public void setMensalidade(Mensalidade mensalidade) {
@@ -61,9 +82,73 @@ public class GerenciarMensalidade {
     public void setMsg(Gmessages msg) {
         this.msg = msg;
     }
+
+    public String getBusca() {
+        return busca;
+    }
+
+    public void setBusca(String busca) {
+        this.busca = busca;
+    }
+
+    public String getParam() {
+        return param;
+    }
+
+    public void setParam(String param) {
+        this.param = param;
+    }
+
+    public GerenciarMatricula getGerMat() {
+        return gerMat;
+    }
+
+    public void setGerMat(GerenciarMatricula gerMat) {
+        this.gerMat = gerMat;
+    }
+    
+    
+    public void selectMensalidade(ActionEvent ae) {
+        selecionado = (Matricula)ae.getComponent().getAttributes().get("matricula");
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+    public void consultar(ActionEvent ae) {
+        System.out.println(param);
+        System.out.println(busca);
+        if(busca.trim().equals("")) {
+            gerMat.setMatriculas(null);
+            //mensalidades = ep.search(Mensalidade.class, new CriteriaGroup("ge", "id", 1, null));     
+        }else if (param.equals("nome")) {
+            List<Aluno> aluno = ep.search(Aluno.class, new CriteriaGroup("eq", "estado", "ativo", null), new CriteriaGroup("eq", param, busca, null)); 
+            if(aluno.isEmpty()) {
+                gerMat.setMatriculas(null);
+            }else {
+                gerMat.setMatriculas(ep.search(Matricula.class, new CriteriaGroup("eq", "aluno", aluno.get(0), null)));
+            }
+        } else if (param.equals("curso")) {
+            List<Curso> curso = ep.search(Curso.class, new CriteriaGroup("eq","nome", busca, null));
+            List<Nivel> nivel = ep.search(Nivel.class, new CriteriaGroup("eq", "curso", curso.get(0), null));
+            List<Turma> turma = ep.search(Turma.class, new CriteriaGroup("eq", "nivel", nivel.get(0), null));
+            if (turma.isEmpty()){
+                gerMat.setMatricula(null);
+            } else {
+                gerMat.setMatriculas(ep.search(Matricula.class, new CriteriaGroup("eq", "turma", turma.get(0), null)));
+            }
+        } else if (param.equals("matricula")) {
+            gerMat.setMatriculas(ep.search(Matricula.class, new CriteriaGroup("eq", "id", Integer.parseInt(busca), null)));
+        } else if (param.equals("turma")) {
+            List<Turma> turma = ep.search(Turma.class, new CriteriaGroup("eq", "turma", busca, null));
+            if (turma.isEmpty()){
+                gerMat.setMatricula(null);
+            } else {
+                gerMat.setMatriculas(ep.search(Matricula.class, new CriteriaGroup("eq", "turma", turma.get(0), null)));
+            }
+        } else {
+            gerMat.setMatricula(null);
+        }
+            
+    }
     
     public void visualizar() {
-        
     }
     
     public void alterar(ActionEvent ae) {
@@ -77,5 +162,4 @@ public class GerenciarMensalidade {
     public void verTurmaInteira() {
         
     }
-    
 }

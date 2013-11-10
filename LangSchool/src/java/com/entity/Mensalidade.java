@@ -6,41 +6,62 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Mensalidade")
 public class Mensalidade implements Serializable {
-
     @Id
     @GeneratedValue
     private int id;
     
+    @ManyToOne
+    @JoinColumn(name="id_matricula")
+    private Matricula matricula;
+    
     @Column(name = "mes")
-    private String[] mes = new String[12];
+    private String mes;
  
     @Column(name = "situacao")
-    private boolean situMensalidade;
+    private String situMensalidade;
+    
+    public Mensalidade() {
+    }
     
     public int getId(){
         return id;
     }
-    
-    public boolean getSituMensalidade(){
-        return situMensalidade;
-    }
-    
-    public void setSituMensalidade(boolean situMensalidade) {
-        this.situMensalidade = situMensalidade;
-    }
 
-    public String[] getMes() {
+    public String getMes() {
         return mes;
     }
 
-    public void setMes(String[] mes) {
+    public void setMes(String mes) {
         this.mes = mes;
+    }
+
+    public String getSituMensalidade() {
+        return situMensalidade;
+    }
+    
+
+    public void setSituMensalidade(String situMensalidade) {
+        this.situMensalidade = situMensalidade;
+    }
+
+    public Matricula getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
+    }
+    
+    public Mensalidade(Matricula m,String mes) {
+        this.matricula = m;
+        this.mes = mes;
+        this.situMensalidade = "PEN";
     }
    
 }

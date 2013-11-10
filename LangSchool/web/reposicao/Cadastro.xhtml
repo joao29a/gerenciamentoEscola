@@ -8,7 +8,7 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Reposição de Aula</ui:define>
         <ui:define name="centro">
-            <h:form id="formBusca">
+            <h:form id="formBusca" style="font-size: small">
                 <script>
                     function swNew() {
                         self.location = "/LangSchool/faces/reposicao/Cadastro.xhtml";
@@ -17,17 +17,19 @@
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
                 </script>
-                <h:panelGrid id="formDados" cellpadding="5" columns="2">
+                <h:panelGrid id="formDados" cellpadding="5" columns="3">
                     <p:outputLabel value="Data de Reposicao:"/>
-                    <p:calendar value="#{gerenciarReposicao.reposicao.dataReposicao}"/>
+                    <p:calendar id="cal" value="#{gerenciarReposicao.reposicao.dataReposicao}" required="true" requiredMessage="Coloque uma data"/>
+                    <p:message for="cal"/>
                     
                     <p:outputLabel value="Professor:"/>
-                    <p:selectOneMenu value="#{gerenciarReposicao.reposicao.professor}"
-                                     converter="professor">
+                    <p:selectOneMenu id="somProf" value="#{gerenciarReposicao.reposicao.professor}"
+                                     converter="professor" required="true" requiredMessage="Selecione um professor">
                         <f:selectItem itemValue="" itemLabel="Selecione"/>
                         <f:selectItems value="#{gerenciarReposicao.professorMan.professores}"
                                        var="prof" itemLabel="#{prof.nome}" itemValue="#{prof}"/>
                     </p:selectOneMenu>
+                    <p:message for="somProf"/>
                 </h:panelGrid>
                 
                 <br/>
@@ -46,7 +48,7 @@
                 <br/>    
                 
                 <p:dataTable id="dtMatriculas" value="#{gerenciarReposicao.matriculaMan.matriculas}"
-                             var="mat" emptyMessage="Nenhuma matrícula encontrada" >
+                             var="mat" emptyMessage="Nenhuma matrícula encontrada" style="font-size: small">
                     <f:facet name="header">
                         Lista de Matrículas
                     </f:facet>
@@ -66,9 +68,9 @@
                         #{mat.turma.turma}
                     </p:column>
                     <p:column headerText="Acao">
-                        <p:commandButton icon="ui-icon-plus"
+                        <p:commandButton value="adicionar"
                                          action="#{gerenciarReposicao.cadastrarReposicaoAulaAction(mat)}"
-                                         oncomplete="confirmation.show()"/>
+                                         update=":formBusca:formDados"/>
                     </p:column>
                 </p:dataTable>
                 

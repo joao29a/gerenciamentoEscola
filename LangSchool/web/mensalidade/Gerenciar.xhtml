@@ -4,130 +4,109 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Gerenciar Mensalidades</ui:define>
         <ui:define name="centro">
-            <h:form>
+            <h:form id ="formulario">
                 <h:panelGrid columns="2">
                     <h:outputText value="Pesquisar por:" />
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="Curso" itemValue="1" />
-                        <f:selectItem itemLabel="Nome" itemValue="2" />
-                        <f:selectItem itemLabel="ID Matrícula" itemValue="3" />
-                        <f:selectItem itemLabel="Turma" itemValue="4" />
-                        <f:selectItem itemLabel="Pagto do Mês" itemValue="5" />
+                    <p:selectOneMenu value="#{gerenciarMensalidade.param}">
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <f:selectItem itemLabel="Curso" itemValue="curso"/>
+                        <f:selectItem itemLabel="ID Matrícula" itemValue="matricula"/>
+                        <f:selectItem itemLabel="Turma" itemValue="turma"/>
+                        <f:selectItem itemLabel="Estado Pagto" itemValue="pgto"/> 
                     </p:selectOneMenu>
                 </h:panelGrid>
 
-                <p:inputText style="width:60%" />
-                <p:button value="Buscar" style="color: blue" />
+                <p:inputText style="width:60%" value="#{gerenciarMensalidade.busca}"/>
+                <p:commandButton value="Buscar" style="color: blue" actionListener="#{gerenciarMensalidade.consultar}" update="dtMensalidade"/>
 
-                <p:dataTable var="matricula" value="#{gerenciarMatricula.matriculas}">
+                <p:dataTable id="dtMensalidade" var="matricula" value="#{gerenciarMensalidade.gerMat.matriculas}"
+                             emptyMessage="Mensalidade nao encontrada!">>
                     <f:facet name="header">Resultados da Busca</f:facet>
 
-                    <p:row>
-                        <p:column colspan="20">ID Matrícula</p:column>
-                        <p:column colspan="100">Nome</p:column>
-                        <p:column colspan="49">Curso</p:column>
-                        <p:column colspan="50">Nível</p:column>
-                        <p:column colspan="15">Turma</p:column>
-                        <p:column colspan="5">Estado</p:column>
-                        <p:column style="font-weight: bold; color: orangered" colspan="60">Ações</p:column> 
-                    </p:row>
-
-                    <p:column colspan="20" style="font-weight: normal; text-align: center">
+                    <p:column headerText="ID Matrícula">
                         <h:outputText value="#{matricula.id}"/> </p:column>
-                    <p:column colspan="100" style="font-weight: normal; text-align: center">
+                    <p:column headerText="Nome">
                         <h:outputText value="#{matricula.aluno.nome}"/></p:column>
-                    <p:column colspan="49" style="font-weight: normal; text-align: center">
+                    <p:column headerText="Curso">
                         <h:outputText value="#{matricula.turma.nivel.curso.nome}"/></p:column>
-                    <p:column colspan="50" style="font-weight: normal; text-align: center">
+                    <p:column headerText="Nível">
                         <h:outputText value="#{matricula.turma.nivel.nome}"/></p:column>
-                    <p:column colspan="15" style="font-weight: normal; text-align: center">02
+                    <p:column headerText="Turma" >
                         <h:outputText value="#{matricula.turma.turma}"/></p:column>
-                    <p:column colspan="5" style="font-weight: normal; text-align: center; background-color: green; color: white">OK
-                        <h:outputText value="#{matricula.mensalidade.situMensalidade}"/></p:column>
+                 
 
-                    <p:column colspan="20">
-                        <div style="text-align: center">
-                            <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" onclick="dlgo0.show();"/>
-                        </div>
-                    </p:column>
-                    <p:column colspan="20">
-                        <div style="text-align: center">
-                            <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" onclick="dlgo1.show();"/>
-                        </div>
-                    </p:column>
-                    <p:column colspan="20">
-                        <div style="text-align: center">
-                            <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
-                        </div>
+                    <p:column headerText="Ações">
+                        <center>
+                            <p:commandButton value="VISUALIZAR" icon="ui-icon-zoomin"
+                                             style="font-size: small; font-weight: bolder" 
+                                             oncomplete="dlgoVisualiza.show();"
+                                             actionListener="#{gerenciarMensalidade.selectMensalidade}"
+                                             update=":formDlgViz:visualiza">
+                                <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
+                            
+                            <p:commandButton value="ALTERAR" 
+                                             style="font-size: small; font-weight: bolder" 
+                                             oncomplete="dlgoAltera.show();"
+                                             actionListener="#{gerenciarMensalidade.selectMensalidade}"
+                                             update=":formDlgAlt:altera">
+                                <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
+                            
+                            <p:commandButton value="TURMA INTEIRA" 
+                                             style="font-size: small; font-weight: bolder" 
+                                             oncomplete="dlgoTurma.show();"
+                                             actionListener="#{gerenciarMensalidade.selectMensalidade}"
+                                             update=":formDlgTurma:turma">
+                                <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
+                            
+                        </center>
                     </p:column>
                 </p:dataTable>
-
-                <p:dialog header="Visualização" widgetVar="dlgo">
+            </h:form>
+            <h:form id="formDlgViz">
+                <p:dialog id ="visualiza" header="Visualização" widgetVar="dlgoVisualiza">
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
-                        <p:inputText value="001" style="width: 60%" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.id}"/>
                         <h:outputText value="Nome:" />
-                        <p:inputText value="Jousué dos Santos Junior" style="width: 80%" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.aluno.nome}"/>
                         <h:outputText value="Curso:" />
-                        <p:inputText value="Russo" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}"/>
                         <h:outputText value="Nível:" />
-                        <p:inputText value="Basico I" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}"/>
                     </h:panelGrid>
                     <p:panelGrid style="margin-top: 20px">
                         <f:facet name="header">
                             <p:row>
                                 <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
                             </p:row>
-
-                            <p:row>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jan</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Fev</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Mar</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Abr</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Mai</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jun</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jul</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Ago</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Set</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Out</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Nov</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Dez</p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="10" style="text-align: center; color: green">OK</p:column>
-                                <p:column colspan="10" style="text-align: center; color: green">OK</p:column>
-                                <p:column colspan="10" style="text-align: center; color: green">OK</p:column>
-                                <p:column colspan="10" style="text-align: center; color: red">DEVE</p:column>
-                                <p:column colspan="10" style="text-align: center; color: red">DEVE</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                                <p:column colspan="10" style="text-align: center">PEN</p:column>
-                            </p:row>
+                            
+                            <p:dataTable var="mes_x" value="#{gerenciarMensalidade.selecionado.mensalidade}">
+                                <facet header="MÊS"></facet>
+                                    <p:column style="font-weight: bold" headerText="#{mes_x.mes}">
+                                        <h:outputText style="text-align: center" value="#{mes_x.situMensalidade}"/></p:column>
+                            </p:dataTable>                     
                         </f:facet>    
                     </p:panelGrid>
                 </p:dialog> 
-
+            </h:form>
+            <h:form id="formDlgAlt">
                 <p:growl id="gMensalidade" showDetail="false" />
 
-                <p:dialog header="Alterar Mensalidade" widgetVar="dlgo1">
+                <p:dialog id="altera" header="Alterar Mensalidade" widgetVar="dlgoAltera">
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
-                        <p:inputText value="001" style="width: 60%" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.id}"/>
                         <h:outputText value="Nome:" />
-                        <p:inputText value="Jousué dos Santos Junior" style="width: 80%" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.aluno.nome}"/>
                         <h:outputText value="Curso:" />
-                        <p:inputText value="Russo" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}"/>
                         <h:outputText value="Nível:" />
-                        <p:inputText value="Basico I" />
+                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}"/>
                     </h:panelGrid>
 
                     <p:panelGrid style="margin-top: 20px">
@@ -156,44 +135,40 @@
                             <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                             <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                             <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show()"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
+                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
                         </p:row>
                     </p:panelGrid>
                     <br/>
                     <p:separator/>
                     <br/>
-                    <p:commandButton value="CANCELAR" ajax="true" style="color: red; font-weight: bolder; font-size: small" onclick="dlgo1.hide()"/>
-                    <p:commandButton value="SALVAR" ajax="true" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" update="gMensalidade" oncomplete="dlgo1.hide()" />
+                    <p:commandButton value="CANCELAR" ajax="true" style="color: red; font-weight: bolder; font-size: small" onclick="dlgo1.hide();"/>
+                    <p:commandButton value="SALVAR" ajax="true" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" oncomplete="dlgo1.hide()" />
                 </p:dialog>
-
-
-                <p:dialog header="Mensalidades da Turma" widgetVar="dlgo2">
+            </h:form>
+            <h:form id="formDlgTurma">
+                <p:dialog id="turma" header="Mensalidades da Turma" widgetVar="dlgoTurma">
                     <h:panelGrid columns="2">
                         <h:outputText value="Turma" />
-                        <p:inputText value="04" />
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.turma}" />
                         <h:outputText value="Professor:" />
-                        <p:inputText value="Natasha" />
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.professor.nome}" />
                     </h:panelGrid>
 
                     <p:scrollPanel style="width: 800px; height: 300px">
                         <p:panelGrid style="margin-bottom: 20px">
                             <f:facet name="header">
                                 <p:row>
-                                    <p:column style="font-weight: bold; color: teal" colspan="170">Pagamento</p:column>
-                                </p:row>
-                                <p:row>
                                     <p:column style="font-weight: bold; color: teal" colspan="50">-</p:column>
                                     <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
                                 </p:row>
-
                                 <p:row>
                                     <p:column colspan="50" style="font-weight: bold; color: blue">NOME</p:column>
                                     <p:column colspan="10" style="font-weight: bold; color: blue">Jan</p:column>
@@ -218,28 +193,28 @@
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
                             </p:row>
                             <p:row>
                                 <p:column colspan="50" style="text-align: center; font-weight: bold">Jousué dos Santos Junior</p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
                             </p:row>
                             <p:row>
                                 <p:column colspan="50" style="text-align: center; font-weight: bold">Yukio Siraichi</p:column>
@@ -248,32 +223,32 @@
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
                                 <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show()"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
+                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
                             </p:row>
                         </p:panelGrid>
                     </p:scrollPanel>
                     <br/>
-                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small;" onclick="dlgo2.hide()"/>
-                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" update="gMensalidade  " oncomplete="dlgo2.hide()" />
+                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small;" onclick="dlgo2.hide();"/>
+                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" oncomplete="dlgo2.hide()" />
                 </p:dialog>
-
+            </h:form>
+            <h:form id="formDlgPg">
                 <p:dialog header="Efetuar Pagamento" widgetVar="dlgPg">
                     <p:outputLabel style="font-size: 20px" value="Deseja efetuar o pagamento?"/>
                     <br/>
                     <p:separator/>
                     <br/> 
 
-                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small" onclick="dlgPg.hide()"/>
-                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.pago}" update="gMensalidade  " oncomplete="dlgPg.hide()" />
+                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small" onclick="dlgPg.hide();"/>
+                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.pago}" oncomplete="dlgPg.hide()" />
                 </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>
 </html>
-

@@ -23,35 +23,42 @@
                 <br/>
                 <p:separator/>
                 <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
+                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack();" type="button"/>   
 
             </p:dialog> 
+            
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true"/>
                 <h:panelGrid columns ="2" cellpadding="4">
-                    <h:outputText value="Descrição: "></h:outputText>
-                    <p:inputText />
-                    <h:outputText value="Valor: "></h:outputText>
-                    <p:inputMask mask="R$999,999"/>
-                    <h:outputText value="Data: "></h:outputText>
-                    <p:calendar />
+                    <h:outputText value="Descrição: "/>
+                    <p:inputText value="#{gerenciarCaixa.fluxo.descricao}" required="true" label="Descrição"/>
+                    
+                    <h:outputText value="Valor: "/>
+                    <p:inputText value="#{gerenciarCaixa.fluxo.valor}" required="true" label="Valor"/> 
+                    
+                    <h:outputText value="Data: "/>
+                    <p:calendar navigator="true" locale="pt" showButtonPanel="true" value="#{gerenciarCaixa.fluxo.data}" required="true" label="Data"/>
+                    
                 </h:panelGrid>
 
-                <p:selectOneRadio>
-                    <f:selectItem itemLabel="Crédito"/>
-                    <f:selectItem itemLabel="Débito"/>
+                <p:selectOneRadio value="#{gerenciarCaixa.fluxo.tipo}" required="true" label="Tipo">
+                    <f:selectItem itemLabel="Crédito" itemValue="Cred"/>
+                    <f:selectItem itemLabel="Débito" itemValue="Deb"/>
                 </p:selectOneRadio>
                 <br/>
                 <h:panelGrid columns="2" cellpadding="4">
-                    <p:commandButton value="Salvar" style="color: green" onclick="confirmation.show()"/>
-                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
+                    <p:commandButton value="Salvar" style="color: green" update="growl" 
+                                     actionListener="#{gerenciarCaixa.cadastrarFluxo}"
+                                     onclick="confirmation.show();"/>
+                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
 
                 <br/>
                 <br/>
                 <p:separator/>
-                <h2>Atualizações Recentes</h2>
+                <h2>Operações Recentes</h2>
                 <br />
-                <p:panelGrid>
+                <p:panelGrid id="recent">
 
                     <f:facet name="header">
                         <p:row >  

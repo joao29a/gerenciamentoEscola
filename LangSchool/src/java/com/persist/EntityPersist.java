@@ -109,4 +109,11 @@ public class EntityPersist extends HibernateUtil {
         init();
         session.close();
     }
+    public Object mergeObject(Object o) {
+        init(); 
+        return session.merge(o); 
+    }
+    public void endMerge() {
+        session.close(); 
+    }
 }
