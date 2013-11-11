@@ -22,7 +22,7 @@
                 </h:panelGrid>
 
                 <p:inputText style="width:60%" value="#{gerenciarMensalidade.busca}"/>
-                <p:commandButton value="Buscar" style="color: blue" actionListener="#{gerenciarMensalidade.consultar}" update="dtMensalidade"/>
+                <p:commandButton icon="ui-icon-search" value="Buscar" style="color:blue" actionListener="#{gerenciarMensalidade.consultar}" update="dtMensalidade"/>
 
                 <p:dataTable id="dtMensalidade" var="matricula" value="#{gerenciarMensalidade.gerMat.matriculas}"
                              emptyMessage="Mensalidade nao encontrada!">>
@@ -67,46 +67,54 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
+            
             <h:form id="formDlgViz">
                 <p:dialog id ="visualiza" header="Visualização" widgetVar="dlgoVisualiza">
+                    
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.id}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.id}" disabled="true"/>
                         <h:outputText value="Nome:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.aluno.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.aluno.nome}" disabled="true"/>
                         <h:outputText value="Curso:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}" disabled="true"/>
                         <h:outputText value="Nível:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
+                    
                     <p:panelGrid style="margin-top: 20px">
                         <f:facet name="header">
                             <p:row>
                                 <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
                             </p:row>
-                            
-                            <p:dataTable var="mes_x" value="#{gerenciarMensalidade.selecionado.mensalidade}">
-                                <facet header="MÊS"></facet>
-                                    <p:column style="font-weight: bold" headerText="#{mes_x.mes}">
-                                        <h:outputText style="text-align: center" value="#{mes_x.situMensalidade}"/></p:column>
-                            </p:dataTable>                     
+                            <p:row>
+                                <p:columns var="mes_x" style="font-weight: bold" headerText="#{mes_x.mes}">
+                                <h:outputText style="text-align: center" value="#{mes_x.situMensalidade}"/></p:columns>
+                            </p:row>                     
                         </f:facet>    
                     </p:panelGrid>
+                    
+                    <p:dataTable value="#{gerenciarMensalidade.LMat}" var="mat">
+                        <p:columns value="#{gerenciarMensalidade.dados}" var="mes" headerText="#{mes.mes}">
+                            #{mes.situMensalidade}
+                        </p:columns>
+                    </p:dataTable>
                 </p:dialog> 
             </h:form>
+            
             <h:form id="formDlgAlt">
                 <p:growl id="gMensalidade" showDetail="false" />
 
                 <p:dialog id="altera" header="Alterar Mensalidade" widgetVar="dlgoAltera">
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.id}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.id}" disabled="true"/>
                         <h:outputText value="Nome:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.aluno.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.aluno.nome}" disabled="true"/>
                         <h:outputText value="Curso:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.curso.nome}" disabled="true"/>
                         <h:outputText value="Nível:" />
-                        <p:outputLabel value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}"/>
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
 
                     <p:panelGrid style="margin-top: 20px">
@@ -153,13 +161,14 @@
                     <p:commandButton value="SALVAR" ajax="true" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" oncomplete="dlgo1.hide()" />
                 </p:dialog>
             </h:form>
+            
             <h:form id="formDlgTurma">
                 <p:dialog id="turma" header="Mensalidades da Turma" widgetVar="dlgoTurma">
                     <h:panelGrid columns="2">
                         <h:outputText value="Turma" />
-                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.turma}" />
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.turma}" disabled="true"/>
                         <h:outputText value="Professor:" />
-                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.professor.nome}" />
+                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.professor.nome}" disabled="true"/>
                     </h:panelGrid>
 
                     <p:scrollPanel style="width: 800px; height: 300px">

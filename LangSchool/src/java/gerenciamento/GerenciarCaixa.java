@@ -15,16 +15,26 @@ import messages.Gmessages;
 @ViewScoped
 @ManagedBean
 public class GerenciarCaixa {
+
     private FluxoCaixa fluxo = new FluxoCaixa();
+    private FluxoCaixa selecionado;
     private List<FluxoCaixa> fluxos;
     private float buscavalor;
     private String nomecriterio;
-    private Date data1,data2;
+    private Date data1, data2;
     private String param;
     private EntityPersist ep = new EntityPersist();
-    
+
     public GerenciarCaixa() {
         fluxos = ep.search(FluxoCaixa.class);
+    }
+
+    public FluxoCaixa getSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(FluxoCaixa selecionado) {
+        this.selecionado = selecionado;
     }
 
     public FluxoCaixa getFluxo() {
@@ -83,24 +93,44 @@ public class GerenciarCaixa {
         this.param = param;
     }
 
-
-    
     public void cadastrarFluxo() {
         try {
             ep.save(fluxo);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(GerenciarCaixa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void consultar() {
         if (param.equals("valor")) {
             this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, buscavalor, null));
         } else if (param.equals("data")) {
-            nomecriterio="bt";
-            this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, data1, data2));    
+            nomecriterio = "between";
+            this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, data1, data2));
         }
-        System.out.println(fluxos);
     }
-    
+
+    public void selectEstorno(ActionEvent ae) {
+        selecionado = (FluxoCaixa) ae.getComponent().getAttributes().get("movimento");
+    }
+
+    public void estornar() {
+        if (selecionado.getSituacao().equals("OK")) {
+            selecionado.setSituacao("ESTORNADO");
+            try {
+                ep.update(selecionado);
+                Gmessages g = new Gmessages();
+                g.estornar(null);
+            } catch (Exception ex) {
+                Logger.getLogger(GerenciarCaixa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    public boolean showEstorno(FluxoCaixa x){
+        if (x.getSituacao().equals("OK")){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

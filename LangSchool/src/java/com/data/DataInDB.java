@@ -2,8 +2,10 @@ package com.data;
 
 import com.entity.Aluno;
 import com.entity.Curso;
+import com.entity.FluxoCaixa;
 import com.entity.LogIn;
 import com.entity.Matricula;
+import com.entity.Mensalidade;
 import com.entity.Nivel;
 import com.entity.Nota;
 import com.entity.Professor;
@@ -17,11 +19,11 @@ import java.util.logging.Logger;
 public class DataInDB {
 
     private static final EntityPersist ep = new EntityPersist();
-    
+
     private static Object getObjectClass(Class cName, int id) {
         return ep.search(cName, new CriteriaGroup("eq", "id", id, null)).get(0);
     }
-    
+
     public static void addAll() {
         addAlunos();
         addProfessores();
@@ -30,6 +32,8 @@ public class DataInDB {
         addTurmas();
         addLogin();
         addMatriculas();
+        addMensalidades();
+        addFluxoCaixa();
     }
 
     public static void addAlunos() {
@@ -119,17 +123,17 @@ public class DataInDB {
 
     public static void addLogin() {
         try {
-            ep.save(new LogIn("Sec", "secretario",(Professor)getObjectClass(Professor.class, 1), 1));
-            ep.save(new LogIn("Prof", "professor",(Professor)getObjectClass(Professor.class, 3), 0));
+            ep.save(new LogIn("Sec", "secretario", (Professor) getObjectClass(Professor.class, 1), 1));
+            ep.save(new LogIn("Prof", "professor", (Professor) getObjectClass(Professor.class, 3), 0));
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private static void addMat(Aluno a, Turma t) {
         Matricula m = new Matricula(a, t, new Date());
         m.setNotas(new Nota());
-        m.getTurma().setVagasRest(m.getTurma().getVagasRest()-1);
+        m.getTurma().setVagasRest(m.getTurma().getVagasRest() - 1);
         try {
             ep.save(m.getNotas());
             ep.update(m.getTurma());
@@ -138,14 +142,57 @@ public class DataInDB {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void addMatriculas() {
-        addMat((Aluno)getObjectClass(Aluno.class, 1), (Turma)getObjectClass(Turma.class, 3));
-        addMat((Aluno)getObjectClass(Aluno.class, 2), (Turma)getObjectClass(Turma.class, 2));
-        addMat((Aluno)getObjectClass(Aluno.class, 3), (Turma)getObjectClass(Turma.class, 2));
-        addMat((Aluno)getObjectClass(Aluno.class, 4), (Turma)getObjectClass(Turma.class, 3));
-        addMat((Aluno)getObjectClass(Aluno.class, 4), (Turma)getObjectClass(Turma.class, 2));
-        addMat((Aluno)getObjectClass(Aluno.class, 3), (Turma)getObjectClass(Turma.class, 3));
-        addMat((Aluno)getObjectClass(Aluno.class, 2), (Turma)getObjectClass(Turma.class, 3));
+        addMat((Aluno) getObjectClass(Aluno.class, 1), (Turma) getObjectClass(Turma.class, 3));
+        addMat((Aluno) getObjectClass(Aluno.class, 2), (Turma) getObjectClass(Turma.class, 2));
+        addMat((Aluno) getObjectClass(Aluno.class, 3), (Turma) getObjectClass(Turma.class, 2));
+        addMat((Aluno) getObjectClass(Aluno.class, 4), (Turma) getObjectClass(Turma.class, 3));
+        addMat((Aluno) getObjectClass(Aluno.class, 4), (Turma) getObjectClass(Turma.class, 2));
+        addMat((Aluno) getObjectClass(Aluno.class, 3), (Turma) getObjectClass(Turma.class, 3));
+        addMat((Aluno) getObjectClass(Aluno.class, 2), (Turma) getObjectClass(Turma.class, 3));
+    }
+
+    public static void addMensalidades() {
+        try {
+            //Mensalidade
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jan"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "fev"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "mar"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "abr"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "mai"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jun"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jul"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "ago"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "set"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "out"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "nov"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "dez"));
+
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jan"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "fev"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "mar"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "abr"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "mai"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jun"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jul"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "ago"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "set"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "out"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "nov"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "dez"));
+        } catch (Exception ex) {
+            Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void addFluxoCaixa() {
+        try {
+            ep.save(new FluxoCaixa("xerox", (float) 0.25, new Date(), "Cred"));
+            ep.save(new FluxoCaixa("Material de Escritorio", (float) 4.00, new Date(), "Deb"));
+            ep.save(new FluxoCaixa("3 Livros", (float) 150.60, new Date(), "Deb"));
+        } catch (Exception ex) {
+            Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

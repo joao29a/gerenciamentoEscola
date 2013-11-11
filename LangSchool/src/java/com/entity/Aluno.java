@@ -15,14 +15,7 @@ public class Aluno implements Serializable {
 
     @OneToMany(mappedBy = "aluno")
     private Set<Matricula> matricula;
-    public Set<Matricula> getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(Set<Matricula> matricula) {
-        this.matricula = matricula;
-    }
-
+    
     @Column(name = "nome")
     private String nome;
     
@@ -30,9 +23,6 @@ public class Aluno implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNasc;
     
-    @Column(name = "sexo")
-    private String sexo;
-
     @Column(name = "idade")
     private String idade;
     
@@ -42,36 +32,35 @@ public class Aluno implements Serializable {
     @Column(name = "nome_pai")
     private String nomePai;
     
-    @Column(name = "telefone_pai")
-    private String telefonePai;
-    
     @Column(name = "nome_mae")
     private String nomeMae;
-    
-    @Column(name = "telefone_mae")
-    private String telefoneMae;
     
     @Column(name = "telefone")
     private String telefone;
     
+    @Column(name = "telefone_pai")
+    private String telefonePai;
+    
+    @Column(name = "telefone_mae")
+    private String telefoneMae;
+    
     @Column(name = "endereco")
     private String endereco;
-    
-    @Column(name = "numero")
-    private int numero;
-    
-    @Column(name = "CEP")
-    private String CEP;
-
-    @Column(name = "cidade")
-    private String cidade;
-    
-    @Column(name = "uf")
-    private String uf;
     
     @Column(name = "complemento")
     private String complemento;
     
+    @Column(name = "uf")
+    private String uf;
+    
+    @Column(name = "estado")
+    private String estado;
+    
+    @Column(name = "cidade")
+    private String cidade;
+    
+    @Column(name = "sexo")
+    private char sexo;
     
     public Aluno() {
         estado = "ativo";
@@ -84,12 +73,11 @@ public class Aluno implements Serializable {
         this.endereco = endereco;
         this.uf = uf;
         this.cidade = cidade;
+        this.sexo = sexo;
         this.telefone = telefone;
         this.estado = "ativo";
     }
     
-    @Column(name = "estado")
-    private String estado;
     
     public int getId() {
         return id;
@@ -110,15 +98,7 @@ public class Aluno implements Serializable {
     public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
-    
-    public String getSexo() {
-        return sexo;
-    }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-    
     public String getIdade() {
         return idade;
     }
@@ -143,20 +123,28 @@ public class Aluno implements Serializable {
         this.nomePai = nomePai;
     }
 
-    public String getTelefonePai() {
-        return telefonePai;
-    }
-
-    public void setTelefonePai(String telefonePai) {
-        this.telefonePai = telefonePai;
-    }
-
     public String getNomeMae() {
         return nomeMae;
     }
 
     public void setNomeMae(String nomeMae) {
         this.nomeMae = nomeMae;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getTelefonePai() {
+        return telefonePai;
+    }
+
+    public void setTelefonePai(String telefonePai) {
+        this.telefonePai = telefonePai;
     }
 
     public String getTelefoneMae() {
@@ -167,10 +155,6 @@ public class Aluno implements Serializable {
         this.telefoneMae = telefoneMae;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
     public String getEndereco() {
         return endereco;
     }
@@ -178,51 +162,6 @@ public class Aluno implements Serializable {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-    
-    public String getCEP() {
-        return CEP;
-    }
-
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-    
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
 
     public String getComplemento() {
         return complemento;
@@ -232,12 +171,48 @@ public class Aluno implements Serializable {
         this.complemento = complemento;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
     public void setEstadoAtivo() {
         this.estado = "ativo";
     }
     
     public void setEstadoInativo() {
         this.estado = "inativo";
+    }
+
+    public Set<Matricula> getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Set<Matricula> matricula) {
+        this.matricula = matricula;
+    }
+
+    public char getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     @Override

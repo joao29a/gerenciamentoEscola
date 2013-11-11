@@ -8,6 +8,7 @@ import com.entity.Nivel;
 import com.entity.Turma;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ import messages.Gmessages;
 @ManagedBean
 public class GerenciarMensalidade {
     private GerenciarMatricula gerMat;
-    
+    private List<Mensalidade> dados, mensalidades;
     private Mensalidade mensalidade;
     private List<Aluno> aluno;
     private List<Curso> curso;
@@ -28,7 +29,7 @@ public class GerenciarMensalidade {
     private List<Nivel> nivel;
     private Matricula selecionado;
     private EntityPersist ep;
-    private List<Mensalidade> mensalidades;
+    private List<Matricula> lMat;
     private Gmessages msg = new Gmessages();
     private String busca, param;
     private Object matriculas;
@@ -106,10 +107,31 @@ public class GerenciarMensalidade {
     public void setGerMat(GerenciarMatricula gerMat) {
         this.gerMat = gerMat;
     }
+
+    public List<Mensalidade> getDados() {
+        return dados;
+    }
+
+    public void setDados(List<Mensalidade> dados) {
+        this.dados = dados;
+    }
+
+    public List<Matricula> getLMat() {
+        return lMat;
+    }
+
+    public void setLMat(List<Matricula> lMat) {
+        this.lMat = lMat;
+    }
     
     
     public void selectMensalidade(ActionEvent ae) {
         selecionado = (Matricula)ae.getComponent().getAttributes().get("matricula");
+        
+        //Atribuicao extra para linkagem do mês
+        retomarSessao();
+        lMat = new ArrayList<Matricula>();
+        lMat.add(selecionado);
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     public void consultar(ActionEvent ae) {
         System.out.println(param);
@@ -148,7 +170,17 @@ public class GerenciarMensalidade {
             
     }
     
-    public void visualizar() {
+    public void retomarSessao() {
+        Matricula aux;
+        System.out.println("TESTEEEEEEEEEEEEEEEEEEEEEEEEEee");
+        
+        Matricula selecionado2 = (Matricula) ep.mergeObject(selecionado);
+        
+        dados = selecionado2.getMensalidade();
+        
+        for (Mensalidade m : selecionado2.getMensalidade()) 
+            System.out.println("testeremtomar: " +m.getMes());
+        ep.endMerge();
     }
     
     public void alterar(ActionEvent ae) {

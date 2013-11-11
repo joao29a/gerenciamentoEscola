@@ -9,10 +9,10 @@
         <ui:define name="panelHeader">Cadastrar Fluxo de Caixa</ui:define>
         <ui:define name="centro">
             <script>
-                function swNew(){
+                function swNew() {
                     self.location = "/LangSchool/faces/caixa/Cadastro.xhtml";
                 }
-                function swBack(){
+                function swBack() {
                     self.location = "/LangSchool/faces/index.xhtml";
                 }
             </script>
@@ -22,23 +22,25 @@
                 <br/>
                 <br/>
                 <p:separator/>
-                <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack();" type="button"/>   
+                <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();
+                    swNew();" type="button"/>  
+                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();
+                    swBack();" type="button"/>   
 
             </p:dialog> 
-            
+
             <h:form>
                 <p:growl id="growl" showDetail="true" sticky="true"/>
                 <h:panelGrid columns ="2" cellpadding="4">
                     <h:outputText value="Descrição: "/>
                     <p:inputText value="#{gerenciarCaixa.fluxo.descricao}" required="true" label="Descrição"/>
-                    
+
                     <h:outputText value="Valor: "/>
                     <p:inputText value="#{gerenciarCaixa.fluxo.valor}" required="true" label="Valor"/> 
-                    
+
                     <h:outputText value="Data: "/>
-                    <p:calendar navigator="true" locale="pt" showButtonPanel="true" value="#{gerenciarCaixa.fluxo.data}" required="true" label="Data"/>
-                    
+                    <p:calendar navigator="true" showButtonPanel="true" value="#{gerenciarCaixa.fluxo.data}" required="true" label="Data"/>
+
                 </h:panelGrid>
 
                 <p:selectOneRadio value="#{gerenciarCaixa.fluxo.tipo}" required="true" label="Tipo">
@@ -58,24 +60,23 @@
                 <p:separator/>
                 <h2>Operações Recentes</h2>
                 <br />
-                <p:panelGrid id="recent">
-
-                    <f:facet name="header">
-                        <p:row >  
-                            <p:column><h:outputText value="Data" style="font-weight: bolder"/></p:column>
-                            <p:column width="80%"><h:outputText value="Descrição" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="Valor" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="FormaPgto" style="font-weight: bolder"/></p:column>
-                        </p:row>
-                    </f:facet>
-                    <p:row>
-                        <p:column><h:outputText value="12/12/2012"/></p:column>
-                        <p:column><h:outputText value="Material"/></p:column>
-                        <p:column><h:outputText value="R$50,00"/></p:column>
-                        <p:column><h:outputText value="Débito"/></p:column>
-                    </p:row>
-
-                </p:panelGrid>
+                
+                <p:dataTable id="recent" var="fluxoHoje" value="#{gerenciarCaixa.fluxos}">
+                    <f:facet name="header" ></f:facet> 
+                    <p:column headerText="Data">
+                        <h:outputText value="#{fluxoHoje.data}"/>
+                    </p:column>
+                    <p:column width="80%" headerText="Descrição">
+                        <h:outputText value="#{fluxoHoje.descricao}"/>
+                    </p:column>
+                    <p:column headerText="Valor ">
+                        <h:outputText value="#{fluxoHoje.valor}"/>
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{fluxoHoje.tipo}"/>
+                    </p:column>
+                </p:dataTable>
+                
             </h:form>
         </ui:define>
     </ui:composition>
