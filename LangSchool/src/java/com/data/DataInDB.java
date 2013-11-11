@@ -32,7 +32,7 @@ public class DataInDB {
         addTurmas();
         addLogin();
         addMatriculas();
-        addMensalidades();
+        addMensalidades(2, 0);
         addFluxoCaixa();
     }
 
@@ -153,34 +153,23 @@ public class DataInDB {
         addMat((Aluno) getObjectClass(Aluno.class, 2), (Turma) getObjectClass(Turma.class, 3));
     }
 
-    public static void addMensalidades() {
+    public static void addMensalidades(int n, int start) {
         try {
             //Mensalidade
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jan"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "fev"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "mar"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "abr"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "mai"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jun"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jul"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "ago"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "set"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "out"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "nov"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "dez"));
-
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jan"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "fev"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "mar"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "abr"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "mai"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jun"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jul"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "ago"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "set"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "out"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "nov"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "dez"));
+            for (int i = start; i < start+n; i++) {
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "jan"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "fev"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "mar"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "abr"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "mai"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "jun"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "jul"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "ago"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "set"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "out"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "nov"));
+                ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "dez"));
+            }
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
