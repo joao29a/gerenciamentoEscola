@@ -8,8 +8,10 @@ import com.util.CriteriaGroup;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import messages.Gmessages;
@@ -122,6 +124,10 @@ public class GerenciarReposicao {
     }
 
     public String cadastrarReposicaoAulaAction(Matricula selectMat) {
+        if (reposicao.getDataReposicao() == null || reposicao.getProfessor() == null) {
+            msg.dadosObrig(null);
+            return "";
+        }
         System.out.println("Cadastrando");
         System.out.println(reposicao.getDataReposicao());
         System.out.println(reposicao.getProfessor().getNome());

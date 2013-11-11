@@ -17,19 +17,17 @@
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
                 </script>
-                <h:panelGrid id="formDados" cellpadding="5" columns="3">
-                    <p:outputLabel value="Data de Reposicao:"/>
-                    <p:calendar id="cal" value="#{gerenciarReposicao.reposicao.dataReposicao}" required="true" requiredMessage="Coloque uma data"/>
-                    <p:message for="cal"/>
+                <h:panelGrid id="formDados" cellpadding="5" columns="2">
+                    <p:outputLabel value="Data de Reposicao* :"/>
+                    <p:calendar id="cal" value="#{gerenciarReposicao.reposicao.dataReposicao}"/>
                     
-                    <p:outputLabel value="Professor:"/>
+                    <p:outputLabel value="Professor* :"/>
                     <p:selectOneMenu id="somProf" value="#{gerenciarReposicao.reposicao.professor}"
-                                     converter="professor" required="true" requiredMessage="Selecione um professor">
+                                     converter="professor">
                         <f:selectItem itemValue="" itemLabel="Selecione"/>
                         <f:selectItems value="#{gerenciarReposicao.professorMan.professores}"
                                        var="prof" itemLabel="#{prof.nome}" itemValue="#{prof}"/>
                     </p:selectOneMenu>
-                    <p:message for="somProf"/>
                 </h:panelGrid>
                 
                 <br/>
@@ -69,11 +67,10 @@
                     </p:column>
                     <p:column headerText="Acao">
                         <p:commandButton value="adicionar"
-                                         action="#{gerenciarReposicao.cadastrarReposicaoAulaAction(mat)}"
-                                         update=":formBusca:formDados"/>
+                                         action="#{gerenciarReposicao.cadastrarReposicaoAulaAction(mat)}" update=":formBusca:addGrowl"/>
                     </p:column>
                 </p:dataTable>
-                
+                <p:growl id="addGrowl" autoUpdate="true" showDetail="false"/>
                 <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">  
                     <p:outputLabel value="Deseja cadastrar outra reposicao?" />
                     <br/>
@@ -82,7 +79,7 @@
                     <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
                     <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
 
-                </p:dialog> 
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>

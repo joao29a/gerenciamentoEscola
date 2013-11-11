@@ -31,14 +31,14 @@
 
                 <h:panelGrid id="panel" columns="2" cellpadding="4">
                     <h:outputText value="Aluno *:" style="width: 100%;text-align: right"/>
-                    <p:selectOneMenu value="#{gerenciarMatricula.matricula.aluno}" converter="aluno"
+                    <p:selectOneMenu id="somAluno" value="#{gerenciarMatricula.matricula.aluno}" converter="aluno"
                                      filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{gerenciarMatricula.alunoMan.alunos}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno}"/>
                     </p:selectOneMenu>
 
                     <h:outputText value="Curso *:" />
-                    <p:selectOneMenu value="#{gerenciarMatricula.curso}" converter="curso"
+                    <p:selectOneMenu id="somCurso" value="#{gerenciarMatricula.curso}" converter="curso"
                                      filter="true" filterMatchMode="contains">
                         <f:ajax execute="@this" listener="#{gerenciarMatricula.selCurso}" render="dtTurmas"/>
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
@@ -72,8 +72,9 @@
                     </p:column>
                 </p:dataTable>
 
+                <p:growl id="turmaGrowl" showDetail="false" sticky="true"/>
                 <h:panelGrid columns="2">
-                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarMatricula.cadastrarMatricula}" update="panel" oncomplete="confirmation.show()"/>
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarMatricula.cadastrarMatricula}" update="panel, turmaGrowl"/>
                     <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
                 </h:panelGrid>
             </h:form>

@@ -16,6 +16,7 @@
                     <p:selectOneMenu value="#{gerenciarMatricula.param}">
                         <f:selectItem itemLabel="Nome" itemValue="nome"/>
                         <f:selectItem itemLabel="Turma" itemValue="turma"/>
+                        <f:selectItem itemLabel="Nivel" itemValue="nivel"/>
                         <f:selectItem itemLabel="Curso" itemValue="curso"/>
                         <f:selectItem itemLabel="Estado" itemValue="estado"/>
                     </p:selectOneMenu>
@@ -41,6 +42,14 @@
                     </p:column>
                     <p:column headerText="Data">
                         <h:outputText value="#{matricula.dataMatricula}"
+                                      style="font-size: small; font-weight: bold"/>
+                    </p:column>
+                    <p:column headerText="Curso">
+                        <h:outputText value="#{matricula.turma.nivel.curso.nome}"
+                                      style="font-size: small; font-weight: bold"/>
+                    </p:column>
+                    <p:column headerText="Nivel">
+                        <h:outputText value="#{matricula.turma.nivel.nome}"
                                       style="font-size: small; font-weight: bold"/>
                     </p:column>
                     <p:column headerText="Turma">

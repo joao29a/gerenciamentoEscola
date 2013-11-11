@@ -47,5 +47,10 @@ public class Gmessages {
         
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro no Cadastro!", "Pois é"));
     }
+    public void dadosObrig(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Preencha os dados obrigatórios!", "Pois é"));
+    }
     
 }

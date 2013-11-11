@@ -3,7 +3,9 @@ package com.data;
 import com.entity.Aluno;
 import com.entity.Curso;
 import com.entity.LogIn;
+import com.entity.Matricula;
 import com.entity.Nivel;
+import com.entity.Nota;
 import com.entity.Professor;
 import com.entity.Turma;
 import com.persist.EntityPersist;
@@ -27,6 +29,7 @@ public class DataInDB {
         addNiveis();
         addTurmas();
         addLogin();
+        addMatriculas();
     }
 
     public static void addAlunos() {
@@ -98,13 +101,17 @@ public class DataInDB {
     public static void addTurmas() {
         try {
             ep.save(new Turma((Professor) getObjectClass(Professor.class, 1),
-                    (Nivel) getObjectClass(Nivel.class, 5), "Turma 5", "Turma do barulho", 30, 30));
+                    (Nivel) getObjectClass(Nivel.class, 5), "Turma 1", "Turma do barulho", 30, 30));
             ep.save(new Turma((Professor) getObjectClass(Professor.class, 3),
                     (Nivel) getObjectClass(Nivel.class, 2), "Turma 2", "Turma de meth", 30, 30));
             ep.save(new Turma((Professor) getObjectClass(Professor.class, 1),
-                    (Nivel) getObjectClass(Nivel.class, 8), "Turma 8", "Turma dividida ou nao", 30, 30));
+                    (Nivel) getObjectClass(Nivel.class, 8), "Turma 3", "Turma dividida ou nao", 30, 30));
             ep.save(new Turma((Professor) getObjectClass(Professor.class, 2),
-                    (Nivel) getObjectClass(Nivel.class, 5), "Turma 5", "Turma 0 por 0", 30, 30));
+                    (Nivel) getObjectClass(Nivel.class, 5), "Turma 4", "Turma 0 por 0", 30, 30));
+            ep.save(new Turma((Professor) getObjectClass(Professor.class, 4),
+                    (Nivel) getObjectClass(Nivel.class, 1), "Turma 5", "Turma japan", 30, 30));
+            ep.save(new Turma((Professor) getObjectClass(Professor.class, 5),
+                    (Nivel) getObjectClass(Nivel.class, 3), "Turma 6", "Turma spain", 30, 30));
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,5 +124,28 @@ public class DataInDB {
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private static void addMat(Aluno a, Turma t) {
+        Matricula m = new Matricula(a, t, new Date());
+        m.setNotas(new Nota());
+        m.getTurma().setVagasRest(m.getTurma().getVagasRest()-1);
+        try {
+            ep.save(m.getNotas());
+            ep.update(m.getTurma());
+            ep.save(m);
+        } catch (Exception ex) {
+            Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void addMatriculas() {
+        addMat((Aluno)getObjectClass(Aluno.class, 1), (Turma)getObjectClass(Turma.class, 3));
+        addMat((Aluno)getObjectClass(Aluno.class, 2), (Turma)getObjectClass(Turma.class, 2));
+        addMat((Aluno)getObjectClass(Aluno.class, 3), (Turma)getObjectClass(Turma.class, 2));
+        addMat((Aluno)getObjectClass(Aluno.class, 4), (Turma)getObjectClass(Turma.class, 3));
+        addMat((Aluno)getObjectClass(Aluno.class, 4), (Turma)getObjectClass(Turma.class, 2));
+        addMat((Aluno)getObjectClass(Aluno.class, 3), (Turma)getObjectClass(Turma.class, 3));
+        addMat((Aluno)getObjectClass(Aluno.class, 2), (Turma)getObjectClass(Turma.class, 3));
     }
 }
