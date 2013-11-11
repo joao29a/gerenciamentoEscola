@@ -1,50 +1,36 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-/**
- *
- * @author massao
- */
 @Entity
 @Table(name = "Mensalidade")
 public class Mensalidade implements Serializable {
-
     @Id
     @GeneratedValue
     private int id;
     
-    @Column(name = "valor")
-    private float valorMensalidade;
-    
-    @Column(name = "situacao")
-    private boolean situMensalidade;
+    @ManyToOne
+    @JoinColumn(name="id_matricula")
+    private Matricula matricula;
     
     @Column(name = "mes")
     private String mes;
+ 
+    @Column(name = "situacao")
+    private String situMensalidade;
     
-    @ManyToOne
-    @JoinColumn(name = "id_matricula")
-    private Matricula matricula;
+    public Mensalidade() {
+    }
     
     public int getId(){
         return id;
-    }
-    public float getValorMensalidade(){
-        return valorMensalidade;
-    }
-    
-    public boolean getSituMensalidade(){
-        return situMensalidade;
-    }
-    
-    public void setSituMensalidade(boolean situMensalidade) {
-        this.situMensalidade = situMensalidade;
     }
 
     public String getMes() {
@@ -54,6 +40,28 @@ public class Mensalidade implements Serializable {
     public void setMes(String mes) {
         this.mes = mes;
     }
+
+    public String getSituMensalidade() {
+        return situMensalidade;
+    }
     
+
+    public void setSituMensalidade(String situMensalidade) {
+        this.situMensalidade = situMensalidade;
+    }
+
+    public Matricula getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
+    }
     
+    public Mensalidade(Matricula m,String mes) {
+        this.matricula = m;
+        this.mes = mes;
+        this.situMensalidade = "PEN";
+    }
+   
 }

@@ -8,47 +8,37 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Nivel</ui:define>
         <ui:define name="centro">
-            <h:form>
+            <h:form id="f1">
                 <script>
-                    function swNew(){
-                        self.location = "/LangSchool/faces/nivel/Cadastro.xhtml";
-                    }
-                    function swBack(){
+                    function swBack() {
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
                 </script>
+                
+                <p:growl id="growl"/>
+                <h:panelGrid columns="2" cellpadding="4" id="grid">
+                    <h:outputText value="Nome: *" />
+                    <p:inputText value="#{gerenciarNivel.nivel.nome}" style="width: 350px "/>
+                    <h:outputText value="Descricao:" />
+                    <p:inputTextarea cols="50" value="#{gerenciarNivel.nivel.descricao}"/>
+                    <h:outputLabel value="Carga Horária: "/>
+                    <p:spinner min="0" value="#{gerenciarNivel.nivel.cargaHoraria}" />
+                    <h:outputText value="Curso: " />
+                    <p:selectOneMenu value ="#{gerenciarNivel.nivel.curso.id}" >
+                        <f:selectItems value="#{gerenciarCurso.cursos}" var="c"
+                                       itemValue="#{c.id}" itemLabel="#{c.nome}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
 
-                <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">  
-                    <p:outputLabel value="Deseja cadastrar outro nivel?" />
-                    <br/>
-                    <br/>
-                    <p:separator/>
-                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
-
-                </p:dialog> 
-
-
-                    <h:panelGrid columns="2" cellpadding="4">
-                        <h:outputText value="Nome:" />
-                        <p:inputText value="" style="width: 350px "/>
-                        <h:outputText value="Descricao:" />
-                        <p:inputTextarea cols="50"/>
-                        <h:outputText value="Curso:" />
-                        <p:selectOneMenu>
-                            <f:selectItem itemLabel="Alemão" itemValue="5"></f:selectItem>
-                            <f:selectItem itemLabel="Inglês" itemValue="1"></f:selectItem>
-                            <f:selectItem itemLabel="Japonês" itemValue="2"></f:selectItem>
-
-                        </p:selectOneMenu>
-
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="4">
-                        <p:commandButton value="Salvar" style="color: green" onclick="confirmation.show()"/>
-                        <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
-                    </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="4">
+                    
+                    <p:commandButton value="CANCELAR" style="color: red;font-size: small;font-weight: bold"
+                                     onclick="swBack();"/>
+                    <p:commandButton value="SALVAR" style="color: green;font-size: small;font-weight: bold"
+                                     update=":f1:growl, :f1:grid"
+                                     actionListener="#{gerenciarNivel.cadastrarNivel}"/>
+                </h:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>
 </html>
-

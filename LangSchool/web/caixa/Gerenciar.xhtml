@@ -9,78 +9,86 @@
         <ui:define name="panelHeader">Consultar e Estornar Fluxo de Caixa</ui:define>
         <ui:define name="centro">
             <h:form>
-                <h1>Pesquisar por:</h1>
+                <h:outputText value="Pesquisar por:"/>
                 <p:outputPanel id="customPanel">
-                    <p:selectOneRadio id="customRadio" layout="custom"> 
-                        <f:selectItem itemLabel="Valor"  />
-                        <f:selectItem itemLabel="Data"  />
+
+                    <p:selectOneRadio id="customRadio" layout="custom" value="#{gerenciarCaixa.param}"> 
+                        <f:selectItem itemLabel="Valor: " itemValue="valor"/>
+                        <f:selectItem itemLabel="Data: " itemValue="data"/>
                     </p:selectOneRadio>
 
                     <h:panelGrid columns="4">
-
                         <p:radioButton id="opt1" for="customRadio" itemIndex="0"/>
                         <h:outputLabel for="opt1" value="Valor: " /> 
 
-                        <p:selectOneMenu style="margin-left: 20px">
-                            <f:selectItem itemLabel="Maior que"/>
-                            <f:selectItem itemLabel="Menor que"/>
-                            <f:selectItem itemLabel="Exatamente"/>
+
+                        <p:selectOneMenu style="margin-left: 20px" value="#{gerenciarCaixa.nomecriterio}">
+                            <f:selectItem itemLabel="Maior ou igual que" itemValue="ge"/>
+                            <f:selectItem itemLabel="Menor ou igual que" itemValue="le"/>
                         </p:selectOneMenu>
 
-                        <p:inputMask style="margin-left: 10px" mask="R$99,99"/>
+                        <p:inputText style="margin-left: 10px" value="#{gerenciarCaixa.buscavalor}"/>
                     </h:panelGrid>
                     <br/>
                     <h:panelGrid columns="6">
                         <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
 
                         <h:outputLabel for="opt2" value="Data: "/> 
-                        <h:outputText style="margin-left: 20px" value="De"/><p:calendar/>
-                        <h:outputText style="margin-left: 30px" value="Até"/><p:calendar/>  
+                        <h:outputText style="margin-left: 20px" value="De"/><p:calendar navigator="true" value="#{gerenciarCaixa.data1}"/>
+
+                        <h:outputText style="margin-left: 30px" value="Até"/><p:calendar navigator="true" value="#{gerenciarCaixa.data2}"/>  
                     </h:panelGrid>
 
                     <br/>
                     <br/>
-                    <p:commandButton value="Consultar" style="color: green; font-weight: bolder" />
+                    <p:commandButton value="Consultar" style="color: green; font-weight: bolder" update="fluxos" actionListener="#{gerenciarCaixa.consultar}"/>
                 </p:outputPanel>  
                 <br/><br/>
                 <p:growl showDetail="false" id="gCaixa"/>
+
                 <p:dialog header="Visualização" widgetVar="dlgo">
                     <h:outputText value="Tem certeza disto?"/>
                     <br/>
                     <p:separator/>
                     <br/>
-                    <p:commandButton value="Sim" actionListener="#{gmessages.estornar}" update="gCaixa" oncomplete="dlgo.hide()"/>
-                    <p:commandButton value="Não" style="margin-left: 20px" onclick="dlgo.hide()"/>
+                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos" oncomplete="dlgo.hide()"/>
+                    <p:commandButton value="Não" style="margin-left: 20px" onclick="dlgo.hide();"/>
                 </p:dialog>
-                <p:panelGrid>
+
+                <p:dataTable id="fluxos" var ="fluxo" value="#{gerenciarCaixa.fluxos}">
 
                     <f:facet name="header">
-                        <p:row >  
-                            <p:column><h:outputText value="Data" style="font-weight: bolder"/></p:column>
-                            <p:column width="80%"><h:outputText value="Descrição" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="Valor" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="FormaPgto" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="Estornar"  style="font-weight: bolder"/></p:column>
-                        </p:row>
+                        <h:outputText style="font-weight: bolder" value="Resultado da consulta"/>
                     </f:facet>
 
-                    <p:row>
-                        <p:column><h:outputText value="10/12/2012"/></p:column>
-                        <p:column><h:outputText value="Xerox"/></p:column>
-                        <p:column><h:outputText value="R$12,50"/></p:column>
-                        <p:column><h:outputText value="Crédito"/></p:column>
-                        <p:column><p:commandButton value="Estornar" onclick="dlgo.show()"/> </p:column>
-                    </p:row>
+                    <p:column headerText="Data">
+                        <h:outputText value="#{fluxo.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
 
-                    <p:row>
-                        <p:column><h:outputText value="12/12/2012"/></p:column>
-                        <p:column><h:outputText value="Material"/></p:column>
-                        <p:column><h:outputText value="R$50,00"/></p:column>
-                        <p:column><h:outputText value="Débito"/></p:column>
-                        <p:column><p:commandButton value="Estornar" onclick="dlgo.show()"/> </p:column>
-                    </p:row>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{fluxo.descricao}"/>
+                    </p:column> 
 
-                </p:panelGrid>
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{fluxo.valor}"/>
+                    </p:column>
+
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{fluxo.tipo}"/>
+                    </p:column> 
+
+                    <p:column headerText="Situacao">
+                        <h:outputText value="#{fluxo.situacao}"/>
+                    </p:column> 
+
+                    <p:column headerText="Estornar">
+                        <p:commandButton value="Estornar" onclick="dlgo.show();" actionListener="#{gerenciarCaixa.selectEstorno}" rendered="#{gerenciarCaixa.showEstorno(fluxo)}">
+                            <f:attribute name="movimento" value="#{fluxo}"/></p:commandButton>>
+                    </p:column> 
+
+                </p:dataTable>
             </h:form>
         </ui:define>
     </ui:composition>

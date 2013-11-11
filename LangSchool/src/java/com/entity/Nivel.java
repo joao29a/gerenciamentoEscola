@@ -25,6 +25,17 @@ public class Nivel implements Serializable {
         return cargaHoraria;
     }
 
+    public Nivel() {
+        curso = new Curso();
+    }
+    
+    public Nivel(String nome, String descricao, int cargaHoraria, Curso curso) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.cargaHoraria = cargaHoraria;
+        this.curso = curso;
+    }
+    
     public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
@@ -61,11 +72,8 @@ public class Nivel implements Serializable {
         this.descricao = descricao;
     }
 
-    public int getCargaHorario() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHorario(int cargaHorario) {
-        this.cargaHoraria = cargaHorario;
+    @Override
+    public String toString(){
+        return this.nome;
     }
 }

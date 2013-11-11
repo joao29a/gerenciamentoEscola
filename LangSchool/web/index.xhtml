@@ -8,27 +8,6 @@
     <ui:composition template="template.xhtml"> 
         <ui:define name="panelHeader">Página Principal</ui:define>
         <ui:define name="centro">
-            <script>
-                function sw() {
-                    var wind = getElementById("dialog").visibility("false");
-                }
-            </script>
-            <h:form>
-                <p:dialog id="dialog" header="Login" widgetVar="dlg" visible="true" resizable="false">  
-
-                    <h:panelGrid columns="2" cellpadding="5">  
-                        <h:outputLabel for="username" value="Username:" />  
-                        <p:inputText id="username"/>  
-
-                        <h:outputLabel for="password" value="Password:" />  
-                        <h:inputSecret id="password"/>  
-
-                        <p:button onclick="dlg.hide();
-                    sw();" value="Entrar"/>
-                    </h:panelGrid>  
-
-                </p:dialog>
-            </h:form>
         </ui:define>
     </ui:composition>
 </html>

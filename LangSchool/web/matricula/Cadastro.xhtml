@@ -6,58 +6,81 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/template.xhtml">
-        <ui:define name="panelHeader">Matricular</ui:define>
+        <ui:define name="panelHeader">Cadastrar Matricula</ui:define>
         <ui:define name="centro">
-            <h:form>
+            <h:form id="formGrid">
                 <script>
-                    function swNew(){
+                    function swNew() {
                         self.location = "/LangSchool/faces/matricula/Cadastro.xhtml";
                     }
-                    function swBack(){
+                    function swBack() {
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
                 </script>
 
-                <p:dialog header="Matriculado com Sucesso!" widgetVar="confirmation">  
-                    <p:outputLabel value="Deseja matricular outro aluno?" />
+                <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">  
+                    <p:outputLabel value="Deseja cadastrar outra matricula?" />
                     <br/>
                     <br/>
                     <p:separator/>
-                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
-
+                    <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();
+                        swNew();" type="button"/>  
+                    <p:commandButton id="decline" value="Não" onclick="confirmation.hide();
+                        swBack()" type="button"/>   
                 </p:dialog> 
-                <h:panelGrid columns="2" cellpadding="4" style="width: auto;height: 100%">
-                    <h:outputText value="Nome:" />
-                    <p:autoComplete value="Jousué" />
-                    
-                    <h:outputText value="Data:" />
-                    <p:calendar />
 
-                    <h:outputText value="Curso:" />
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="Alemão" />
-                        <f:selectItem itemLabel="Mandarim" />
-                        <f:selectItem itemLabel="Zdslfjklês" />
+                <h:panelGrid id="panel" columns="2" cellpadding="4">
+                    <h:outputText value="Aluno *:" style="width: 100%;text-align: right"/>
+                    <p:selectOneMenu id="somAluno" value="#{gerenciarMatricula.matricula.aluno}" converter="aluno"
+                                     filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                        <f:selectItems value="#{gerenciarMatricula.alunoMan.alunos}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno}"/>
                     </p:selectOneMenu>
-
-                    <h:outputText value="Nível:"/>
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="Zdslfjklês Basico I" />
-                        <f:selectItem itemLabel="Zdslfjklês Basico II" />
-                        <f:selectItem itemLabel="Zdslfjklês Basico III" />
-                        <f:selectItem itemLabel="Zdslfjklês Basico IV" />
-                        <f:selectItem itemLabel="Zdslfjklês Intermediario I" />
-                        <f:selectItem itemLabel="Zdslfjklês Intermediario II" />
-                        <f:selectItem itemLabel="Zdslfjklês Avancado I" />
-                        <f:selectItem itemLabel="Zdslfjklês Avancado II" />
+                </h:panelGrid>
+                
+                <h:panelGrid columns="3" cellpadding="4">
+                    <p:selectOneMenu value="#{gerenciarMatricula.turmaMan.param}">
+                        <f:selectItem itemLabel="Turma" itemValue="turma"/>
+                        <f:selectItem itemLabel="Nivel" itemValue="nivel"/>
+                        <f:selectItem itemLabel="Curso" itemValue="curso"/>
                     </p:selectOneMenu>
+                    <p:inputText value="#{gerenciarMatricula.turmaMan.busca}"/>
+                    <p:commandButton value="Busca" style="width: 100%;text-align: right" actionListener="#{gerenciarMatricula.turmaMan.consultarTurma}"
+                                     update="dtTurmas"/>
+                </h:panelGrid>
 
-                    <p:commandButton value="Matricular" style="color: green" onclick="confirmation.show()"/>
-                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
+                <p:dataTable id="dtTurmas" var="turma" value="#{gerenciarMatricula.turmaMan.turmas}"
+                             emptyMessage="Turmas não encontradas" selectionMode="single" selection="#{gerenciarMatricula.turma}"
+                             rowKey="#{turma.id}" style="font-size: small; margin-bottom: 30px; margin-top: 20px">
+                    <f:facet name="header">
+                        Turmas
+                    </f:facet>
+                    <p:column headerText="Id Turma">
+                        #{turma.id}
+                    </p:column>
+                    <p:column headerText="Nivel">
+                        #{turma.nivel.nome}
+                    </p:column>
+                    <p:column headerText="Turma">
+                        #{turma.turma}
+                    </p:column>
+                    <p:column headerText="Professor">
+                        #{turma.professor.nome}
+                    </p:column>
+                    <p:column headerText="Vagas">
+                        #{turma.vagas}
+                    </p:column>
+                    <p:column headerText="Vagas Restantes">
+                        #{turma.vagasRest}
+                    </p:column>
+                </p:dataTable>
+
+                <p:growl id="turmaGrowl" showDetail="false" sticky="true" life="400"/>
+                <h:panelGrid columns="2">
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" action="#{gerenciarMatricula.cadastrarMatricula}" update="panel, turmaGrowl"/>
+                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
                 </h:panelGrid>
             </h:form>
-
         </ui:define>
     </ui:composition>
 </html>

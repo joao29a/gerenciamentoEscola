@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="template.xhtml"> 
+        <ui:define name="panelHeader">LogIn</ui:define>
+        <ui:define name="centro">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5" id="panelLogin"
+                             style="border-style: solid; border-radius: 10px; padding: 10px;
+                             margin-top: 10%; margin-left: 30%;background-color: aquamarine ">
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{gerenciamentoLogin.login.login}"/>
+
+                    <p:outputLabel id="itSenha" value="Senha:"/>
+                    <p:password value="#{gerenciamentoLogin.login.password}"/>
+
+                    <center>
+                        <p:commandButton value="LOGIN" action="#{gerenciamentoLogin.autenticar}"
+                                         style="font-size: small; margin-top: 10px" update="logGrowl"/>
+                    </center>
+                    <p:growl id="logGrowl" autoUpdate="true" showDetail="false" sticky="true"/>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -9,10 +9,10 @@
         <ui:define name="panelHeader">Cadastrar Fluxo de Caixa</ui:define>
         <ui:define name="centro">
             <script>
-                function swNew(){
+                function swNew() {
                     self.location = "/LangSchool/faces/caixa/Cadastro.xhtml";
                 }
-                function swBack(){
+                function swBack() {
                     self.location = "/LangSchool/faces/index.xhtml";
                 }
             </script>
@@ -22,53 +22,61 @@
                 <br/>
                 <br/>
                 <p:separator/>
-                <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
-                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
+                <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();
+                    swNew();" type="button"/>  
+                <p:commandButton id="decline" value="Não" onclick="confirmation.hide();
+                    swBack();" type="button"/>   
 
             </p:dialog> 
+
             <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true"/>
                 <h:panelGrid columns ="2" cellpadding="4">
-                    <h:outputText value="Descrição: "></h:outputText>
-                    <p:inputText />
-                    <h:outputText value="Valor: "></h:outputText>
-                    <p:inputMask mask="R$999,999"/>
-                    <h:outputText value="Data: "></h:outputText>
-                    <p:calendar />
+                    <h:outputText value="Descrição: "/>
+                    <p:inputText value="#{gerenciarCaixa.fluxo.descricao}" required="true" label="Descrição"/>
+
+                    <h:outputText value="Valor: "/>
+                    <p:inputText value="#{gerenciarCaixa.fluxo.valor}" required="true" label="Valor"/> 
+
+                    <h:outputText value="Data: "/>
+                    <p:calendar navigator="true" showButtonPanel="true" value="#{gerenciarCaixa.fluxo.data}" required="true" label="Data"/>
+
                 </h:panelGrid>
 
-                <p:selectOneRadio>
-                    <f:selectItem itemLabel="Crédito"/>
-                    <f:selectItem itemLabel="Débito"/>
+                <p:selectOneRadio value="#{gerenciarCaixa.fluxo.tipo}" required="true" label="Tipo">
+                    <f:selectItem itemLabel="Crédito" itemValue="Cred"/>
+                    <f:selectItem itemLabel="Débito" itemValue="Deb"/>
                 </p:selectOneRadio>
                 <br/>
                 <h:panelGrid columns="2" cellpadding="4">
-                    <p:commandButton value="Salvar" style="color: green" onclick="confirmation.show()"/>
-                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack()"/>      
+                    <p:commandButton value="Salvar" style="color: green" update="growl" 
+                                     actionListener="#{gerenciarCaixa.cadastrarFluxo}"
+                                     onclick="confirmation.show();"/>
+                    <p:commandButton value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
 
                 <br/>
                 <br/>
                 <p:separator/>
-                <h2>Atualizações Recentes</h2>
+                <h2>Operações Recentes</h2>
                 <br />
-                <p:panelGrid>
-
-                    <f:facet name="header">
-                        <p:row >  
-                            <p:column><h:outputText value="Data" style="font-weight: bolder"/></p:column>
-                            <p:column width="80%"><h:outputText value="Descrição" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="Valor" style="font-weight: bolder"/></p:column>
-                            <p:column><h:outputText value="FormaPgto" style="font-weight: bolder"/></p:column>
-                        </p:row>
-                    </f:facet>
-                    <p:row>
-                        <p:column><h:outputText value="12/12/2012"/></p:column>
-                        <p:column><h:outputText value="Material"/></p:column>
-                        <p:column><h:outputText value="R$50,00"/></p:column>
-                        <p:column><h:outputText value="Débito"/></p:column>
-                    </p:row>
-
-                </p:panelGrid>
+                
+                <p:dataTable id="recent" var="fluxoHoje" value="#{gerenciarCaixa.fluxos}">
+                    <f:facet name="header" ></f:facet> 
+                    <p:column headerText="Data">
+                        <h:outputText value="#{fluxoHoje.data}"/>
+                    </p:column>
+                    <p:column width="80%" headerText="Descrição">
+                        <h:outputText value="#{fluxoHoje.descricao}"/>
+                    </p:column>
+                    <p:column headerText="Valor ">
+                        <h:outputText value="#{fluxoHoje.valor}"/>
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{fluxoHoje.tipo}"/>
+                    </p:column>
+                </p:dataTable>
+                
             </h:form>
         </ui:define>
     </ui:composition>

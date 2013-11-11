@@ -37,5 +37,30 @@ public class Gmessages {
         
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Emitindo...", "Pois é"));
     }
+    public void ativado(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Ativado com Sucesso!", "Pois é"));
+    }
+    public void falhaCadastro(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro no Cadastro!", "Pois é"));
+    }
+    public void dadosObrig(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Preencha os dados obrigatórios!", "Pois é"));
+    }
+    public void falhaLogin(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login inválido. Combinaçao invalida!", "Pois é"));
+    }
+    public void sucessoLogin(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Logged In!", "Pois é"));
+    }
     
 }

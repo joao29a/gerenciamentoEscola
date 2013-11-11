@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
@@ -36,9 +37,20 @@ public class Matricula implements Serializable {
     
     @OneToMany(mappedBy = "matricula")
     private Set<ReposicaoAula> reposicoes;
-
-    @Column(name = "estado")
+    
+    @Column(name="estado")
     private String estado;
+
+    public Matricula() {
+        this.estado = "ativo";
+    }
+    
+    public Matricula(Aluno aluno, Turma turma, Date dataMatricula) {
+        this.aluno = aluno;
+        this.turma = turma;
+        this.dataMatricula = dataMatricula;
+        this.estado = "ativo";
+    }    
     
     public int getId() {
         return id;
@@ -46,6 +58,10 @@ public class Matricula implements Serializable {
 
     public Nota getNotas() {
         return notas;
+    }
+
+    public void setNotas(Nota n) {
+        this.notas = n;
     }
     
     public Aluno getAluno() {
@@ -71,13 +87,28 @@ public class Matricula implements Serializable {
     public void setDataMatricula(Date dataMatricula) {
         this.dataMatricula = dataMatricula;
     }
-    
-    public String getEstado() {
-        return this.estado;
+
+    public ArrayList<Mensalidade> getMensalidade() {
+        return new ArrayList<Mensalidade>(mensalidade);
     }
-    
-    public void alteraEstado() {
-        if(this.estado.equals("inativo")) this.estado = "ativo";
-        this.estado = "inativo";
+
+    public void setMensalidade(Set<Mensalidade> mensalidade) {
+        this.mensalidade = mensalidade;
+    }   
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Set<Presenca> getPresenca() {
+        return presenca;
+    }
+
+    public Set<ReposicaoAula> getReposicoes() {
+        return reposicoes;
     }
 }

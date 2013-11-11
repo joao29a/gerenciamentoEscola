@@ -23,9 +23,6 @@ public class ReposicaoAula implements Serializable {
     @JoinColumn(name = "id_professor")
     private Professor professor;
     
-    @Column(name = "estado")
-    private String estado;
-
     public int getId() {
         return id;
     }
@@ -52,14 +49,5 @@ public class ReposicaoAula implements Serializable {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
-    }
-    
-    public String getEstado() {
-        return this.estado;
-    }
-    
-    public void alteraEstado() {
-        if(this.estado.equals("inativo")) this.estado = "ativo";
-        this.estado = "inativo";
     }
 }

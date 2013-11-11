@@ -4,6 +4,7 @@
  */
 package com.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Turma")
-public class Turma {
+public class Turma implements Serializable {
     @Id 
     @GeneratedValue
     @Column (name = "id")
@@ -21,13 +22,10 @@ public class Turma {
     @ManyToOne
     @JoinColumn(name = "id_professor")
     private Professor professor;
-    
+   
     @ManyToOne
     @JoinColumn(name = "id_nivel")
     private Nivel nivel;
-    
-    @Column (name = "codigo")
-    private int codigo;
     
     @Column (name = "turma")
     private String turma;
@@ -38,6 +36,26 @@ public class Turma {
     @Column (name = "vagas")
     private int vagas;
     
+    @Column (name = "vagas_rest")
+    private int vagasRest;
+    
+    @Column(name = "estado")
+    private String estado;
+    
+    public Turma(){
+        this.estado = "ativo";
+    }
+
+    public Turma(Professor professor, Nivel nivel, String turma, String descricao, int vagas, int vagasRest) {
+        this.professor = professor;
+        this.nivel = nivel;
+        this.turma = turma;
+        this.descricao = descricao;
+        this.vagas = vagas;
+        this.vagasRest = vagasRest;
+        this.estado = "ativo";
+    }
+    
     public void setId(int id){
         this.id = id;
     }
@@ -45,13 +63,21 @@ public class Turma {
     public int getId(){
         return this.id;
     }
-    
-    public void setNivel(Nivel nivel){
+
+    public Nivel getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Nivel nivel) {
         this.nivel = nivel;
     }
     
-    public Nivel getNivel(){
-        return this.nivel;
+    public void setVagasRest(int rest){
+        this.vagasRest = rest;
+    }
+    
+    public int getVagasRest(){
+        return this.vagasRest;
     }
     
     public void setProfessor(Professor professor){
@@ -60,14 +86,6 @@ public class Turma {
     
     public Professor getProfessor(){
         return this.professor;
-    }
-    
-    public void setCodigo(int codigo){
-        this.codigo = codigo;
-    }
-    
-    public int getCodigo(){
-        return this.codigo;
     }
     
     public void setTurma(String turma){
@@ -92,5 +110,29 @@ public class Turma {
     
     public int getVagas(){
         return this.vagas;
-    }    
+    }
+    
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+    
+    public String getEstado(){
+        return this.estado;
+    }
+    
+    public void setEstadoAtivo() {
+        this.estado = "ativo";
+    }
+    
+    public void setEstadoInativo() {
+        this.estado = "inativo";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || !(o instanceof Turma))
+            return false;
+        return (((Turma)o).getTurma().equals(this.turma));
+    }
+    
 }
