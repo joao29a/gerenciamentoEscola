@@ -7,6 +7,25 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Reposição de Aula</ui:define>
+        <ui:define name="help">
+            Como cadastrar!?
+            <br/>
+            1 - Clique na caixa de texto logo à direita do ítem "Data de Reposicao".
+            <br/>
+            2 - Selecione a data de preferência clicando na mesma.
+            <br/>
+            3 - Clique no objeto à direita de onde se lê "Professor"
+            <br/>
+            4 - Selecione o professor responsável para a reposição.
+            <br/>
+            5 - Identifique na tabela abaixo, a matrícula do aluno desejado. <br/>
+            Ela varia conforme o nível que foi escolhido.
+            <br/>
+            6 - Clique então, no botão "adicionar" que está localizado na mesma linha<br/>
+            da matricula do aluno desejado.
+            <br/>
+            ATENÇÃO: TODOS OS CAMPOS COM "*" SÃO OBRIGATÓRIOS!
+        </ui:define>
         <ui:define name="centro">
             <h:form id="formBusca" style="font-size: small">
                 <script>

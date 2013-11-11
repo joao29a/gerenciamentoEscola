@@ -52,5 +52,15 @@ public class Gmessages {
         
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Preencha os dados obrigatórios!", "Pois é"));
     }
+    public void falhaLogin(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login inválido. Combinaçao invalida!", "Pois é"));
+    }
+    public void sucessoLogin(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Logged In!", "Pois é"));
+    }
     
 }

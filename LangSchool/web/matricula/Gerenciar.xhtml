@@ -61,12 +61,12 @@
 
                     <p:column headerText="Açoes">
                         <center>
-                            <p:commandButton icon="ui-icon-zoomin" actionListener="#{gerenciarMatricula.selectMatricula}"
+                            <p:commandButton value="visualizar" actionListener="#{gerenciarMatricula.selectMatricula}"
                                              oncomplete="dlgViz.show();" update=":formDlgMatricula:dlogViz"
                                              style="font-size: small; font-weight: bold">
                                 <f:attribute name="matricula" value="#{matricula}"/>
                             </p:commandButton>
-                            <p:commandButton icon="ui-icon-close" actionListener="#{gerenciarMatricula.selectMatricula}"
+                            <p:commandButton value="excluir" actionListener="#{gerenciarMatricula.selectMatricula}"
                                              oncomplete="dlgRem.show();" update=":formDlgRemMatricula:dlogRem"
                                              style="font-size: small; font-weight: bold">
                                 <f:attribute name="matricula" value="#{matricula}"/>

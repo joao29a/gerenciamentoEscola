@@ -6,11 +6,13 @@ import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import messages.Gmessages;
 
 @ManagedBean
 public class GerenciamentoLogin {
     private LogIn login;
     private EntityPersist ep;
+    private Gmessages msg = new Gmessages();
 
     public GerenciamentoLogin() {
         login = new LogIn();
@@ -30,18 +32,22 @@ public class GerenciamentoLogin {
         String password = login.getPassword();
         
         if (email.equals("") || password.equals("")) {
+            msg.falhaLogin(null);
             return "";
         }
         LogIn logged;
         if ((logged = (LogIn)ep.search(LogIn.class, new CriteriaGroup("eq", "login", email, null),
-                new CriteriaGroup("eq", "password", password, null)).get(0)) == null)
+                new CriteriaGroup("eq", "password", password, null)).get(0)) == null) {
+            msg.falhaLogin(null);
             return "";
+        }
         
         String hierarchy = "secretario";
         System.out.println(logged.getHierarquia() + " Hierarquia");
         if (logged.getHierarquia() != 1) hierarchy = "professor";
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("authenticated", hierarchy);
+        msg.sucessoLogin(null);
         return "/faces/index.xhtml";
     }
     

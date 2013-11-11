@@ -32,7 +32,7 @@ public class DataInDB {
         addTurmas();
         addLogin();
         addMatriculas();
-        addMensalidades(2, 0);
+        addMensalidades(2, 1);
         addFluxoCaixa();
     }
 
@@ -157,6 +157,7 @@ public class DataInDB {
         try {
             //Mensalidade
             for (int i = start; i < start+n; i++) {
+                System.out.println("i " + i);
                 ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "jan"));
                 ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "fev"));
                 ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, i), "mar"));

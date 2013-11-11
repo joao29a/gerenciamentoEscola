@@ -36,14 +36,17 @@
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{gerenciarMatricula.alunoMan.alunos}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno}"/>
                     </p:selectOneMenu>
-
-                    <h:outputText value="Curso *:" />
-                    <p:selectOneMenu id="somCurso" value="#{gerenciarMatricula.curso}" converter="curso"
-                                     filter="true" filterMatchMode="contains">
-                        <f:ajax execute="@this" listener="#{gerenciarMatricula.selCurso}" render="dtTurmas"/>
-                        <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{gerenciarMatricula.cursoMan.cursos}" var="curso" itemLabel="#{curso.nome}" itemValue="#{curso}"/>
+                </h:panelGrid>
+                
+                <h:panelGrid columns="3" cellpadding="4">
+                    <p:selectOneMenu value="#{gerenciarMatricula.turmaMan.param}">
+                        <f:selectItem itemLabel="Turma" itemValue="turma"/>
+                        <f:selectItem itemLabel="Nivel" itemValue="nivel"/>
+                        <f:selectItem itemLabel="Curso" itemValue="curso"/>
                     </p:selectOneMenu>
+                    <p:inputText value="#{gerenciarMatricula.turmaMan.busca}"/>
+                    <p:commandButton value="Busca" style="width: 100%;text-align: right" actionListener="#{gerenciarMatricula.turmaMan.consultarTurma}"
+                                     update="dtTurmas"/>
                 </h:panelGrid>
 
                 <p:dataTable id="dtTurmas" var="turma" value="#{gerenciarMatricula.turmaMan.turmas}"
@@ -72,9 +75,9 @@
                     </p:column>
                 </p:dataTable>
 
-                <p:growl id="turmaGrowl" showDetail="false" sticky="true"/>
+                <p:growl id="turmaGrowl" showDetail="false" sticky="true" life="400"/>
                 <h:panelGrid columns="2">
-                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarMatricula.cadastrarMatricula}" update="panel, turmaGrowl"/>
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" action="#{gerenciarMatricula.cadastrarMatricula}" update="panel, turmaGrowl"/>
                     <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
                 </h:panelGrid>
             </h:form>

@@ -13,16 +13,16 @@
                              style="border-style: solid; border-radius: 10px; padding: 10px;
                              margin-top: 10%; margin-left: 30%;background-color: aquamarine ">
                     <p:outputLabel value="ID:"/>
-                    <p:inputText value="#{gerenciamentoLogin.login.login}" required="true"/>
+                    <p:inputText value="#{gerenciamentoLogin.login.login}"/>
 
                     <p:outputLabel id="itSenha" value="Senha:"/>
-                    <p:password value="#{gerenciamentoLogin.login.password}" required="true"/>
+                    <p:password value="#{gerenciamentoLogin.login.password}"/>
 
                     <center>
                         <p:commandButton value="LOGIN" action="#{gerenciamentoLogin.autenticar}"
-                                         style="font-size: small; margin-top: 10px" update="panelLogin"/>
+                                         style="font-size: small; margin-top: 10px" update="logGrowl"/>
                     </center>
-                    <p:outputLabel/>
+                    <p:growl id="logGrowl" autoUpdate="true" showDetail="false" sticky="true"/>
                 </h:panelGrid>
             </h:form>
         </ui:define>

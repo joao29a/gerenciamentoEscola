@@ -41,9 +41,6 @@ public final class GerenciarMatricula {
         matricula = new Matricula();
         ep = new EntityPersist();
 
-        nivelMan.setNiveis(null);
-        turmaMan.setTurmas(null);
-
         matriculas = new ArrayList<Matricula>();
         getAllActive();
     }
@@ -152,18 +149,20 @@ public final class GerenciarMatricula {
         this.nivelMan = nivelMan;
     }
 
-    public void cadastrarMatricula(ActionEvent ae) {
+    public String cadastrarMatricula() {
         if (turma == null || matricula.getAluno() == null) {
+            System.out.println("Aqui!");
             msg.dadosObrig(null);
-            return;
-        }
-        if (matricula.getTurma().getVagasRest() == 0) {
-            msg.falhaCadastro(ae);
-            return;
+            return "";
         }
         matricula.setTurma(turma);
+        if (matricula.getTurma().getVagasRest() == 0) {
+            msg.falhaCadastro(null);
+            return "";
+        }
         cadastrar(matricula, turma);
         RequestContext.getCurrentInstance().execute("confirmation.show()");
+        return "";
     }
 
     public void cadastrar(Matricula matricula, Turma turma) {
@@ -309,7 +308,8 @@ public final class GerenciarMatricula {
 
     }
 
-    public void selCurso(AjaxBehaviorEvent vc) {
+    public String selCurso() {
+        System.out.println("YOooooo");
         nivelMan.setNiveis(ep.search(Nivel.class, new CriteriaGroup("eq", "curso", curso, null)));
         if (turmaMan.getTurmas() == null) {
             turmaMan.setTurmas(new ArrayList<Turma>());
@@ -320,6 +320,7 @@ public final class GerenciarMatricula {
             turmaMan.getTurmas().addAll(ep.search(Turma.class, new CriteriaGroup("eq", "nivel", n, null)));
         }
         System.out.println("sizeN: " + nivelMan.getNiveis().size());
+        return "";
     }
 
     public void getAllActive() {
