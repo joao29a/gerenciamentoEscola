@@ -65,8 +65,8 @@ public class DataInDB {
     }
     
     public static void addNiveisforTest() {
-        try {            
-            ep.save(new Nivel("Gramática I", "Separado em lições, cada com seu tema e vocabulario próprio. Pratica dos tempos verbais simples e contínuo.", 30,
+        try {
+            ep.save(new Nivel("Gramática I", "Pratica dos tempos verbais simples e contínuo.", 30,
                     (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Ingles", null)).get(0)));
             ep.save(new Nivel("Intensivo", "Curso basico de espanhol com foco na conversação, para turistas.", 30,
                     (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Espanhol", null)).get(0)));

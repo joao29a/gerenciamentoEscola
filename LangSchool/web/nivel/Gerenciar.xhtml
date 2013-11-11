@@ -28,13 +28,13 @@
 
                 <p:dataTable id="niveis" paginator="true" rows="5" paginatorPosition="top"
                              paginatorAlwaysVisible="true" emptyMessage="Nenhum Resultado Encontrado!"
-                             var="nivel" value="#{gerenciarNivel.niveis}">
+                             var="nivel" value="#{gerenciarNivel.niveis}" style="font-size: medium">
 
                     <p:column headerText="Nome" style="width: 120px">
                         <h:outputText value="#{nivel.nome}" ></h:outputText>
                     </p:column>
-                    <p:column headerText="Descrição" style="width: 380px">
-                        <h:outputText value="#{nivel.descricao}"></h:outputText>
+                    <p:column headerText="Descrição" style="" >
+                        <h:outputText value="#{nivel.descricao}" style="width: 100%;word-wrap: break-word;" ></h:outputText>
                     </p:column>
                     <p:column headerText="C/h" style="width: 40px">
                         <h:outputText value="#{nivel.cargaHoraria}"></h:outputText>
