@@ -69,7 +69,7 @@
 
             <h:form id="formDlgProfessor">
                 <p:dialog id="dlogViz" header="Visualização" widgetVar="dlgViz">
-                    <p:scrollPanel style="width: 800px; height: 400px">
+                    <p:scrollPanel style="width: 800px; height: 300px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelViz">
                             <h:outputText value="Nome *:" />
                             <p:inputText value="#{gerenciarProfessor.selecionado.nome}" disabled="true"/>
@@ -114,7 +114,7 @@
                         <h:outputText value=" " />
                         <p:commandButton value="Cancelar" style="color: red" onclick="dlgAlt.hide()"/>
                     </h:panelGrid>
-                    <p:scrollPanel style="width: 800px; height: 400px">
+                    <p:scrollPanel style="width: 800px; height: 300px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelAlt">
                             <h:outputText value="Nome *:" />
                             <p:inputText required="true" value="#{gerenciarProfessor.selecionado.nome}"/>

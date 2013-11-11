@@ -36,8 +36,8 @@
                         <h:outputText value="#{turma.turma}"
                                              style="font-size: small; font-weight: bold"/>
                     </p:column>
-                    <p:column headerText="Curso">
-                        <h:outputText value="#{turma.curso.nome}"
+                    <p:column headerText="Nivel">
+                        <h:outputText value="#{turma.nivel.nome}"
                                              style="font-size: small; font-weight: bold"/>
                     </p:column>
                     <p:column headerText="Vagas Restantes">
@@ -106,7 +106,7 @@
                             <p:inputText value="#{gerenciarTurma.selecionado.turma}" required="true"/>
 
                             <h:outputText value="Descrição *:" />
-                            <p:inputTextarea cols="40" value="#{gerenciarTurma.selecionado.descricao}" required="true"/>
+                            <p:inputTextarea cols="20" value="#{gerenciarTurma.selecionado.descricao}" required="true"/>
 
                             <h:outputText value="Total de Vagas:" />
                             <p:inputText value="#{gerenciarTurma.selecionado.vagas}" required="true"/>
