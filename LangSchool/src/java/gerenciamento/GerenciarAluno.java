@@ -3,10 +3,7 @@ package gerenciamento;
 import com.entity.Aluno;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
@@ -27,17 +24,17 @@ public class GerenciarAluno {
     public List<Aluno> getAlunos() {
         return alunos;
     }
-    
    
-    public void cadastrarAluno(ActionEvent ae) {
+    public void cadastrarAluno(ActionEvent ae) throws Exception {
         System.out.println(aluno.getTelefone());
         System.out.println("Passou por AQUI!");
         try {
             ep.save(aluno);
         } catch (Exception ex) {
-            Logger.getLogger(GerenciarAluno.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         }
     }
+    
     public void consultarAluno(String nome){
         alunos = ep.search(Aluno.class, 
                 new CriteriaGroup("like", "nome", nome, null));

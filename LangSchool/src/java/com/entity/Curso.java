@@ -18,7 +18,7 @@ public class Curso implements Serializable {
     private String descricao;
     @OneToMany(mappedBy="curso")
     private Set<Nivel> niveis;
-    
+
     public int getId() {
         return id;
     }
@@ -42,5 +42,10 @@ public class Curso implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     } 
+    
+    @Override
+    public String toString(){
+        return this.nome;
+    }
     
 }

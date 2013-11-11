@@ -8,78 +8,97 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Gerenciar Curso</ui:define>
         <ui:define name="centro">
-            <h:form>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Pesquisar por:" />
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="Nome" />
-                        <f:selectItem itemLabel="Descricao" />
+            <h:form id="formGerCurso" >
+                <script>
+                    function swBack() {
+                        self.location = "/LangSchool/faces/curso/Gerenciar.xhtml#";
+                    }
+                </script>
+                <p:growl id="growl"/>
+                <h:outputText value="Pesquisar por:" />
+                <h:panelGrid columns="3" cellpadding="5" id="p1">
+                    <p:selectOneMenu value ="#{gerenciarCurso.searchParam}">
+                        <f:selectItem itemLabel="Nome" itemValue="nome" />
+                        <f:selectItem itemLabel="Descricao" itemValue="descricao"/>
                     </p:selectOneMenu>
+
+                    <p:inputText value="#{gerenciarCurso.searchValue}"/>
+                    <p:commandButton update="cursos" 
+                                     
+                                     actionListener="#{gerenciarCurso.consultarCurso}" 
+                                     style="font-size: small;color: blue;font-weight: bold;" 
+                                     value="BUSCAR"
+                                     icon="ui-icon-search" />
                 </h:panelGrid>
 
-                <p:inputText style="width:60%" />
-                <p:button value="Buscar" style="color: blue" />
+                <p:dataTable id="cursos" paginator="true" rows="5" paginatorPosition="top" 
+                             paginatorAlwaysVisible="true" emptyMessage="Nenhum Resultado Encontrado!"  
+                             var="curso" value="#{gerenciarCurso.cursos}" style="font-size: medium;" >
 
-                <p:panelGrid style="margin-top: 20px; width: 80%">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column style="font-weight: bold; color: teal" colspan="5">Resultados da Busca</p:column>
-                        </p:row>
+                    <p:column headerText="Nome" style="width: 260px">
+                        <h:outputText value="#{curso.nome}" ></h:outputText>
+                    </p:column>
+                    <p:column headerText="Descrição" style="width: 440px">
+                        <h:outputText value="#{curso.descricao}"></h:outputText>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bold" 
+                                         actionListener="#{gerenciarCurso.escolherCurso}" 
+                                         oncomplete="dlA.show();"
+                                         process="@this"
+                                         update=":formGerCurso:dlA">
+                            <f:attribute name="curso" value="#{curso}"/>
+                        </p:commandButton>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton update =":formGerCurso:dlE" value="REMOVER" 
+                                         style="font-size: small; font-weight: bold" 
+                                         actionListener="#{gerenciarCurso.escolherCurso}" 
+                                         process="@this"
+                                         oncomplete="dlE.show();">
+                            <f:attribute name="curso" value="#{curso}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
 
-                        <p:row>
-                            <p:column width="100px">Nome</p:column>
-                            <p:column width="300px">Descrição</p:column>
-                            <p:column width="30px">Carga Horária</p:column>
-                            <p:column style="font-weight: bold; color: orangered" colspan="2">Ações</p:column> 
-                        </p:row>
-                    </f:facet>
+                <p:dialog id="dlA" header="Alterar Curso" widgetVar="dlA" closable="false">
 
-                    <p:row>
-                        <p:column style="font-weight: normal; text-align: center">Japonês</p:column>
-                        <p:column style="font-weight: normal; text-align: center">Informações sobre o curso, seu foco e níveis. Entre outras informações.</p:column>
-                        <p:column style="font-weight: normal; text-align: center">30</p:column>
-
-                        <p:column>
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" onclick="dlgoA.show()" />
-                            </div>
-                        </p:column>
-                        <p:column>
-                            <div style="text-align: center">
-                                <p:commandButton value="REMOVER" style="font-size: small; font-weight: bolder; color: red" onclick="dlgoE.show()"/>
-                            </div>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-
-                <p:growl showDetail="false" id="gCurso" />
-                <p:dialog header="Alterar Curso" widgetVar="dlgoA">
-
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Nome:" />
-                        <p:inputText value="Japonês" style="width: 350px "/>
-                        <h:outputText value="Descricao:" />
-                        <p:inputTextarea cols="50" value="Informações sobre o curso, seu foco e níveis. Entre outras informações."/>
-                        <h:outputText value="Carga Horária:" />
-                        <p:inputText value="30" style="width: 50px "/>
+                    <h:panelGrid id="pa" columns="2">
+                        <h:outputText value="Nome: *" />
+                        <p:inputText id="nome" value="#{gerenciarCurso.cursoEscolhido.nome}" style="width: 350px "
+                                     />
+                        <h:outputText value="Descricao: " />
+                        <p:inputTextarea cols="50" value="#{gerenciarCurso.cursoEscolhido.descricao}" maxlength="200"/>
 
                     </h:panelGrid>
                     <h:panelGrid columns="2">
-                        <p:commandButton value="Cancelar" style="color: red" onclick="dlgoA.hide()"/>      
-                        <p:commandButton value="Salvar" style="color: green; margin-left: 10px" actionListener="#{gmessages.alterar}" update="gCurso" oncomplete="dlgoA.hide()"/>
+                        <p:commandButton value="CANCELAR" style="color: red; margin-left: 20px;font-size: small;font-weight: bold;" 
+                                         onclick="dlA.hide();" process="@this" update="dlA,pa,cursos"
+                                         actionListener="#{gerenciarCurso.atualizarForm}"/>  
+
+                        <p:commandButton value="SALVAR" style="color: green; margin-left: 20px; font-size: small;font-weight: bold;" 
+                                         actionListener="#{gerenciarCurso.atualizarCurso}" 
+                                         update="pa, growl,cursos"
+                                         
+                                         />
                     </h:panelGrid>
                 </p:dialog>
 
-                <p:dialog  header="Excluir Curso" widgetVar="dlgoE">
+                <p:dialog id ="dlE" header="Remover Curso" widgetVar="dlE" closable="false">
                     <h:outputLabel value="Tem certeza que deseja remover esse Curso?"/>
-                    <br/>
                     <p:separator/>
-                    <br/>
                     <h:panelGrid columns="2">
-                        <p:commandButton value="Sim" style="color: green" actionListener="#{gmessages.remover}" update="gCurso" oncomplete="dlgoE.hide()"/>
-                        <p:commandButton value="Não" style="color: red"  onclick="dlgoE.hide()"/>      
+
+                        <p:commandButton value="Sim" style="color: green" 
+                                         actionListener="#{gerenciarCurso.removerCurso}" 
+                                         update="cursos, growl"
+                                         process="@this"
+
+                                         onsuccess="dlE.hide()"/>
+                        <p:commandButton value="Não" style="color: red"  onclick="dlE.hide();"/>      
                     </h:panelGrid>
                 </p:dialog>
+
             </h:form>
         </ui:define>
     </ui:composition>
