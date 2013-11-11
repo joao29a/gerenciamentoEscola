@@ -25,7 +25,7 @@ public class Curso implements Serializable {
     }
 
     public Curso() {
-    }
+    }   
     
     public int getId() {
         return id;

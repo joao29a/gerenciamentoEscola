@@ -156,31 +156,31 @@ public class DataInDB {
     public static void addMensalidades() {
         try {
             //Mensalidade
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jan"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "fev"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "mar"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "abr"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "mai"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jun"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "jul"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "ago"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "set"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "out"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "nov"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 1), "dez"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jan"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "fev"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "mar"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "abr"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "mai"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jun"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "jul"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "ago"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "set"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "out"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "nov"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 1), "dez"));
 
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jan"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "fev"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "mar"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "abr"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "mai"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jun"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "jul"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "ago"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "set"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "out"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "nov"));
-            ep.save(new Mensalidade((Matricula) getObjectClass(Mensalidade.class, 2), "dez"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jan"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "fev"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "mar"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "abr"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "mai"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jun"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "jul"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "ago"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "set"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "out"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "nov"));
+            ep.save(new Mensalidade((Matricula) getObjectClass(Matricula.class, 2), "dez"));
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
