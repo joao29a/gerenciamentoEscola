@@ -25,6 +25,7 @@ public class DataInDB {
     }
 
     public static void addAll() {
+        addNiveisforTest();
         addAlunos();
         addProfessores();
         addCursos();
@@ -61,6 +62,24 @@ public class DataInDB {
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void addNiveisforTest() {
+        try {            
+            ep.save(new Nivel("Gramática I", "Separado em lições, cada com seu tema e vocabulario próprio. Pratica dos tempos verbais simples e contínuo.", 30,
+                    (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Ingles", null)).get(0)));
+            ep.save(new Nivel("Intensivo", "Curso basico de espanhol com foco na conversação, para turistas.", 30,
+                    (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Espanhol", null)).get(0)));
+            ep.save(new Nivel("Japones Básico", "Hiragana e Katakana", 30,
+                    (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Japones", null)).get(0)));
+            ep.save(new Nivel("Japones Intermediario", "Kanjis", 30,
+                    (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Japones", null)).get(0)));
+            ep.save(new Nivel("Ingles Empresarial", "Lições direcionadas para Empreendedores.", 30,
+                    (Curso) ep.search(Curso.class, new CriteriaGroup("eq", "nome", "Ingles", null)).get(0)));            
+        } catch (Exception ex) {
+            Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public static void addNiveis() {
