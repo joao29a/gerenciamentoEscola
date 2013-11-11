@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import messages.Gmessages;
+import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
@@ -107,8 +108,15 @@ public class GerenciarTurma {
 
     public void cadastrarTurma(ActionEvent ae) {
         try {
-            turma.setVagasRest(turma.getVagas());
-            ep.save(turma);
+            param = "turma";
+            busca = turma.getTurma();
+            if (busca != null && !busca.equals(""))
+                consultarTurma(ae);
+            if (turma.getNivel() != null && turma.getProfessor() != null && turmas.isEmpty()){
+                turma.setVagasRest(turma.getVagas());
+                ep.save(turma);
+                RequestContext.getCurrentInstance().execute("confirmation.show()");
+            }
         } catch (Exception ex) {
             Logger.getLogger(GerenciarTurma.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,8 +140,10 @@ public class GerenciarTurma {
         } else if (!param.equals("estado")) {
             turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null),
                     new CriteriaGroup("eq", "estado", "ativo", null));
-        } else {
-            turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null));
+        } else if (param.equals("turma"))
+               turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null));
+        else {
+            turmas = ep.search(Turma.class, new CriteriaGroup("like", param, "%" +busca+ "%", null));
         }
     }
 

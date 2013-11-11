@@ -26,7 +26,7 @@
                     <p:commandButton id="confirm" value="Sim" onclick="confirmation.hide();swNew();" type="button"/>  
                     <p:commandButton id="decline" value="Não" onclick="confirmation.hide();swBack()" type="button"/>   
 
-                </p:dialog>                 
+                </p:dialog>   
                 
                 <h:panelGrid id="panel" columns="3" cellpadding="4">
                     <h:outputText value="Nome *:" />
@@ -71,7 +71,7 @@
 
                 <h:panelGrid columns="2">
                     <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarProfessor.cadastrarProfessor}" 
-                                     update="panel" oncomplete="if (args &amp;&amp; !args.validationFailed) confirmation.show()"/>
+                                     update="panel"/>
                     <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
                 </h:panelGrid>
             </h:form>

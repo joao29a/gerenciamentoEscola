@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import messages.Gmessages;
+import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
@@ -83,9 +84,19 @@ public class GerenciarProfessor {
         return ep.search(Professor.class);
     }
     
-    public void cadastrarProfessor(ActionEvent ae) {
+    public void cadastrarProfessor(ActionEvent ae) throws NullPointerException {
         try {
-            ep.save(professor);
+            param = "email";
+            busca = professor.getEmail();
+            if (busca != null && !busca.equals(""))
+                consultarProfessor(ae);
+            if (professor.getRg() != null && professor.getCidade() != null && 
+                    professor.getEndereco() != null && professor.getNome() != null
+                    && professores.isEmpty()){
+                ep.save(professor);
+                RequestContext.getCurrentInstance().execute("confirmation.show()");
+            }
+                
         } catch (Exception ex) {
             Logger.getLogger(GerenciarProfessor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,10 +106,13 @@ public class GerenciarProfessor {
         if(busca.trim().equals(""))
             professores = ep.search(Professor.class, new CriteriaGroup("eq", "estado", "ativo", null));
         else if(!param.equals("estado")) {
-            professores = ep.search(Professor.class, new CriteriaGroup("eq", param, busca, null),
+            professores = ep.search(Professor.class, new CriteriaGroup("like", param, "%" + busca + "%", null),
                     new CriteriaGroup("eq", "estado", "ativo", null));
-        }else
+        }else if (param.equals("email")){
             professores = ep.search(Professor.class, new CriteriaGroup("eq", param, busca, null));
+        } else{
+            professores = ep.search(Professor.class, new CriteriaGroup("eq", param, busca, null));
+        }
     }
 
     public void selectProfessor(ActionEvent ae) {
