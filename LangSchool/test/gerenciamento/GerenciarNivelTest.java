@@ -35,8 +35,13 @@ public class GerenciarNivelTest {
     @BeforeClass
     public static void setUpClass() {
         EntityPersist ep = new EntityPersist();
-        List l = ep.search(Nivel.class);
+        List l;
+        l = ep.search(Curso.class);
         if (l.isEmpty()) {
+            DataInDB.addCursos();
+        }
+        l = ep.search(Nivel.class);
+        if (l == null || l.isEmpty()) {
             DataInDB.addNiveisforTest();
         } else {
             for (Nivel n : (List<Nivel>) l) {
@@ -47,10 +52,6 @@ public class GerenciarNivelTest {
                 }
                 DataInDB.addNiveisforTest();
             }
-        }
-        l = ep.search(Curso.class);
-        if (l.isEmpty()) {
-            DataInDB.addCursos();
         }
     }
 
