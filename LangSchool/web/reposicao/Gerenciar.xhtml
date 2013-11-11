@@ -23,7 +23,8 @@
                 <p:commandButton icon="ui-icon-search" value="Buscar" style="color: blue; margin-left: 10px; margin-bottom: 20px" actionListener="#{gerenciarReposicao.consultarReposicaoAula}" update="dtReposicoes"/>
 
                 <p:dataTable var="reposicao" id="dtReposicoes" value="#{gerenciarReposicao.reposicoes}"
-                             emptyMessage="Reposicao nao encontrado!">
+                             emptyMessage="Reposicao nao encontrado!" paginator="true" rows="5" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PageLinks} {LastPageLink}">
                     <f:facet name="header">
                         Lista de Reposicoes
                     </f:facet>

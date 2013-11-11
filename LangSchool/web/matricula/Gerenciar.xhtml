@@ -27,7 +27,8 @@
                                  actionListener="#{gerenciarMatricula.consultarMatricula}" update="dtMatriculas"/>
 
                 <p:dataTable var="matricula" id="dtMatriculas" value="#{gerenciarMatricula.matriculas}"
-                             emptyMessage="Matricula nao encontrado!">
+                             emptyMessage="Matricula nao encontrado!" paginator="true" rows="5" 
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PageLinks} {LastPageLink}">
                     <f:facet name="header">
                         Lista de Matriculas
                     </f:facet>
