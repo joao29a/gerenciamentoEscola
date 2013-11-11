@@ -92,11 +92,11 @@ public class DataInDB {
 
     public static void addProfessores() {
         try {
-            ep.save(new Professor("Jose Almeida", "1111111111", "25", "Rua 1-1", "PR", "Maringa", 'M'));
-            ep.save(new Professor("Alberto Siraichi", "2222222222", "26", "Rua 2-2", "SP", "Sao Paulo", 'M'));
-            ep.save(new Professor("Joao Uyeno", "3333333333", "27", "Rua 3-3", "MG", "Belo Horizonte", 'M'));
-            ep.save(new Professor("Carla Perassoli", "4444444444", "28", "Rua 4-4", "PE", "Recife", 'F'));
-            ep.save(new Professor("Icaro Juda", "5555555555", "29", "Rua 5-5", "GO", "Goiania", 'M'));
+            ep.save(new Professor("Jose Almeida", "jose@uem.br", "10.123.124-7", "1111111111", "25", "Rua 1-1", "PR", "Maringa", 'M'));
+            ep.save(new Professor("Alberto Siraichi", "alberto@uem.br", "10.111.222-9", "2222222222", "26", "Rua 2-2", "SP", "Sao Paulo", 'M'));
+            ep.save(new Professor("Joao Uyeno", "joao@uem.br", "11.144.222-1", "3333333333", "27", "Rua 3-3", "MG", "Belo Horizonte", 'M'));
+            ep.save(new Professor("Carla Perassoli", "carla@uem.br", "14.999.888-1", "4444444444", "28", "Rua 4-4", "PE", "Recife", 'F'));
+            ep.save(new Professor("Icaro Juda", "icaro@uem.br", "15.333.555-1", "5555555555", "29", "Rua 5-5", "GO", "Goiania", 'M'));
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }

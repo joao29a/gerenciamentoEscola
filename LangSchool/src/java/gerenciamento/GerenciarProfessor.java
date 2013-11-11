@@ -1,6 +1,7 @@
 package gerenciamento;
 
 import com.entity.Professor;
+import com.entity.Turma;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
 import java.util.List;
@@ -18,6 +19,7 @@ public class GerenciarProfessor {
     private EntityPersist ep;
     private String busca, param;
     private List<Professor> professores;
+    private List<Turma> turmas;
     private boolean isAtivo;
     private Gmessages msg = new Gmessages();
 
@@ -95,12 +97,13 @@ public class GerenciarProfessor {
         else if(!param.equals("estado")) {
             professores = ep.search(Professor.class, new CriteriaGroup("eq", param, busca, null),
                     new CriteriaGroup("eq", "estado", "ativo", null));
-        } else
+        }else
             professores = ep.search(Professor.class, new CriteriaGroup("eq", param, busca, null));
     }
 
     public void selectProfessor(ActionEvent ae) {
         selecionado = (Professor) ae.getComponent().getAttributes().get("professor");
+        turmas = (List<Turma>) ep.search(Turma.class, new CriteriaGroup("eq", "professor", selecionado, null));
         setIsAtivo(!"inativo".equals(selecionado.getEstado()));
     }
 
@@ -132,5 +135,13 @@ public class GerenciarProfessor {
         selecionado.setEstadoAtivo();
         msg.ativado(ae);
         setIsAtivo(false);
+    }
+    
+    public void setTurmas(List<Turma> turmas){
+        this.turmas = turmas;
+    }
+    
+    public List<Turma> getTurmas(){
+        return turmas;
     }
 }

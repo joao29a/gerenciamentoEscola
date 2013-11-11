@@ -26,7 +26,6 @@ public class LoginFilter implements Filter {
         
         String url = req.getRequestURL().toString();
         String hierarchy = (String)session.getAttribute("authenticated");
-        //chain.doFilter(request, response);
         if(hierarchy == null && 
                 !url.contains("login.xhtml")) {
             resp.sendRedirect(req.getContextPath()+ "/faces/login.xhtml");

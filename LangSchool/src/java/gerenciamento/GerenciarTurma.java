@@ -128,7 +128,7 @@ public class GerenciarTurma {
             turmas.clear();
             for (Nivel n : (List<Nivel>) ep.search(Nivel.class, new CriteriaGroup("like", "nome", "%" + busca + "%", null))) {
                 turmas.addAll(ep.search(Turma.class, new CriteriaGroup("eq", "nivel", n, null)));
-            }
+            }     
         } else if (!param.equals("estado")) {
             turmas = ep.search(Turma.class, new CriteriaGroup("eq", param, busca, null),
                     new CriteriaGroup("eq", "estado", "ativo", null));

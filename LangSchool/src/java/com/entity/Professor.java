@@ -43,9 +43,11 @@ public class Professor implements Serializable {
         this.estado = "ativo";
     }
 
-    public Professor(String nome, String telefone, String idade, 
+    public Professor(String nome, String email, String rg, String telefone, String idade, 
             String endereco, String uf, String cidade, char sexo) {
         this.nome = nome;
+        this.email = email;
+        this.rg = rg;
         this.endereco = endereco;
         this.uf = uf;
         this.cidade = cidade;

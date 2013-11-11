@@ -69,7 +69,6 @@
 
             <h:form id="formDlgProfessor">
                 <p:dialog id="dlogViz" header="Visualização" widgetVar="dlgViz">
-                    <p:scrollPanel style="width: 800px; height: 300px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelViz">
                             <h:outputText value="Nome *:" />
                             <p:inputText value="#{gerenciarProfessor.selecionado.nome}" disabled="true"/>
@@ -97,9 +96,13 @@
 
                             <h:outputText value="Endereço *:" />
                             <p:inputText required="true" value="#{gerenciarProfessor.selecionado.endereco}" disabled="true"/>
+                            
+                            <h:outputText value="Turmas: "/>
+                            <p:dataList value="#{gerenciarProfessor.turmas}" var="turma" type="ordered">
+                                #{turma.turma}
+                            </p:dataList>
 
                         </h:panelGrid>
-                    </p:scrollPanel>
                 </p:dialog> 
 
                 <p:growl showDetail="false" severity="info" id="gProfessor" />
@@ -114,7 +117,6 @@
                         <h:outputText value=" " />
                         <p:commandButton value="Cancelar" style="color: red" onclick="dlgAlt.hide()"/>
                     </h:panelGrid>
-                    <p:scrollPanel style="width: 800px; height: 300px">
                         <h:panelGrid columns="4" cellpadding="5" id="panelAlt">
                             <h:outputText value="Nome *:" />
                             <p:inputText required="true" value="#{gerenciarProfessor.selecionado.nome}"/>
@@ -146,7 +148,6 @@
                             <h:outputText value="Estado"/>
                             <p:commandButton value="Ativar" actionListener="#{gerenciarProfessor.ativar}" update="gProfessor" disabled="#{gerenciarProfessor.isAtivo}"/>
                         </h:panelGrid>
-                    </p:scrollPanel>
                 </p:dialog> 
             </h:form>
 
