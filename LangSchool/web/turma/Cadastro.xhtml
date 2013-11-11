@@ -49,11 +49,11 @@
                     <p:message for="professor" />
                     
                     <h:outputText value="Nivel *:" />
-                    <p:selectOneMenu id="nivel" required="true" requiredMessage="Selecione um nivel." value="#{gerenciarTurma.turma.nivel}" converter="nivel">
+                    <p:selectOneMenu id="nivel" required="true" value="#{gerenciarTurma.turma.nivel}" converter="nivel">
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{gerenciarTurma.gerenNivel.niveis}" var="nivel" itemLabel="#{nivel.nome}" itemValue="#{nivel}"/>
+                        <f:selectItems value="#{gerenciarTurma.gerenNivel.niveis}" var="n" itemLabel="#{n.nome}" itemValue="#{n}"/>
                     </p:selectOneMenu>
-                    <p:message for="nivel" />
+                    <p:message for="nivel"/>
                     
                     
                 </h:panelGrid>
