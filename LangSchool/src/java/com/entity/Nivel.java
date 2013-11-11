@@ -76,4 +76,13 @@ public class Nivel implements Serializable {
     public String toString(){
         return this.nome;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null)
+            return false;
+        return ((Nivel)o).getNome().equals(this.getNome());
+    }
+    
+    
 }

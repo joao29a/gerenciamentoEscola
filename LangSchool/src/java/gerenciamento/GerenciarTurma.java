@@ -24,7 +24,7 @@ public class GerenciarTurma {
     private List<Turma> turmas;
     private EntityPersist ep;
     private GerenciarProfessor gerenProf;
-    private GerenciarCurso gerenCurso;
+    private GerenciarNivel gerenNivel;
 
     public GerenciarTurma() {
         System.out.println("Ativado");
@@ -32,7 +32,7 @@ public class GerenciarTurma {
         turma = new Turma();
         ep = new EntityPersist();
         gerenProf = new GerenciarProfessor();
-        gerenCurso = new GerenciarCurso();
+        gerenNivel = new GerenciarNivel();
         turmas = ep.search(Turma.class,
                 new CriteriaGroup("eq", "estado", "ativo", turma));
     }
@@ -77,12 +77,12 @@ public class GerenciarTurma {
         this.gerenProf = gerenProf;
     }
 
-    public GerenciarCurso getGerenCurso() {
-        return this.gerenCurso;
+    public GerenciarNivel getGerenNivel() {
+        return this.gerenNivel;
     }
 
-    public void setGerenCurso(GerenciarCurso gerenNivel) {
-        this.gerenCurso = gerenNivel;
+    public void setGerenNivel(GerenciarNivel gerenNivel) {
+        this.gerenNivel = gerenNivel;
     }
 
     public Turma getSelecionado() {
