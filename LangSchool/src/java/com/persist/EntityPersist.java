@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import org.hibernate.*;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 public class EntityPersist extends HibernateUtil {
@@ -34,6 +35,7 @@ public class EntityPersist extends HibernateUtil {
         }
         return method;
     }
+    
 
     //Funcao generica
     private String doSerialize(Object obj, Method method) throws Exception {
@@ -81,6 +83,33 @@ public class EntityPersist extends HibernateUtil {
         return doSerialize(obj, createMethod("updateFunction", Object.class));
     }
     
+    public List searchOrderBy(Class cName, String att, CriteriaGroup... addCrit){
+        init();
+        List crit;
+        Criteria c = session.createCriteria(cName);
+        for(CriteriaGroup cg : addCrit) {
+            c.add(createRestriction(cg));
+        }
+        c.addOrder(Order.asc(att));
+        crit = c.list();
+        session.close();
+        return crit;
+    }
+    
+    public List searchInnerJoin(Class cName, String searchParam){
+        init();
+        List crit;
+        Criteria c = session.createCriteria(cName,"n");
+        c.createAlias("curso", "c");
+        c.add(Restrictions.eqProperty("c.id", "n.curso.id"));
+        c.add(Restrictions.like("c.nome", "%"+searchParam+"%"));
+        c.addOrder(Order.asc("c.nome"));
+        crit = c.list();
+        session.close();
+        return crit;
+
+    }
+    
     public List search(Class cName, CriteriaGroup... addCrit) {
         init();
         List crit;
@@ -105,10 +134,6 @@ public class EntityPersist extends HibernateUtil {
         return null;
     }
     
-    public void updateDb() {
-        init();
-        session.close();
-    }
     public Object mergeObject(Object o) {
         init(); 
         return session.merge(o); 
@@ -116,4 +141,5 @@ public class EntityPersist extends HibernateUtil {
     public void endMerge() {
         session.close(); 
     }
+
 }

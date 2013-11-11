@@ -9,46 +9,32 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Curso</ui:define>
         <ui:define name="centro">
-            <h:form>
-
-                <script>
-                    function swNew(){
-                        self.location = "/LangSchool/faces/curso/Cadastro.xhtml";
-                    }
-                    function swBack(){
+            <h:form id="f1">
+                <script>                    
+                    function swBack() {
                         self.location = "/LangSchool/faces/index.xhtml";
                     }
-                    function swNivel(){
-                        self.location = "/LangSchool/faces/nivel/Cadastro.xhtml";
-                    }
                 </script>
-
-                <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">  
-                    <br/>
-                    <p:outputLabel value="O que deseja fazer?" />
-                    <br/>
-                    <br/>
-                    <p:separator/>
-                    <h:panelGrid columns="3" cellpadding="3">
-                        <p:commandButton id="confirm" value="Cadastrar outro curso" onclick="confirmation.hide();swNew();" type="button"/>  
-                        <p:commandButton id="nivelNew" value="Cadastrar um nivel" onclick="confirmation.hide();swNivel()" type="button"/>   
-                        <p:commandButton id="decline" value="Sair" onclick="confirmation.hide();swBack()" type="button"/>   
-                    </h:panelGrid>
-                </p:dialog> 
-
-                <h:panelGrid id="panel" columns="3" cellpadding="4">
-                    <h:outputText value="Curso *:" />
-                    <p:inputText id="edCurso" value="#{gerenciarCurso.curso.nome}" required="true" style="width: 350px"/>
-                    <p:message for="edCurso" display="icon"/>
-                    
-                    <h:outputText value="Descricao *:" />
-                    <p:inputTextarea id="edDesc" value="#{gerenciarCurso.curso.descricao}" required="true" cols="50"/>
-                    <p:message for="edDesc" display="icon"/>
+               
+                <p:growl id="growl"/>
+                
+                <h:panelGrid columns="2" id ="grid">
+                    <h:outputText value="Nome: *" />
+                    <p:inputText id="nome" style= "width: 350px"  
+                                 value="#{gerenciarCurso.curso.nome}"/>
+                    <h:outputText value="Descricao: " />
+                    <p:inputTextarea maxlength="200" value="#{gerenciarCurso.curso.descricao}" cols="40"/>
                 </h:panelGrid >
+                
                 <h:panelGrid columns="2" cellpadding="4">
-                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarCurso.adicionarCurso}" oncomplete="confirmation.show()" update="panel"/>
-                    <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack()"/>      
+
+                    <p:commandButton value="CANCELAR" style="color: red;font-size: small;font-weight: bold" onclick="swBack();"/>
+                    <p:commandButton value="SALVAR" style="color: green;font-size: small;font-weight: bold" 
+                                     update="growl,grid"
+                                     actionListener="#{gerenciarCurso.cadastrarCurso}"/>
+                     
                 </h:panelGrid>
+                
             </h:form>
         </ui:define>
     </ui:composition>

@@ -39,7 +39,7 @@ public class Nivel implements Serializable {
     public int getCargaHoraria() {
         return cargaHoraria;
     }
-
+    
     public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
@@ -76,15 +76,9 @@ public class Nivel implements Serializable {
         this.descricao = descricao;
     }
 
-    public String getEstado() {
-        return estado;
-    }
 
-    public void setEstadoAtivo() {
-        this.estado = "ativo";
-    }
-
-    public void setEstadoInativo() {
-        this.estado = "inativo";
+    @Override
+    public String toString(){
+        return this.nome;
     }
 }

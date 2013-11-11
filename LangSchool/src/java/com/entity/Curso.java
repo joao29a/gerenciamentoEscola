@@ -31,7 +31,6 @@ public class Curso implements Serializable {
         this.estado = "ativo";
     }
     
-    
     public int getId() {
         return id;
     }
@@ -74,4 +73,9 @@ public class Curso implements Serializable {
             return false;
         return (((Curso)o).getNome().equals(this.nome));
     }
+    
+    public String toString(){
+        return this.nome;
+    }
+    
 }
