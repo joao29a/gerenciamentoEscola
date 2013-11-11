@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Cadastrar Nivel</ui:define>
         <ui:define name="centro">
@@ -17,7 +16,7 @@
                 </script>
                 
                 <p:growl id="growl"/>
-                <h:panelGrid  columns="2" cellpadding="4" id="grid">
+                <h:panelGrid columns="2" cellpadding="4" id="grid">
                     <h:outputText value="Nome: *" />
                     <p:inputText value="#{gerenciarNivel.nivel.nome}" style="width: 350px "/>
                     <h:outputText value="Descricao:" />
@@ -26,16 +25,16 @@
                     <p:spinner min="0" value="#{gerenciarNivel.nivel.cargaHoraria}" />
                     <h:outputText value="Curso: " />
                     <p:selectOneMenu value ="#{gerenciarNivel.nivel.curso.id}" >
-                        <f:selectItems value="#{gerenciarCurso.cursos}" var="c" 
+                        <f:selectItems value="#{gerenciarCurso.cursos}" var="c"
                                        itemValue="#{c.id}" itemLabel="#{c.nome}" />
                     </p:selectOneMenu>
                 </h:panelGrid>
 
                 <h:panelGrid columns="2" cellpadding="4">
                     
-                    <p:commandButton value="CANCELAR" style="color: red;font-size: small;font-weight: bold" 
-                                     onclick="swBack();"/>      
-                    <p:commandButton value="SALVAR" style="color: green;font-size: small;font-weight: bold" 
+                    <p:commandButton value="CANCELAR" style="color: red;font-size: small;font-weight: bold"
+                                     onclick="swBack();"/>
+                    <p:commandButton value="SALVAR" style="color: green;font-size: small;font-weight: bold"
                                      update=":f1:growl, :f1:grid"
                                      actionListener="#{gerenciarNivel.cadastrarNivel}"/>
                 </h:panelGrid>
@@ -43,5 +42,3 @@
         </ui:define>
     </ui:composition>
 </html>
-
-

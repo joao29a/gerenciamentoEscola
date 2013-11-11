@@ -47,7 +47,8 @@
                 
                 <p:dataTable id="dtMatriculas" value="#{gerenciarReposicao.matriculaMan.matriculas}"
                              var="mat" emptyMessage="Nenhuma matrícula encontrada" style="font-size: small" paginator="true" rows="5" 
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PageLinks} {LastPageLink}">
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PageLinks} {LastPageLink}"
+                             paginatorPosition="top">
                     <f:facet name="header">
                         Lista de Matrículas
                     </f:facet>

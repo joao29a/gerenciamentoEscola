@@ -7,10 +7,9 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="panelHeader">Gerenciar Nivel</ui:define>
+        <ui:define name="panelHeader">Gerenciar Niveis</ui:define>
         <ui:define name="centro">
             <h:form id="formGerNivel">
-
                 <h:outputText value="Pesquisar por:" />
                 <h:panelGrid columns="3" cellpadding="5" id="p1">
                     <p:selectOneMenu value="#{gerenciarNivel.searchParam}">
@@ -22,13 +21,13 @@
                     <p:inputText value="#{gerenciarNivel.searchValue}"/>
                     <p:commandButton update="niveis,p1"
                                      style="font-size: small;color: blue;font-weight: bold;"
-                                     actionListener="#{gerenciarNivel.consultarNivel}" 
+                                     actionListener="#{gerenciarNivel.consultarNivel}"
                                      value="BUSCAR"
                                      icon="ui-icon-search"/>
                 </h:panelGrid>
 
-                <p:dataTable id="niveis" paginator="true" rows="5" paginatorPosition="top" 
-                             paginatorAlwaysVisible="true" emptyMessage="Nenhum Resultado Encontrado!"  
+                <p:dataTable id="niveis" paginator="true" rows="5" paginatorPosition="top"
+                             paginatorAlwaysVisible="true" emptyMessage="Nenhum Resultado Encontrado!"
                              var="nivel" value="#{gerenciarNivel.niveis}">
 
                     <p:column headerText="Nome" style="width: 120px">
@@ -44,8 +43,8 @@
                         <h:outputText value="#{nivel.curso.nome}" ></h:outputText>
                     </p:column>
                     <p:column>
-                        <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" 
-                                         actionListener="#{gerenciarNivel.escolherNivel}" 
+                        <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder"
+                                         actionListener="#{gerenciarNivel.escolherNivel}"
                                          process="@this"
                                          update =":formGerNivel:dlA"
                                          oncomplete ="dlA.show();">
@@ -53,14 +52,14 @@
                         </p:commandButton>
                     </p:column>
                     <p:column>
-                        <p:commandButton value="REMOVER" style="font-size: small; font-weight: bolder" 
-                                         actionListener="#{gerenciarNivel.escolherNivel}" 
+                        <p:commandButton value="REMOVER" style="font-size: small; font-weight: bolder"
+                                         actionListener="#{gerenciarNivel.escolherNivel}"
                                          process="@this"
                                          update =":formGerNivel:dlE"
                                          oncomplete ="dlE.show();">
                                          <f:attribute name="nivel" value="#{nivel}"/>
                         </p:commandButton>
-                    </p:column> 
+                    </p:column>
                 </p:dataTable>
 
                 <p:growl id="growl"/>
@@ -76,36 +75,36 @@
                         <p:spinner min="0" value="#{gerenciarNivel.nivelEscolhido.cargaHoraria}" />
                         <h:outputText value="Curso: " />
                         <p:selectOneMenu value ="#{gerenciarNivel.nivelEscolhido.curso.id}" >
-                            <f:selectItems value="#{gerenciarNivel.cursos}" var="c" 
+                            <f:selectItems value="#{gerenciarNivel.cursos}" var="c"
                                            itemValue="#{c.id}" itemLabel="#{c.nome}" />
                         </p:selectOneMenu>
                     </h:panelGrid>
                     
                     <h:panelGrid columns="2">
-                        <p:commandButton value="CANCELAR" 
-                                         style="color: red; margin-left: 20px;font-size: small;font-weight: bold;" 
-                                         onclick="dlA.hide();" process="@this" 
+                        <p:commandButton value="CANCELAR"
+                                         style="color: red; margin-left: 20px;font-size: small;font-weight: bold;"
+                                         onclick="dlA.hide();" process="@this"
                                          update="dlA,pa,niveis" actionListener="#{gerenciarNivel.consultarNivel}"
                                          />
                         
-                        <p:commandButton value="SALVAR" 
-                                         style="color: green; margin-left: 20px; font-size: small;font-weight: bold;" 
-                                         actionListener="#{gerenciarNivel.atualizarNivel}" 
+                        <p:commandButton value="SALVAR"
+                                         style="color: green; margin-left: 20px; font-size: small;font-weight: bold;"
+                                         actionListener="#{gerenciarNivel.atualizarNivel}"
                                          update="pa, growl,niveis"
                                          />
                     </h:panelGrid>
                     
                 </p:dialog>
                 
-                 <p:dialog  id="dlE" header="Excluir Nivel" widgetVar="dlE" closable="false">
+                 <p:dialog id="dlE" header="Excluir Nivel" widgetVar="dlE" closable="false">
                     <h:outputLabel value="Tem certeza que deseja remover esse nivel?"/>
                     <p:separator/>
                     <h:panelGrid columns="2">
-                        <p:commandButton value="Sim" style="color: green" 
-                                         actionListener="#{gerenciarNivel.removerNivel}" 
+                        <p:commandButton value="Sim" style="color: green"
+                                         actionListener="#{gerenciarNivel.removerNivel}"
                                          update="niveis,growl" oncomplete="dlE.hide()"
                                          process="@this"/>
-                        <p:commandButton value="Não" style="color: red"  onclick="dlE.hide();"/>   
+                        <p:commandButton value="Não" style="color: red" onclick="dlE.hide();"/>
                     </h:panelGrid>
                 </p:dialog>
 
@@ -113,4 +112,3 @@
         </ui:define>
     </ui:composition>
 </html>
-

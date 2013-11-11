@@ -20,24 +20,20 @@ public class Nivel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;
-    @Column(name = "estado")
-    private String estado;
 
-    public Nivel(){
-        this.estado = "ativo";
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 
+    public Nivel() {
+        curso = new Curso();
+    }
+    
     public Nivel(String nome, String descricao, int cargaHoraria, Curso curso) {
         this.nome = nome;
         this.descricao = descricao;
         this.cargaHoraria = cargaHoraria;
         this.curso = curso;
-        this.estado = "ativo";
-    }
-    
-  
-    public int getCargaHoraria() {
-        return cargaHoraria;
     }
     
     public void setCargaHoraria(int cargaHoraria) {
@@ -75,7 +71,6 @@ public class Nivel implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
 
     @Override
     public String toString(){
