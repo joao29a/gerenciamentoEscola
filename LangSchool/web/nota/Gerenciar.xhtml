@@ -7,121 +7,89 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition template="/template.xhtml">
+        <ui:define name="panelHeader">Gerenciar Notas</ui:define>
         <ui:define name="centro">
-            <h:form>
+            <h:form id="gerNota">
+                <br/>
                 <h:panelGrid columns="2">
                     <h:outputText value="Pesquisar por:" />
-                    <p:selectOneMenu>
-                        <f:selectItem itemLabel="Curso" itemValue="1" />
-                        <f:selectItem itemLabel="Nome" itemValue="2" />
-                        <f:selectItem itemLabel="ID Matrícula" itemValue="3" />
-                        <f:selectItem itemLabel="Turma" itemValue="4" />
+                    <p:selectOneMenu value="#{gerenciarNota.param}">
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <f:selectItem itemLabel="Curso" itemValue="curso"/>
+                        <f:selectItem itemLabel="Turma" itemValue="turma"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
 
-                <p:inputText style="width:60%" />
-                <p:button value="Buscar" style="color: blue" />
+                <p:inputText style="width:60%" value="#{gerenciarNota.busca}"/>
+                <p:commandButton value="BUSCAR" style="color: blue; font-size: small; margin-left: 20px" icon="ui-icon-search" 
+                                 actionListener="#{gerenciarNota.consultarMatricula}" update="tabNotas"/>
+                <br/>
+                <p:separator/>
+                
+                <p:dataTable id="tabNotas" var="matricula" value="#{gerenciarNota.busMat.matriculas}" 
+                             emptyMessage="Nenhum dado encontrado.">
+                    
+                    <f:facet name="header">Resultados da Busca</f:facet>
+                    <p:column headerText="ID Matricula">
+                        <center>
+                            <h:outputText value="#{matricula.id}"/>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <center>
+                            <h:outputText value="#{matricula.aluno.nome}"/>
+                        </center>    
+                    </p:column>
+                    <p:column headerText="Curso">
+                        <center>
+                            <h:outputText value="#{matricula.turma.nivel.curso.nome}"/>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Nível">
+                        <center>
+                            <h:outputText value="#{matricula.turma.nivel.nome}"/>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Turma">
+                        <center>
+                            <h:outputText value="#{matricula.turma.turma}"/>
+                        </center>
+                    </p:column>
 
-                <p:panelGrid style="margin-top: 20px; width: 80%">
-                    <f:facet name="header">
-                        <p:row>
-                            <p:column style="font-weight: bold; color: teal" colspan="320">Resultados da Busca</p:column>
-                        </p:row>
+                    <p:column headerText="Ações" style="color: orangered">
+                        <center>
+                            <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" 
+                                             actionListener="#{gerenciarNota.selectMatricula}" 
+                                             oncomplete="visualizar.show();" update=":visuNota:visu">
+                                <f:attribute name="matricula" value="#{matricula}"/>
+                            </p:commandButton>
+                            <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" 
+                                             actionListener="#{gerenciarNota.selectMatricula}" 
+                                             oncomplete="alterar.show();" update=":altNota:alt">
+                                <f:attribute name="matricula" value="#{matricula}"/>
+                            </p:commandButton>
+                            <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" 
+                                             actionListener="#{gerenciarNota.consultarTurma}" 
+                                             oncomplete="turma.show();" update=":altNotaTurm:turm">
+                                <f:attribute name="matricula" value="#{matricula}"/>
+                            </p:commandButton>
+                        </center>
+                    </p:column>
 
-                        <p:row>
-                            <p:column colspan="20">ID Matrícula</p:column>
-                            <p:column colspan="100">Nome</p:column>
-                            <p:column colspan="1">Idade</p:column>
-                            <p:column colspan="49">Curso</p:column>
-                            <p:column colspan="50">Nível</p:column>
-                            <p:column colspan="20">Turma</p:column>
-                            <p:column style="font-weight: bold; color: orangered" colspan="60">Ações</p:column> 
-                        </p:row>
-                    </f:facet>
-
-                    <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">003</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Massao Uyeno</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">22</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Japonês</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Medio III</p:column>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">02</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">001</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Jousué dos Santos Junior</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">22</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Alemão</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Básico I</p:column>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">04</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" onclick="dlgo.show();" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" onclick="dlgo1.show();" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" onclick="dlgo2.show();" />
-                            </div>
-                        </p:column>
-                    </p:row>
-
-                    <p:row>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">005</p:column>
-                        <p:column colspan="100" style="font-weight: normal; text-align: center">Yukio Siraichi</p:column>
-                        <p:column colspan="1" style="font-weight: normal; text-align: center">20</p:column>
-                        <p:column colspan="49" style="font-weight: normal; text-align: center">Mandarim</p:column>
-                        <p:column colspan="50" style="font-weight: normal; text-align: center">Avançado II</p:column>
-                        <p:column colspan="20" style="font-weight: normal; text-align: center">07</p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="VISUALIZAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="ALTERAR" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                        <p:column colspan="20">
-                            <div style="text-align: center">
-                                <p:commandButton value="TURMA INTEIRA" style="font-size: small; font-weight: bolder" />
-                            </div>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-
-                <p:dialog header="Visualização" widgetVar="dlgo">
+                </p:dataTable>
+            </h:form>
+            
+            <h:form id="visuNota">
+                <p:dialog id="visu" header="Visualização" widgetVar="visualizar" >
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
-                        <p:inputText value="001" style="width: 60%" />
+                        <p:inputText value="#{gerenciarNota.selecionado.id}" disabled="true"/>
                         <h:outputText value="Nome:" />
-                        <p:inputText value="Jousué dos Santos Junior" style="width: 80%" />
+                        <p:inputText value="#{gerenciarNota.selecionado.aluno.nome}" disabled="true"/>
                         <h:outputText value="Curso:" />
-                        <p:inputText value="Russo" />
+                        <p:inputText value="#{gerenciarNota.selecionado.turma.nivel.curso.nome}" disabled="true"/>
                         <h:outputText value="Nível:" />
-                        <p:inputText value="Basico I" />
+                        <p:inputText value="#{gerenciarNota.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
                     <p:panelGrid style="margin-top: 20px">
                         <f:facet name="header">
@@ -138,74 +106,48 @@
                             </p:row>
 
                             <p:row>
-                                <p:column colspan="30" style="text-align: center">60</p:column>
-                                <p:column colspan="30" style="text-align: center">50</p:column>
-                                <p:column colspan="30" style="text-align: center">80</p:column>
-                                <p:column colspan="30" style="text-align: center">90</p:column>
-                                <p:column colspan="30" style="text-align: center">70</p:column>
-                            </p:row>
-                        </f:facet>    
-                    </p:panelGrid>
-                </p:dialog> 
-
-                <p:growl id="gNota" showDetail="false" />
-
-                <p:dialog header="Alterar Nota" widgetVar="dlgo1">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="ID Matrícula:" />
-                        <p:inputText value="001" style="width: 60%" />
-                        <h:outputText value="Nome:" />
-                        <p:inputText value="Jousué dos Santos Junior" style="width: 80%" />
-                        <h:outputText value="Curso:" />
-                        <p:inputText value="Russo" />
-                        <h:outputText value="Nível:" />
-                        <p:inputText value="Basico I" />
-                    </h:panelGrid>
-
-                    <p:panelGrid style="margin-top: 20px">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column style="font-weight: bold; color: teal" colspan="260">NOTAS</p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 1</p:column>
-                                <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 2</p:column>
-                                <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 3</p:column>
-                                <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 4</p:column>
-                                <p:column colspan="30" style="font-weight: bold; color: orangered">Média Final</p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="30">
-                                    <p:inputText value="60" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota1}" disabled="true"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="50" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota2}" disabled="true"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="80" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota3}" disabled="true"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="90" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota4}" disabled="true"/>
                                 </p:column>
-                                <p:column colspan="30" style="font-weight: bold">70</p:column>
+                                <p:column colspan="30" style="text-align: center">
+                                    <h:outputText style="text-align: center; width: 40px" 
+                                                  value="#{gerenciarNota.selecionado.notas.media}"/>
+                                </p:column>
                             </p:row>
                         </f:facet>    
                     </p:panelGrid>
                     <br/>
                     <p:separator/>
-                    <br/>
-                    <p:commandButton value="CANCELAR" ajax="true" style="color: red; font-weight: bolder; font-size: small" onclick="dlgo1.hide()"/>
-                    <p:commandButton value="SALVAR" ajax="true" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" update="gNota" oncomplete="dlgo1.hide()" />
-                </p:dialog>
-
-                <p:dialog header="Notas da Turma" widgetVar="dlgo2">
+                    <p:commandButton value="SAIR" ajax="true" style="color: red; 
+                                     font-weight: bolder; font-size: small" onclick="visualizar.hide()"/>
+                </p:dialog> 
+            </h:form>     
+            
+            <h:form id="altNota">
+                <p:growl id="aNota" showDetail="false" severity="info"/> 
+                <p:dialog id="alt" header="Alterar Nota" widgetVar="alterar">
                     <h:panelGrid columns="2">
-                        <h:outputText value="Turma" />
-                        <p:inputText value="04" />
-                        <h:outputText value="Professor:" />
-                        <p:inputText value="Natasha" />
+                        <h:outputText value="ID Matrícula:" />
+                        <p:inputText value="#{gerenciarNota.selecionado.id}" disabled="true"/>
+                        <h:outputText value="Nome:"/>
+                        <p:inputText value="#{gerenciarNota.selecionado.aluno.nome}" disabled="true"/>
+                        <h:outputText value="Curso:"/>
+                        <p:inputText value="#{gerenciarNota.selecionado.turma.nivel.curso.nome}" disabled="true"/>
+                        <h:outputText value="Nível:"/>
+                        <p:inputText value="#{gerenciarNota.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
 
                     <p:panelGrid style="margin-top: 20px">
@@ -215,7 +157,6 @@
                             </p:row>
 
                             <p:row>
-                                <p:column colspan="60" style="font-weight: bold">Aluno</p:column>
                                 <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 1</p:column>
                                 <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 2</p:column>
                                 <p:column colspan="30" style="font-weight: bold; color: blue">Avaliação 3</p:column>
@@ -224,66 +165,121 @@
                             </p:row>
 
                             <p:row>
-                                <p:column colspan="60">
-                                    <h:outputText value="Jousué dos Santos Junior" />
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota1}" disabled="false"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="60" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota2}" disabled="false"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="50" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota3}" disabled="false"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="80" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <p:inputText style="text-align: center; width: 40px" 
+                                                 value="#{gerenciarNota.selecionado.notas.nota4}" disabled="false"/>
                                 </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="90" style="width: 40px; text-align: center"/>
+                                <p:column colspan="30" style="text-align: center">
+                                    <h:outputText style="text-align: center; width: 40px" 
+                                                  value="#{gerenciarNota.selecionado.notas.media}"/>
                                 </p:column>
-                                <p:column colspan="30" style="font-weight: bold">70</p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="60">
-                                    <h:outputText value="Oswaldo Marques Souza" />
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="40" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="30" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="30" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="60" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30" style="font-weight: bold">40</p:column>
-                            </p:row>     
-                            <p:row>
-                                <p:column colspan="60">
-                                    <h:outputText value="Manoel Rocha" />
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="80" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="70" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="80" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30">
-                                    <p:inputText value="90" style="width: 40px; text-align: center"/>
-                                </p:column>
-                                <p:column colspan="30" style="font-weight: bold">80</p:column>
                             </p:row>
                         </f:facet>    
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder" onclick="dlgo2.hide()"/>
-                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" update="gNota" oncomplete="dlgo2.hide()" />
+                    <p:separator/>
+                    <p:commandButton value="CANCELAR" ajax="true" style="color: red; font-size: small" oncomplete="alterar.hide();" update=":gerNota:tabNotas"/>
+                    <p:commandButton value="SALVAR" ajax="true" style="color: green; font-size: small; margin-left: 20px" 
+                                     action="#{gerenciarNota.alterarNota}"  oncomplete="alterar.hide()" update="aNota, :gerNota:tabNotas"/>
                 </p:dialog>
             </h:form>
+            
+            <h:form id="altNotaTurm"> 
+                <p:growl id="tNota" showDetail="false" severity="info"/>
+                <p:dialog id="turm" header="Alterar por Turma" widgetVar="turma">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Turma:"/>
+                        <p:inputText value="#{gerenciarNota.seleciona.turma.id}" disabled="true"/>
+                        <h:outputText value="Professor:"/>
+                        <p:inputText value="#{gerenciarNota.seleciona.turma.professor.nome}" disabled="true"/>
+                        <h:outputText value="Curso:"/>
+                        <p:inputText value="#{gerenciarNota.seleciona.turma.nivel.curso.nome}" disabled="true"/>
+                        <h:outputText value="Nivel:"/>
+                        <p:inputText value="#{gerenciarNota.seleciona.turma.nivel.nome}" disabled="true"/>                        
+                    </h:panelGrid>
+                    
+                    <p:dataTable var="tabTurm" value="#{gerenciarNota.alunosTurm}" 
+                             emptyMessage="Nenhum dado encontrado.">
+                        <f:facet name="header">Notas da Turma</f:facet>
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="Id" rowspan="2"/>
+                                <p:column headerText="Aluno" rowspan="2"/>
+                                <p:column headerText="Notas" colspan="5" style="color: teal"/>
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="Avaliação 1" style="color: blue"/>
+                                <p:column headerText="Avaliação 2" style="color: blue"/>
+                                <p:column headerText="Avaliação 3" style="color: blue"/>
+                                <p:column headerText="Avaliação 4" style="color: blue"/>
+                                <p:column headerText="Média Final" style="color: orangered"/>
+                            </p:row>
+                        </p:columnGroup>
+                        
+                        <p:column>
+                            <center>
+                                <h:outputText value="#{tabTurm.id}"/>
+                            </center>    
+                        </p:column>
+                        <p:column> 
+                            <center>
+                                <h:outputText value="#{tabTurm.aluno.nome}"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <p:inputText style="text-align: center; width: 40px" 
+                                             value="#{tabTurm.notas.nota1}" disabled="false"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <p:inputText style="text-align: center; width: 40px" 
+                                            value="#{tabTurm.notas.nota2}" disabled="false"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <p:inputText style="text-align: center; width: 40px" 
+                                            value="#{tabTurm.notas.nota3}" disabled="false"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <p:inputText style="text-align: center; width: 40px" 
+                                            value="#{tabTurm.notas.nota4}" disabled="false"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <h:outputText style="text-align: center; width: 40px" 
+                                            value="#{tabTurm.notas.media}"/>
+                            </center>
+                        </p:column>
+                        
+                    </p:dataTable>
+                    <br/>
+                    <p:separator/>
+                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small" 
+                                     oncomplete="turma.hide();" update=":gerNota:tabNotas"/>
+                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 20px" 
+                                     action="#{gerenciarNota.todaTurm(gerenciarNota.alunosTurm)}" 
+                                     oncomplete="turma.hide()" update="tNota, :gerNota:tabNotas"/>
+                </p:dialog>
+            </h:form>
+
         </ui:define>
     </ui:composition>
 </html>

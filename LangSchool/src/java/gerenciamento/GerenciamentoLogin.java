@@ -4,6 +4,7 @@ import com.entity.LogIn;
 import com.entity.Professor;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import messages.Gmessages;
@@ -35,16 +36,16 @@ public class GerenciamentoLogin {
             msg.falhaLogin(null);
             return "";
         }
-        LogIn logged;
-        if ((logged = (LogIn)ep.search(LogIn.class, new CriteriaGroup("eq", "login", email, null),
-                new CriteriaGroup("eq", "password", password, null)).get(0)) == null) {
+        List<LogIn> logged;
+        if ((logged = (List<LogIn>)ep.search(LogIn.class, new CriteriaGroup("eq", "login", email, null),
+                             new CriteriaGroup("eq", "password", password, null))) == null) {
             msg.falhaLogin(null);
             return "";
         }
         
         String hierarchy = "secretario";
-        System.out.println(logged.getHierarquia() + " Hierarquia");
-        if (logged.getHierarquia() != 1) hierarchy = "professor";
+        System.out.println(logged.get(0).getHierarquia() + " Hierarquia");
+        if (logged.get(0).getHierarquia() != 1) hierarchy = "professor";
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("authenticated", hierarchy);
         msg.sucessoLogin(null);

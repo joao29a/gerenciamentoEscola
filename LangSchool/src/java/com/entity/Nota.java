@@ -26,12 +26,15 @@ public class Nota implements Serializable {
     private int nota3;
     @Column(name = "nota_4")
     private int nota4;
+    @Column(name = "media")
+    private String media;
 
     public Nota() {
         this.nota1 = 0;
         this.nota2 = 0;
         this.nota3 = 0;
         this.nota4 = 0;
+        this.media = null;
     }
     
     public Nota(int nota1, int nota2, int nota3, int nota4) {
@@ -76,4 +79,14 @@ public class Nota implements Serializable {
     public void setNota4(int nota4) {
         this.nota4 = nota4;
     }
+
+    public String getMedia() {
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
+    }
+    
+    
 }
