@@ -8,6 +8,14 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Consultar e Estornar Fluxo de Caixa</ui:define>
         <ui:define name="centro">
+            <p:dialog header="Erro por data" widgetVar="erroDatas">  
+                <p:outputLabel value="A data referente ao início é sucessora à data referente ao fim! Corrija, por favor" />
+                <br/>
+                <br/>
+                <p:separator/>
+                <p:commandButton id="confirm1" value="Sim" onclick="erroDatas.hide();
+                        swNew();" type="button"/>  
+            </p:dialog> 
             <h:form>
                 <h:outputText value="Pesquisar por:"/>
                 <p:outputPanel id="customPanel">
@@ -30,7 +38,7 @@
                         <p:inputText style="margin-left: 10px" value="#{gerenciarCaixa.buscavalor}"/>
                     </h:panelGrid>
                     <br/>
-                    <h:panelGrid columns="6">
+                    <h:panelGrid columns="6" id="perro">
                         <p:radioButton id="opt2" for="customRadio" itemIndex="1"/>
 
                         <h:outputLabel for="opt2" value="Data: "/> 
@@ -46,12 +54,12 @@
                 <br/><br/>
                 <p:growl showDetail="false" id="gCaixa"/>
 
-                <p:dialog header="Visualização" widgetVar="dlgo">
+                <p:dialog header="Estorno" widgetVar="dlgo">
                     <h:outputText value="Tem certeza disto?"/>
                     <br/>
                     <p:separator/>
-                    <br/>
-                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos" oncomplete="dlgo.hide()"/>
+                    Lembre-se: Esta operação é irreversível!<br/>
+                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos,gCaixa,perro"/>
                     <p:commandButton value="Não" style="margin-left: 20px" onclick="dlgo.hide();"/>
                 </p:dialog>
 
@@ -94,4 +102,3 @@
     </ui:composition>
 
 </html>
-

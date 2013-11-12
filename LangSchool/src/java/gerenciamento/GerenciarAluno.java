@@ -3,6 +3,7 @@ package gerenciamento;
 import com.entity.Aluno;
 import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.sound.midi.Soundbank;
 import messages.Gmessages;
+import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
@@ -38,6 +40,10 @@ public class GerenciarAluno {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+    }
+
+    public void setEp(EntityPersist ep) {
+        this.ep = ep;
     }
 
     public String getBusca() {
@@ -85,15 +91,17 @@ public class GerenciarAluno {
     }
 
     public void cadastrarAluno() {
-        System.out.println("alal");
         if (aluno.getNome().equals("") || aluno.getDataNasc() == null
                 || aluno.getSexo() == 'x' || aluno.getIdade().equals("")
                 || aluno.getTelefone().equals("") || aluno.getCidade().equals("")) {
-            System.out.println("alala1");
             msg.dadosObrig(null);
+        } else if (aluno.getNome().length() < 4 || (aluno.getNomeMae().length() < 4 && aluno.getNomeMae().length() != 0)
+                || (aluno.getNomePai().length() < 4 && aluno.getNomePai().length() != 0) || aluno.getEndereco().length() < 4) {
+            msg.tamanhoInsuf(null);
         } else {
             try {
                 ep.save(aluno);
+                RequestContext.getCurrentInstance().execute("confirmation.show()");
             } catch (Exception ex) {
                 Logger.getLogger(GerenciarAluno.class.getName()).log(Level.SEVERE, null, ex);
             }

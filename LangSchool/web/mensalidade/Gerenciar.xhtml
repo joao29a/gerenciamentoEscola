@@ -17,7 +17,6 @@
                         <f:selectItem itemLabel="Curso" itemValue="curso"/>
                         <f:selectItem itemLabel="ID Matrícula" itemValue="matricula"/>
                         <f:selectItem itemLabel="Turma" itemValue="turma"/>
-                        <f:selectItem itemLabel="Estado Pagto" itemValue="pgto"/> 
                     </p:selectOneMenu>
                 </h:panelGrid>
 
@@ -38,7 +37,7 @@
                         <h:outputText value="#{matricula.turma.nivel.nome}"/></p:column>
                     <p:column headerText="Turma" >
                         <h:outputText value="#{matricula.turma.turma}"/></p:column>
-                 
+
 
                     <p:column headerText="Ações">
                         <center>
@@ -48,29 +47,29 @@
                                              actionListener="#{gerenciarMensalidade.selectMensalidade}"
                                              update=":formDlgViz:visualiza">
                                 <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
-                            
+
                             <p:commandButton value="ALTERAR" 
                                              style="font-size: small; font-weight: bolder" 
                                              oncomplete="dlgoAltera.show();"
                                              actionListener="#{gerenciarMensalidade.selectMensalidade}"
-                                             update=":formDlgAlt:altera">
+                                             update=":formDlgAlt:alteraDlg">
                                 <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
-                            
+
                             <p:commandButton value="TURMA INTEIRA" 
                                              style="font-size: small; font-weight: bolder" 
                                              oncomplete="dlgoTurma.show();"
                                              actionListener="#{gerenciarMensalidade.selectMensalidade}"
                                              update=":formDlgTurma:turma">
                                 <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
-                            
+
                         </center>
                     </p:column>
                 </p:dataTable>
             </h:form>
-            
+
             <h:form id="formDlgViz">
                 <p:dialog id ="visualiza" header="Visualização" widgetVar="dlgoVisualiza">
-                    
+
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
                         <p:inputText value="#{gerenciarMensalidade.selecionado.id}" disabled="true"/>
@@ -81,31 +80,21 @@
                         <h:outputText value="Nível:" />
                         <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
-                    
-                    <p:panelGrid style="margin-top: 20px">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
-                            </p:row>
-                            <p:row>
-                                <p:columns var="mes_x" style="font-weight: bold" headerText="#{mes_x.mes}">
-                                <h:outputText style="text-align: center" value="#{mes_x.situMensalidade}"/></p:columns>
-                            </p:row>                     
-                        </f:facet>    
-                    </p:panelGrid>
-                    
+
                     <p:dataTable value="#{gerenciarMensalidade.LMat}" var="mat">
+                        <f:facet name="header"><h:outputText value="MÊS" style="font-weight: bold; color: teal"/></f:facet>
                         <p:columns value="#{gerenciarMensalidade.dados}" var="mes" headerText="#{mes.mes}">
-                            #{mes.situMensalidade}
+                            <h:outputText style=" #{gerenciarMensalidade.defineVisual(mes)}" value="#{mes.situMensalidade}"/>
                         </p:columns>
                     </p:dataTable>
                 </p:dialog> 
             </h:form>
-            
+
+
             <h:form id="formDlgAlt">
                 <p:growl id="gMensalidade" showDetail="false" />
 
-                <p:dialog id="altera" header="Alterar Mensalidade" widgetVar="dlgoAltera">
+                <p:dialog id="alteraDlg" header="Alterar Mensalidade" widgetVar="dlgoAltera">
                     <h:panelGrid columns="2">
                         <h:outputText value="ID Matrícula:" />
                         <p:inputText value="#{gerenciarMensalidade.selecionado.id}" disabled="true"/>
@@ -117,51 +106,24 @@
                         <p:inputText value="#{gerenciarMensalidade.selecionado.turma.nivel.nome}" disabled="true"/>
                     </h:panelGrid>
 
-                    <p:panelGrid style="margin-top: 20px">
-                        <f:facet name="header">
-                            <p:row>
-                                <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
-                            </p:row>
-
-                            <p:row>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jan</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Fev</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Mar</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Abr</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Mai</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jun</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Jul</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Ago</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Set</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Out</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Nov</p:column>
-                                <p:column colspan="10" style="font-weight: bold; color: blue">Dez</p:column>
-                            </p:row>
-
-                        </f:facet>    
-                        <p:row>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                            <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PEN" onclick="dlgPg.show();"/></p:column>
-                        </p:row>
-                    </p:panelGrid>
+                    <p:dataTable id="dadosAltera" value="#{gerenciarMensalidade.LMat}" var="mat">
+                        <f:facet name="header"><h:outputText value="MÊS" style="font-weight: bold; color: teal"/></f:facet>
+                        <p:columns id="colunaAtt" value="#{gerenciarMensalidade.dados}" var="mesc" headerText="#{mesc.mes}">
+                            <p:commandButton id="btAtu" disabled="#{gerenciarMensalidade.conferePgto(mesc)}" value="#{mesc.situMensalidade}" 
+                                             style="#{gerenciarMensalidade.defineCor(mesc)}"
+                                             onclick="dlgPg.show();" actionListener="#{gerenciarMensalidade.pagamento}" update=":formDlgAlt:dadosAltera">
+                                <f:attribute  name="mes" value="#{mesc}"/>
+                            </p:commandButton>
+                        </p:columns>
+                    </p:dataTable>
                     <br/>
                     <p:separator/>
                     <br/>
-                    <p:commandButton value="CANCELAR" ajax="true" style="color: red; font-weight: bolder; font-size: small" onclick="dlgo1.hide();"/>
-                    <p:commandButton value="SALVAR" ajax="true" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" oncomplete="dlgo1.hide()" />
+
                 </p:dialog>
             </h:form>
-            
+
+
             <h:form id="formDlgTurma">
                 <p:dialog id="turma" header="Mensalidades da Turma" widgetVar="dlgoTurma">
                     <h:panelGrid columns="2">
@@ -255,7 +217,7 @@
                     <br/> 
 
                     <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small" onclick="dlgPg.hide();"/>
-                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.pago}" oncomplete="dlgPg.hide()" />
+                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gerenciarMensalidade.pagamento}" oncomplete="dlgPg.hide()"/>
                 </p:dialog>
             </h:form>
         </ui:define>

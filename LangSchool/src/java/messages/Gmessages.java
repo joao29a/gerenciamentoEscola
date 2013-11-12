@@ -12,6 +12,12 @@ public class Gmessages {
         
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Alterado com sucesso!", "Pois é"));
     }
+    public void tamanhoInsuf(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Tamanho de dado insuficiente!", "Pois é"));
+    }
+    
     public void remover(ActionEvent ae) {
         FacesContext context = FacesContext.getCurrentInstance();
         

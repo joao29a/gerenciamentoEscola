@@ -16,7 +16,6 @@
                     self.location = "/LangSchool/faces/index.xhtml";
                 }
             </script>
-
             <p:dialog header="Cadastrado com Sucesso!" widgetVar="confirmation">  
                 <p:outputLabel value="Deseja cadastrar outro registro?" />
                 <br/>
@@ -30,28 +29,27 @@
             </p:dialog> 
 
             <h:form>
-                <p:growl id="growl" showDetail="true" sticky="true"/>
-                <h:panelGrid columns ="2" cellpadding="4">
-                    <h:outputText value="Descrição: "/>
+                <h:panelGrid columns ="2" cellpadding="4" id="panel">
+                    <h:outputText value="Descrição: *"/>
                     <p:inputText value="#{gerenciarCaixa.fluxo.descricao}" required="true" label="Descrição"/>
 
-                    <h:outputText value="Valor: "/>
+                    <h:outputText value="Valor: *"/>
                     <p:inputText value="#{gerenciarCaixa.fluxo.valor}" required="true" label="Valor"/> 
 
-                    <h:outputText value="Data: "/>
+                    <h:outputText value="Data: *"/>
                     <p:calendar navigator="true" showButtonPanel="true" value="#{gerenciarCaixa.fluxo.data}" required="true" label="Data"/>
 
                 </h:panelGrid>
+                <p:growl id="growl" showDetail="true" sticky="true"/>
 
-                <p:selectOneRadio value="#{gerenciarCaixa.fluxo.tipo}" required="true" label="Tipo">
+                <p:selectOneRadio value="#{gerenciarCaixa.fluxo.tipo}" required="true" label="Tipo *">
                     <f:selectItem itemLabel="Crédito" itemValue="Cred"/>
                     <f:selectItem itemLabel="Débito" itemValue="Deb"/>
                 </p:selectOneRadio>
                 <br/>
                 <h:panelGrid columns="2" cellpadding="4">
-                    <p:commandButton value="Salvar" style="color: green" update="growl" 
-                                     actionListener="#{gerenciarCaixa.cadastrarFluxo}"
-                                     onclick="confirmation.show();"/>
+                    <p:commandButton value="Salvar" style="color: green" update="panel,growl" 
+                                     actionListener="#{gerenciarCaixa.cadastrarFluxo}"/>
                     <p:commandButton value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
 
@@ -60,7 +58,7 @@
                 <p:separator/>
                 <h2>Operações Recentes</h2>
                 <br />
-                
+
                 <p:dataTable id="recent" var="fluxoHoje" value="#{gerenciarCaixa.fluxos}">
                     <f:facet name="header" ></f:facet> 
                     <p:column headerText="Data">
@@ -76,9 +74,8 @@
                         <h:outputText value="#{fluxoHoje.tipo}"/>
                     </p:column>
                 </p:dataTable>
-                
+
             </h:form>
         </ui:define>
     </ui:composition>
 </html>
-

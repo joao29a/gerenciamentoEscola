@@ -104,13 +104,12 @@
                     <h:outputText value="Telefone da Mãe:" />
                     <p:inputMask mask="(99)09999-9999" value="#{gerenciarAluno.aluno.telefoneMae}" />
                 </h:panelGrid>
-
+                <p:growl id="nomeGrowl" showDetail="false" sticky="true"/>
                 <h:panelGrid columns="2">
-                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarAluno.cadastrarAluno}" update="panel" oncomplete="confirmation.show()"/>
+                    <p:commandButton icon="ui-icon-plus" value="Salvar" style="color: green" actionListener="#{gerenciarAluno.cadastrarAluno}" update="panel,nomeGrowl"/>
                     <p:commandButton icon="ui-icon-close" value="Cancelar" style="color: red" onclick="swBack();"/>      
                 </h:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>
 </html>
-

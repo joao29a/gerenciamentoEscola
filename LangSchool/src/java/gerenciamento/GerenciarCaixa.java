@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import messages.Gmessages;
+import org.primefaces.context.RequestContext;
 
 @ViewScoped
 @ManagedBean
@@ -24,6 +25,7 @@ public class GerenciarCaixa {
     private Date data1, data2;
     private String param;
     private EntityPersist ep = new EntityPersist();
+    private Gmessages msg = new Gmessages();
 
     public GerenciarCaixa() {
         fluxos = ep.search(FluxoCaixa.class);
@@ -94,10 +96,16 @@ public class GerenciarCaixa {
     }
 
     public void cadastrarFluxo() {
-        try {
-            ep.save(fluxo);
-        } catch (Exception ex) {
-            Logger.getLogger(GerenciarCaixa.class.getName()).log(Level.SEVERE, null, ex);
+        if (fluxo.getDescricao().equals("") || fluxo.getData() == null
+                || fluxo.getSituacao().equals("") || fluxo.getValor() == 0.0) {
+            msg.dadosObrig(null);
+        } else {
+            try {
+                ep.save(fluxo);
+                RequestContext.getCurrentInstance().execute("confirmation.show()");
+            } catch (Exception ex) {
+                Logger.getLogger(GerenciarCaixa.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -106,7 +114,12 @@ public class GerenciarCaixa {
             this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, buscavalor, null));
         } else if (param.equals("data")) {
             nomecriterio = "between";
-            this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, data1, data2));
+            if (data2.compareTo(data1)>0){
+                this.fluxos = ep.search(FluxoCaixa.class, new CriteriaGroup(nomecriterio, param, data1, data2));
+            } else {
+                RequestContext.getCurrentInstance().execute("erroDatas.show()");
+            }
+            
         }
     }
 
@@ -126,8 +139,9 @@ public class GerenciarCaixa {
             }
         }
     }
-    public boolean showEstorno(FluxoCaixa x){
-        if (x.getSituacao().equals("OK")){
+
+    public boolean showEstorno(FluxoCaixa x) {
+        if (x.getSituacao().equals("OK")) {
             return true;
         } else {
             return false;
