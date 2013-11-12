@@ -59,7 +59,7 @@
                     <br/>
                     <p:separator/>
                     Lembre-se: Esta operação é irreversível!<br/>
-                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos,gCaixa,perro"/>
+                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos,gCaixa,perro" oncomplete="dlgo.hide()"/>
                     <p:commandButton value="Não" style="margin-left: 20px" onclick="dlgo.hide();"/>
                 </p:dialog>
 
