@@ -16,7 +16,7 @@
                 <p:commandButton id="confirm1" value="Sim" onclick="erroDatas.hide();
                         swNew();" type="button"/>  
             </p:dialog> 
-            <h:form>
+            <h:form id="formCx">
                 <h:outputText value="Pesquisar por:"/>
                 <p:outputPanel id="customPanel">
 
@@ -59,7 +59,7 @@
                     <br/>
                     <p:separator/>
                     Lembre-se: Esta operação é irreversível!<br/>
-                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update="fluxos,gCaixa,perro" oncomplete="dlgo.hide()"/>
+                    <p:commandButton value="Sim" actionListener="#{gerenciarCaixa.estornar}" update=":formCx:fluxos,:formCx:gCaixa" oncomplete="dlgo.hide()"/>
                     <p:commandButton value="Não" style="margin-left: 20px" onclick="dlgo.hide();"/>
                 </p:dialog>
 
@@ -87,13 +87,21 @@
                         <h:outputText value="#{fluxo.tipo}"/>
                     </p:column> 
 
-                    <p:column headerText="Situacao">
-                        <h:outputText value="#{fluxo.situacao}"/>
+                    <p:column headerText="Situacao" width="45">
+                        <center>
+                            <h:outputText value="#{fluxo.situacao}"/>
+                        </center>   
                     </p:column> 
 
                     <p:column headerText="Estornar">
-                        <p:commandButton value="Estornar" onclick="dlgo.show();" actionListener="#{gerenciarCaixa.selectEstorno}" rendered="#{gerenciarCaixa.showEstorno(fluxo)}">
-                            <f:attribute name="movimento" value="#{fluxo}"/></p:commandButton>>
+                        <center>
+                            <p:commandButton value="Estornar" onclick="dlgo.show();" 
+                                             actionListener="#{gerenciarCaixa.selectEstorno}" 
+                                             rendered="#{gerenciarCaixa.showEstorno(fluxo)}"
+                                             style="font-size: small; ">
+                                <f:attribute name="movimento" value="#{fluxo}"/></p:commandButton>
+                        </center>
+
                     </p:column> 
 
                 </p:dataTable>

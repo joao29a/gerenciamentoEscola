@@ -39,16 +39,16 @@ public class DataInDB {
 
     public static void addAlunos() {
         try {
-            ep.save(new Aluno("Marcos Augusto", new Date(1993, 2, 17), "111111111",
-                    "13", "rua 11111 -111", "PR", "Maringa", 'M'));
-            ep.save(new Aluno("Lucas SSolipra", new Date(1992, 4, 27), "222222222",
-                    "29", "rua 22222 -22", "PR", "Astorga", 'F'));
-            ep.save(new Aluno("Joao Miranda", new Date(1989, 11, 13), "33333333",
-                    "2", "rua 3333 3-333", "PR", "Arapongas", 'M'));
-            ep.save(new Aluno("Claudio Santos", new Date(2000, 7, 9), "4444444444",
-                    "29", "rua 444444- -444", "PR", "Campo Mourao", 'M'));
-            ep.save(new Aluno("Rodrigo Guilherme", new Date(1991, 12, 29), "5555555555",
-                    "37", "rua 55555 -555", "PR", "Foz do Iguacu", 'M'));
+            ep.save(new Aluno("Marcos Augusto", new Date(1993, 2, 17), "(44)3111-4323",
+                    13, "rua 11111 -111", "PR", "Maringa", 'M'));
+            ep.save(new Aluno("Lucas SSolipra", new Date(1992, 4, 27), "(44)3222-4323",
+                    29, "rua 22222 -22", "PR", "Astorga", 'F'));
+            ep.save(new Aluno("Joao Miranda", new Date(1989, 11, 13), "(41)3222-4323",
+                    2, "rua 3333 3-333", "PR", "Arapongas", 'M'));
+            ep.save(new Aluno("Claudio Santos", new Date(2000, 7, 9), "(11)3444-4323",
+                    28, "rua 444444- -444", "SP", "Sao Paulo", 'M'));
+            ep.save(new Aluno("Rodrigo Guilherme", new Date(1991, 12, 29), "(44)3555-4323",
+                    37, "rua 55555 -555", "PR", "Foz do Iguacu", 'M'));
         } catch (Exception ex) {
             Logger.getLogger(DataInDB.class.getName()).log(Level.SEVERE, null, ex);
         }

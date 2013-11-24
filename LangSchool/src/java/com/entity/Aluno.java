@@ -24,7 +24,7 @@ public class Aluno implements Serializable {
     private Date dataNasc;
     
     @Column(name = "idade")
-    private String idade;
+    private int idade;
     
     @Column(name = "rg")
     private String rg;
@@ -66,7 +66,7 @@ public class Aluno implements Serializable {
         estado = "ativo";
     }
 
-    public Aluno(String nome, Date dataNasc, String telefone, String idade, String endereco, String uf, String cidade, char sexo) {
+    public Aluno(String nome, Date dataNasc, String telefone, int idade, String endereco, String uf, String cidade, char sexo) {
         this.nome = nome;
         this.dataNasc = dataNasc;
         this.idade = idade;
@@ -99,11 +99,11 @@ public class Aluno implements Serializable {
         this.dataNasc = dataNasc;
     }
 
-    public String getIdade() {
+    public int getIdade() {
         return idade;
     }
 
-    public void setIdade(String idade) {
+    public void setIdade(int idade) {
         this.idade = idade;
     }
 
@@ -173,6 +173,13 @@ public class Aluno implements Serializable {
 
     public String getEstado() {
         return estado;
+    }
+    
+    public boolean es() {
+        if (this.estado.equals("ativo")){
+            return true;
+        } 
+        return false;
     }
 
     public void setEstadoAtivo() {
