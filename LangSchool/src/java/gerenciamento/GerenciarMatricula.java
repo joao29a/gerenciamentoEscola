@@ -270,6 +270,7 @@ public final class GerenciarMatricula {
     public void removerMatricula(ActionEvent ae) {
         System.out.println("Removendo");
         msg.remover(ae);
+        remover(selecionado);
         busca = "";
         param = "Nome";
         consultarMatricula(ae);

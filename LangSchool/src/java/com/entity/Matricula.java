@@ -4,6 +4,7 @@ import com.hibernate.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -39,6 +40,9 @@ public class Matricula implements Serializable {
 
     public Matricula() {
         this.estado = "ativo";
+        this.presenca = new HashSet<Presenca>();
+        this.mensalidade = new HashSet<Mensalidade>();
+        this.reposicoes = new HashSet<ReposicaoAula>();
     }
 
     public Matricula(Aluno aluno, Turma turma, Date dataMatricula) {
@@ -46,6 +50,9 @@ public class Matricula implements Serializable {
         this.turma = turma;
         this.dataMatricula = dataMatricula;
         this.estado = "ativo";
+        this.presenca = new HashSet<Presenca>();
+        this.mensalidade = new HashSet<Mensalidade>();
+        this.reposicoes = new HashSet<ReposicaoAula>();
     }
 
     public int getId() {

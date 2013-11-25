@@ -53,6 +53,7 @@ public class GerenciarMatriculaTest {
         for (Matricula m : (List<Matricula>)ep.search(Matricula.class)) {
             try {
                 ep.delete(m);
+                ep.delete(m.getNotas());
             } catch (Exception ex) {
                 Logger.getLogger(GerenciarMatriculaTest.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -101,7 +102,7 @@ public class GerenciarMatriculaTest {
         
         matricula = null;
         matricula = (Matricula)ep.search(Matricula.class, new CriteriaGroup("eq", "id", matId, null)).get(0); // Pega do bd novamente
-        assertFalse("Antigo id diferente do novo", turmaId == matricula.getId());
+        assertFalse("Antigo id diferente do novo", turmaId == matricula.getTurma().getId());
     }
     
     @Test
@@ -145,11 +146,10 @@ public class GerenciarMatriculaTest {
         matrMan.cadastrar(matricula, matricula.getTurma()); // Cadastrado
         matrMan.cadastrar(matricula2, matricula2.getTurma()); // Cadastrado
         matrMan.cadastrar(matricula3, matricula3.getTurma()); // Cadastrado
-        
         matrMan.remover(matricula2);
         
         matrMan.consultar("nome", "");
-        assertTrue("Found everybody! Empty", matrMan.getMatriculas().size() == 2);
+        assertTrue("Found everybody! Empty" + matrMan.getMatriculas().size(), matrMan.getMatriculas().size() == 2);
         matrMan.consultar("nome", "marcos");
         assertFalse("Marcos Found! Nome", matrMan.getMatriculas().isEmpty());
         matrMan.consultar("curso", "Ingles");
