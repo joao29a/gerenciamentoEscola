@@ -10,6 +10,7 @@ import com.persist.EntityPersist;
 import com.util.CriteriaGroup;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +23,7 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 @ManagedBean
 public class GerenciarMensalidade {
-
-    private GerenciarMatricula gerMat;
+    private GerenciarMatricula gerMat,turmaMat;
     private List<Mensalidade> dados, mensalidades;
     private Mensalidade mensalidade;
     private List<Aluno> aluno;
@@ -32,7 +32,7 @@ public class GerenciarMensalidade {
     private List<Nivel> nivel;
     private Matricula selecionado;
     private EntityPersist ep;
-    private List<Matricula> lMat, ordenado;
+    private List<Matricula> lMat;
     private Gmessages msg = new Gmessages();
     private String busca, param;
     private Object matriculas;
@@ -42,6 +42,7 @@ public class GerenciarMensalidade {
         ep = new EntityPersist();
         mensalidades = ep.search(Mensalidade.class);
         gerMat = new GerenciarMatricula();
+        turmaMat = new GerenciarMatricula();
     }
 
     public Mensalidade getMensalidade() {
@@ -124,6 +125,14 @@ public class GerenciarMensalidade {
         this.lMat = lMat;
     }
 
+    public GerenciarMatricula getTurmaMat() {
+        return turmaMat;
+    }
+
+    public void setTurmaMat(GerenciarMatricula turmaMat) {
+        this.turmaMat = turmaMat;
+    }
+
     public enum Mes {
 
         jan(1),
@@ -145,13 +154,12 @@ public class GerenciarMensalidade {
         }
     }
 
-    public void selectMensalidade(ActionEvent ae) {
+    public void selectMensalidade(ActionEvent ae) throws Exception {
         selecionado = (Matricula) ae.getComponent().getAttributes().get("matricula");
 
         //Atribuicao extra para linkagem do mês
         retomarSessao();
         lMat = new ArrayList<Matricula>();
-        ordenado = new ArrayList<Matricula>();
         lMat.add(selecionado);
         int mes;
         Calendar hoje = Calendar.getInstance();
@@ -161,7 +169,7 @@ public class GerenciarMensalidade {
                 m.setSituMensalidade("DEVE");
             }
         }
-
+        Collections.sort(dados);
     }
 
     public String defineCor(Mensalidade m) {
@@ -175,19 +183,6 @@ public class GerenciarMensalidade {
             return "color: white;font-size: 60%; background-color: green";
         }
         return "font-size: 60%; background-color: white";
-    }
-
-    public String defineVisual(Mensalidade m) {
-        if (m.getSituMensalidade().equals("PEN")) {
-            return "";
-        }
-        if (m.getSituMensalidade().equals("DEVE")) {
-            return "color: white;background-color: red";
-        }
-        if (m.getSituMensalidade().equals("OK")) {
-            return "color: white;background-color: green";
-        }
-        return "background-color: white";
     }
 
     public String conferePgto(Mensalidade m) {
@@ -209,9 +204,7 @@ public class GerenciarMensalidade {
         }
     }
 
-    public void consultar(ActionEvent ae) {
-        System.out.println(param);
-        System.out.println(busca);
+    public void consultar() {
         if (busca.trim().equals("")) {
             gerMat.setMatriculas(null);
             //mensalidades = ep.search(Mensalidade.class, new CriteriaGroup("ge", "id", 1, null));     
@@ -264,7 +257,13 @@ public class GerenciarMensalidade {
             Logger.getLogger(GerenciarMensalidade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void verTurmaInteira() {
+    
+    public void verTurmaInteira(ActionEvent ae) {
+        selecionado = (Matricula) ae.getComponent().getAttributes().get("matricula");
+        param = "turma";
+        busca = selecionado.getTurma().getTurma();
+        consultar();
+        
+        
     }
 }

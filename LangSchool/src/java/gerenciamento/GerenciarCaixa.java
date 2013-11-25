@@ -19,7 +19,7 @@ public class GerenciarCaixa {
 
     private FluxoCaixa fluxo = new FluxoCaixa();
     private FluxoCaixa selecionado;
-    private List<FluxoCaixa> fluxos;
+    private List<FluxoCaixa> fluxos,hoje;
     private float buscavalor;
     private String nomecriterio;
     private Date data1, data2;
@@ -29,6 +29,8 @@ public class GerenciarCaixa {
 
     public GerenciarCaixa() {
         fluxos = ep.search(FluxoCaixa.class);
+        hoje = ep.search(FluxoCaixa.class, 
+                new CriteriaGroup("eq", "data", new Date(), null));
     }
 
     public FluxoCaixa getSelecionado() {
@@ -53,6 +55,14 @@ public class GerenciarCaixa {
 
     public void setFluxos(List<FluxoCaixa> fluxos) {
         this.fluxos = fluxos;
+    }
+
+    public List<FluxoCaixa> getHoje() {
+        return hoje;
+    }
+
+    public void setHoje(List<FluxoCaixa> hoje) {
+        this.hoje = hoje;
     }
 
     public float getBuscavalor() {

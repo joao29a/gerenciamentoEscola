@@ -59,12 +59,12 @@
                 <h2>Operações Recentes</h2>
                 <br />
 
-                <p:dataTable id="recent" var="fluxoHoje" value="#{gerenciarCaixa.fluxos}">
+                <p:dataTable id="recent" var="fluxoHoje" value="#{gerenciarCaixa.hoje}">
                     <f:facet name="header" ></f:facet> 
                     <p:column headerText="Data">
                         <h:outputText value="#{fluxoHoje.data}"/>
                     </p:column>
-                    <p:column width="80%" headerText="Descrição">
+                    <p:column width="60%" headerText="Descrição">
                         <h:outputText value="#{fluxoHoje.descricao}"/>
                     </p:column>
                     <p:column headerText="Valor ">

@@ -69,4 +69,20 @@ public class Gmessages {
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Logged In!", "Pois é"));
     }
     
+    public void idadeInvalida(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Idade inválida!", "Pois é"));
+    } 
+    public void dataInvalida(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Data de nascimento inválida!", "Pois é"));
+    } 
+        public void rgExiste(ActionEvent ae) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"RG Já existe!", "Pois é"));
+    } 
+    
 }

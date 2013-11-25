@@ -57,16 +57,14 @@
 
                             <p:commandButton value="TURMA INTEIRA" 
                                              style="font-size: small; font-weight: bolder" 
-                                             oncomplete="dlgoTurma.show();"
-                                             actionListener="#{gerenciarMensalidade.selectMensalidade}"
-                                             update=":formDlgTurma:turma">
+                                             actionListener="#{gerenciarMensalidade.verTurmaInteira}"
+                                             update="dtMensalidade">
                                 <f:attribute name="matricula" value="#{matricula}"/></p:commandButton>
 
                         </center>
                     </p:column>
                 </p:dataTable>
             </h:form>
-
             <h:form id="formDlgViz">
                 <p:dialog id ="visualiza" header="Visualização" widgetVar="dlgoVisualiza">
 
@@ -84,13 +82,11 @@
                     <p:dataTable value="#{gerenciarMensalidade.LMat}" var="mat">
                         <f:facet name="header"><h:outputText value="MÊS" style="font-weight: bold; color: teal"/></f:facet>
                         <p:columns value="#{gerenciarMensalidade.dados}" var="mes" headerText="#{mes.mes}">
-                            <h:outputText style=" #{gerenciarMensalidade.defineVisual(mes)}" value="#{mes.situMensalidade}"/>
+                            <p:commandButton  style=" #{gerenciarMensalidade.defineCor(mes)}" disabled="true" value="#{mes.situMensalidade}"/>
                         </p:columns>
                     </p:dataTable>
                 </p:dialog> 
             </h:form>
-
-
             <h:form id="formDlgAlt">
                 <p:growl id="gMensalidade" showDetail="false" />
 
@@ -108,11 +104,11 @@
 
                     <p:dataTable id="dadosAltera" value="#{gerenciarMensalidade.LMat}" var="mat">
                         <f:facet name="header"><h:outputText value="MÊS" style="font-weight: bold; color: teal"/></f:facet>
-                        <p:columns id="colunaAtt" value="#{gerenciarMensalidade.dados}" var="mesc" headerText="#{mesc.mes}">
-                            <p:commandButton id="btAtu" disabled="#{gerenciarMensalidade.conferePgto(mesc)}" value="#{mesc.situMensalidade}" 
-                                             style="#{gerenciarMensalidade.defineCor(mesc)}"
+                        <p:columns id="colunaAtt" value="#{gerenciarMensalidade.dados}" var="mesA" headerText="#{mesA.mes}">
+                            <p:commandButton id="btAtu" disabled="#{gerenciarMensalidade.conferePgto(mesA)}" value="#{mesA.situMensalidade}" 
+                                             style="#{gerenciarMensalidade.defineCor(mesA)}"
                                              onclick="dlgPg.show();" actionListener="#{gerenciarMensalidade.pagamento}" update=":formDlgAlt:dadosAltera">
-                                <f:attribute  name="mes" value="#{mesc}"/>
+                                <f:attribute  name="mes" value="#{mesA}"/>
                             </p:commandButton>
                         </p:columns>
                     </p:dataTable>
@@ -123,92 +119,6 @@
                 </p:dialog>
             </h:form>
 
-
-            <h:form id="formDlgTurma">
-                <p:dialog id="turma" header="Mensalidades da Turma" widgetVar="dlgoTurma">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Turma" />
-                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.turma}" disabled="true"/>
-                        <h:outputText value="Professor:" />
-                        <p:inputText value="#{gerenciarMensalidade.selecionado.turma.professor.nome}" disabled="true"/>
-                    </h:panelGrid>
-
-                    <p:scrollPanel style="width: 800px; height: 300px">
-                        <p:panelGrid style="margin-bottom: 20px">
-                            <f:facet name="header">
-                                <p:row>
-                                    <p:column style="font-weight: bold; color: teal" colspan="50">-</p:column>
-                                    <p:column style="font-weight: bold; color: teal" colspan="120">MÊS</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column colspan="50" style="font-weight: bold; color: blue">NOME</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Jan</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Fev</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Mar</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Abr</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Mai</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Jun</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Jul</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Ago</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Set</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Out</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Nov</p:column>
-                                    <p:column colspan="10" style="font-weight: bold; color: blue">Dez</p:column>
-                                </p:row>
-
-                            </f:facet>    
-                            <p:row>
-                                <p:column colspan="50" style="text-align: center; font-weight: bold">Massao Uyeno</p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="50" style="text-align: center; font-weight: bold">Jousué dos Santos Junior</p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: red" value="DEVE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                            </p:row>
-                            <p:row>
-                                <p:column colspan="50" style="text-align: center; font-weight: bold">Yukio Siraichi</p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="color: white;font-size: 13px; background-color: green" value="OK" disabled="true"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                                <p:column colspan="10" style="text-align: center"><p:commandButton style="font-size: 13px" value="PRE" onclick="dlgPg.show();"/></p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:scrollPanel>
-                    <br/>
-                    <p:commandButton value="CANCELAR" style="color: red; font-weight: bolder; font-size: small;" onclick="dlgo2.hide();"/>
-                    <p:commandButton value="SALVAR" style="color: green; font-weight: bolder; font-size: small; margin-left: 10px" actionListener="#{gmessages.alterar}" oncomplete="dlgo2.hide()" />
-                </p:dialog>
-            </h:form>
             <h:form id="formDlgPg">
                 <p:dialog header="Efetuar Pagamento" widgetVar="dlgPg">
                     <p:outputLabel style="font-size: 20px" value="Deseja efetuar o pagamento?"/>

@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import javax.sound.midi.Soundbank;
 import messages.Gmessages;
 import org.primefaces.context.RequestContext;
 
@@ -44,6 +43,10 @@ public class GerenciarAluno {
 
     public void setEp(EntityPersist ep) {
         this.ep = ep;
+    }
+
+    public EntityPersist getEp() {
+        return ep;
     }
 
     public String getBusca() {
@@ -91,14 +94,55 @@ public class GerenciarAluno {
     }
 
     public void cadastrarAluno() {
+        boolean valido = true;
+        Date d = new Date();
         if (aluno.getNome().equals("") || aluno.getDataNasc() == null
-                || aluno.getSexo() == 'x' || aluno.getIdade().equals("")
-                || aluno.getTelefone().equals("") || aluno.getCidade().equals("")) {
+                || aluno.getSexo() == 'x' || aluno.getIdade() == 0
+                || aluno.getTelefone().equals("") || aluno.getCidade().equals("")
+                || aluno.getEndereco().equals("")) {
+            msg.falhaCadastro(null);
             msg.dadosObrig(null);
-        } else if (aluno.getNome().length() < 4 || (aluno.getNomeMae().length() < 4 && aluno.getNomeMae().length() != 0)
-                || (aluno.getNomePai().length() < 4 && aluno.getNomePai().length() != 0) || aluno.getEndereco().length() < 4) {
+            valido = false;
+        }
+
+        boolean jaexiste = false;
+        alunos = ep.search(Aluno.class, new CriteriaGroup("eq", "rg", aluno.getRg(), null));
+        if (!(alunos.isEmpty())) {
+            jaexiste = true;
+        }
+        if (aluno.getRg() != null && jaexiste == true) {
+            if (valido == true) {
+                msg.falhaCadastro(null);
+            }
+            msg.rgExiste(null);
+            valido = false;
+        }
+        if ((aluno.getNome().length() < 4) || (aluno.getEndereco().length() < 4)
+                || (aluno.getNomeMae().length() != 0 && aluno.getNomeMae().length() < 4)
+                || (aluno.getNomePai().length() != 0 && aluno.getNomePai().length() < 4)) {
+            if (valido == true) {
+                msg.falhaCadastro(null);
+            }
             msg.tamanhoInsuf(null);
-        } else {
+            valido = false;
+
+        }
+        if (aluno.getIdade() < 0) {
+            if (valido == true) {
+                msg.falhaCadastro(null);
+            }
+            msg.idadeInvalida(null);
+            valido = false;
+
+        }//System.out.println(d);System.out.println(aluno.getDataNasc());
+        if (aluno.getDataNasc() == null) { //||aluno.getDataNasc().after(d)
+            if (valido == true) {
+                msg.falhaCadastro(null);
+            }
+            msg.dataInvalida(null);
+            valido = false;
+        }
+        if (valido) {
             try {
                 ep.save(aluno);
                 RequestContext.getCurrentInstance().execute("confirmation.show()");
@@ -111,32 +155,33 @@ public class GerenciarAluno {
     public void consultarAluno(ActionEvent ae) {
         if (busca.trim().equals("")) {
             alunos = ep.search(Aluno.class, new CriteriaGroup("eq", "estado", "ativo", null));
-        } else if (!param.equals("estado")) {
+        } else if (param.equals("nome")) {
             alunos = ep.search(Aluno.class, new CriteriaGroup("eq", param, busca, null),
                     new CriteriaGroup("eq", "estado", "ativo", null));
-        } else {
-            alunos = ep.search(Aluno.class, new CriteriaGroup("eq", param, busca, null));
+        } else if (param.equals("estado")) {
+            alunos = ep.search(Aluno.class, new CriteriaGroup("eq", "nome", busca, null),
+                    new CriteriaGroup("eq", "estado", "inativo", null));
         }
     }
 
     public void selectAluno(ActionEvent ae) {
-        System.out.println("DEU!");
         selecionado = (Aluno) ae.getComponent().getAttributes().get("aluno");
         setIsAtivo(!"inativo".equals(selecionado.getEstado()));
     }
 
     public void alterarAluno(ActionEvent ae) {
-        System.out.println("Alterando");
+        System.out.println(selecionado.getNome());
+
         try {
             ep.update(selecionado);
             msg.alterar(ae);
+
         } catch (Exception ex) {
             Logger.getLogger(GerenciarAluno.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void removerAluno(ActionEvent ae) {
-        System.out.println("Removendo");
         selecionado.setEstadoInativo();
         try {
             ep.update(selecionado);
@@ -151,7 +196,11 @@ public class GerenciarAluno {
 
     public void ativar(ActionEvent ae) {
         selecionado.setEstadoAtivo();
-        msg.ativado(ae);
-        setIsAtivo(false);
+        try {
+            ep.update(selecionado);
+            msg.ativado(ae);
+        } catch (Exception ex) {
+            Logger.getLogger(GerenciarAluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
