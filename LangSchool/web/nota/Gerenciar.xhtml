@@ -8,6 +8,47 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="panelHeader">Gerenciar Notas</ui:define>
+        <ui:define name="help">
+            <br/>
+            As notas são adicionadas automaticamente no momento da 
+            matricula do aluno.
+            <br/>
+            Todas as notas começam ZERADAS (0)
+            <br/>
+            As médias serão calculadas a partir da primeira 
+            atualização das notas.
+            <br/>
+            Para VISUALIZAR nota individual,
+            <br/>
+            1 - Selecione a opção VISUALIZAR
+            <br/>
+            2 - Uma nova janela contendo as informações do 
+            aluno selecionado e suas notas serão mostradas.
+            <br/>
+            Para ALTERAR nota individual,
+            <br/>
+            1 - Selecione a opção ALTERAR
+            <br/>
+            2 - Uma nova janela será exibida, semelhante 
+                ao da visualização, mas desta vez os campos estão 
+                habilitados para alteração.
+            <br/>
+            3 - Para salvar as novas notas, pressione SALVAR.
+                Para ignorar as atualizações, pressione CANCELAR.
+            <br/>
+            Para ALTERAR nota da TURMA,
+            <br/>
+            1 - Selecioe a opção ALTERAR TURMA
+            <br/>
+            2 - Uma nova janela será exibida, contendo as informações 
+                da turma (nome do professor e turma) com uma lista de alunos 
+                pertencentes a ela e suas notas
+            <br/>
+            3 - Altere os campos e pressione SALVAR para salvar alterações
+                Para ignorar alterações feitas, pressione CANCELAR
+            <br/>
+            ----- SOLUÇÃO DE PROBLEMAS ENVIEI E-MAIL PARA: claudio_massao@live.com -----
+        </ui:define>
         <ui:define name="centro">
             <h:form id="gerNota">
                 <br/>
